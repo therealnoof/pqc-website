@@ -1,0 +1,94 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Sidebar from "../../components/Sidebar.astro";
+import "../../styles/reader.css";
+
+export async function getStaticPaths() {
+  const all = (await getCollection("chapters")).sort(
+    (a, b) => a.data.order - b.data.order
+  );
+  return all.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      prev: all[i - 1] ?? null,
+      next: all[i + 1] ?? null,
+    },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+
+<BaseLayout title={d.title} description={d.excerpt || undefined} wide>
+  <div class="reader" id="reader">
+    <Sidebar current={entry.id} />
+
+    <main class="reader-main" id="main" data-pagefind-body>
+      <button class="btn toc-toggle" id="toc-toggle" type="button" aria-expanded="false" data-pagefind-ignore>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
+        Contents
+      </button>
+
+      <header class="chapter-head">
+        <div class="chapter-eyebrow">
+          <span class="chip">{d.section}</span>
+          {d.chapter && <span>Chapter {d.chapter}</span>}
+          <span class="dot">•</span>
+          <span>{d.readingMinutes} min read</span>
+        </div>
+        <h1 class="chapter-title">{d.title}</h1>
+      </header>
+
+      <article class="prose">
+        <Content />
+      </article>
+
+      <nav class="pager" aria-label="Chapter navigation" data-pagefind-ignore>
+        {prev ? (
+          <a class="prev" href={`/read/${prev.id}/`}>
+            <span class="dir">← Previous</span>
+            <span class="ttl">{prev.data.title}</span>
+          </a>
+        ) : (
+          <span class="empty"></span>
+        )}
+        {next ? (
+          <a class="next" href={`/read/${next.id}/`}>
+            <span class="dir">Next →</span>
+            <span class="ttl">{next.data.title}</span>
+          </a>
+        ) : (
+          <span class="empty"></span>
+        )}
+      </nav>
+    </main>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  (() => {
+    // wrap data tables so they can scroll horizontally on narrow screens
+    document.querySelectorAll(".prose table").forEach((t) => {
+      if (t.parentElement && t.parentElement.classList.contains("table-wrap")) return;
+      const wrap = document.createElement("div");
+      wrap.className = "table-wrap";
+      t.replaceWith(wrap);
+      wrap.appendChild(t);
+    });
+    // mobile contents toggle
+    const reader = document.getElementById("reader");
+    const btn = document.getElementById("toc-toggle");
+    btn && btn.addEventListener("click", () => {
+      const open = reader.classList.toggle("toc-open");
+      btn.setAttribute("aria-expanded", String(open));
+    });
+    // close the mobile TOC after picking a chapter
+    document.querySelectorAll("#sidebar a").forEach((a) =>
+      a.addEventListener("click", () => reader.classList.remove("toc-open"))
+    );
+  })();
+</script>

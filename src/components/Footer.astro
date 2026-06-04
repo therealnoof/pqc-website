@@ -1,0 +1,46 @@
+---
+import meta from "../data/book-meta.json";
+const year = 2026;
+---
+
+<footer class="site-footer">
+  <div class="container grid">
+    <div>
+      <p class="ft-title">The Post-Quantum Cryptography Field Guide</p>
+      <p class="ft-sub">{meta.subtitle} · {meta.chapterCount} chapters · ~{meta.readingMinutes} min read</p>
+    </div>
+    <nav class="ft-links" aria-label="Footer">
+      <a href="/read/">Contents</a>
+      <a href="/read/04-the-quantum-threat-why-this-matters-now/">Start reading</a>
+      <a href="/read/15-glossary/">Glossary</a>
+      <a href="/pqc-field-guide.pdf" download>Download PDF</a>
+    </nav>
+  </div>
+  <div class="container ft-bottom">
+    <span>© {year} {meta.authors.join(", ")}.</span>
+    <span class="ft-note">A practitioner's field guide to post-quantum cryptography.</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 5rem;
+    border-top: 1px solid var(--border);
+    background: color-mix(in srgb, var(--surface) 50%, transparent);
+    padding: 2.5rem 0 2rem;
+  }
+  .grid {
+    display: flex; flex-wrap: wrap; gap: 1.5rem 2rem;
+    justify-content: space-between; align-items: flex-start;
+  }
+  .ft-title { margin: 0; font-weight: 700; color: var(--text-strong); }
+  .ft-sub { margin: 0.3rem 0 0; color: var(--muted); font-size: 0.9rem; }
+  .ft-links { display: flex; flex-wrap: wrap; gap: 1.1rem; }
+  .ft-links a { color: var(--muted); font-size: 0.92rem; }
+  .ft-links a:hover { color: var(--accent); }
+  .ft-bottom {
+    margin-top: 1.8rem; padding-top: 1.4rem; border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; justify-content: space-between;
+    color: var(--faint); font-size: 0.82rem;
+  }
+</style>

@@ -1,0 +1,107 @@
+---
+// Full-text search modal powered by Pagefind.
+// The Pagefind bundle is generated at build time (`pagefind --site dist`) and
+// served from /pagefind/. It is therefore unavailable in `astro dev`; the modal
+// loads it lazily and shows a hint if missing.
+---
+
+<div id="search-modal" class="search-modal" hidden>
+  <div class="search-backdrop" data-close></div>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search the guide">
+    <div class="search-head">
+      <span class="chip">Search</span>
+      <button class="icon-btn" type="button" data-close aria-label="Close search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+      </button>
+    </div>
+    <div id="search-ui"></div>
+    <p class="search-hint" hidden>
+      Search is generated at build time. Run <code>npm run build</code> then
+      <code>npm run preview</code> to try it locally.
+    </p>
+  </div>
+</div>
+
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+
+<style>
+  .search-modal { position: fixed; inset: 0; z-index: 300; }
+  .search-modal[hidden] { display: none; }
+  .search-backdrop {
+    position: absolute; inset: 0;
+    background: color-mix(in srgb, #000 55%, transparent);
+    backdrop-filter: blur(3px);
+  }
+  .search-panel {
+    position: relative;
+    max-width: 640px; margin: 8vh auto 0; padding: 1.1rem;
+    background: var(--surface); border: 1px solid var(--border-strong);
+    border-radius: var(--radius); box-shadow: var(--shadow);
+  }
+  .search-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; }
+  .search-hint { color: var(--muted); font-size: 0.85rem; }
+  .search-hint code { background: var(--code-bg); padding: 0.1rem 0.35rem; border-radius: 5px; }
+
+  /* Theme the Pagefind UI to match the site */
+  #search-ui {
+    --pagefind-ui-primary: var(--accent);
+    --pagefind-ui-text: var(--text);
+    --pagefind-ui-background: var(--surface);
+    --pagefind-ui-border: var(--border);
+    --pagefind-ui-tag: var(--surface-2);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 10px;
+    --pagefind-ui-font: var(--font-sans);
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const modal = document.getElementById("search-modal");
+    const openBtn = document.getElementById("open-search");
+    const hint = modal && modal.querySelector(".search-hint");
+    let loaded = false;
+
+    async function ensureLoaded() {
+      if (loaded) return;
+      loaded = true;
+      try {
+        const mod = await import("/pagefind/pagefind-ui.js");
+        const PagefindUI = mod.PagefindUI || window.PagefindUI;
+        new PagefindUI({ element: "#search-ui", showSubResults: true, pageSize: 6 });
+      } catch (e) {
+        if (hint) hint.hidden = false;
+      }
+    }
+    function open() {
+      if (!modal) return;
+      modal.hidden = false;
+      document.body.style.overflow = "hidden";
+      ensureLoaded();
+      setTimeout(() => {
+        const input = modal.querySelector("input");
+        if (input) input.focus();
+      }, 60);
+    }
+    function close() {
+      if (!modal) return;
+      modal.hidden = true;
+      document.body.style.overflow = "";
+    }
+
+    openBtn && openBtn.addEventListener("click", open);
+    modal && modal.addEventListener("click", (e) => {
+      if (e.target instanceof Element && e.target.closest("[data-close]")) close();
+    });
+    document.addEventListener("keydown", (e) => {
+      const tag = (document.activeElement && document.activeElement.tagName) || "";
+      const typing = tag === "INPUT" || tag === "TEXTAREA";
+      if (e.key === "/" && !typing && modal.hidden) {
+        e.preventDefault();
+        open();
+      } else if (e.key === "Escape" && !modal.hidden) {
+        close();
+      }
+    });
+  })();
+</script>

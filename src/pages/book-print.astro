@@ -1,0 +1,205 @@
+---
+/*
+ * Print-optimized, single-page rendering of the entire guide.
+ * Used to generate public/pqc-field-guide.pdf via headless Chrome
+ * (`npm run pdf`). Kept out of nav, search, and the sitemap; harmless if
+ * visited directly. Always renders light for clean printing.
+ */
+import { getCollection, render } from "astro:content";
+import meta from "../data/book-meta.json";
+
+const entries = (await getCollection("chapters")).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const rendered = await Promise.all(
+  entries.map(async (e) => ({ data: e.data, Content: (await render(e)).Content }))
+);
+
+const bySection = (name: string) => rendered.filter((r) => r.data.section === name);
+const tocGroups = [
+  { name: "Front Matter", items: bySection("Front Matter") },
+  { name: "Chapters", items: bySection("Chapters") },
+  { name: "Appendices & Reference", items: bySection("Appendices & Reference") },
+];
+const buildDate = "2026";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{meta.title}</title>
+  </head>
+  <body>
+    <!-- COVER -->
+    <section class="cover">
+      <div class="cover-mark">PQC</div>
+      <p class="cover-kicker">Post-Quantum Cryptography</p>
+      <h1>{meta.title}</h1>
+      <p class="cover-sub">{meta.subtitle}</p>
+      <p class="cover-author">{meta.authors.join(", ")}</p>
+      <p class="cover-meta">{meta.chapterCount} chapters · {meta.pageCount} sections · ~{meta.readingMinutes} min</p>
+    </section>
+
+    <!-- CONTENTS -->
+    <section class="toc">
+      <h2>Contents</h2>
+      {tocGroups.map((g) => (
+        <div class="toc-group">
+          <p class="toc-group-name">{g.name}</p>
+          <ul>
+            {g.items.map((r) => (
+              <li>
+                <span class="toc-num">{r.data.chapter ? String(r.data.chapter).padStart(2, "0") : "—"}</span>
+                <span>{r.data.title}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </section>
+
+    <!-- BODY -->
+    {rendered.map((r) => (
+      <section class="chapter">
+        <header class="ch-head">
+          {r.data.chapter && <p class="ch-kicker">Chapter {r.data.chapter}</p>}
+          {!r.data.chapter && <p class="ch-kicker">{r.data.section}</p>}
+          <h1>{r.data.title}</h1>
+        </header>
+        <div class="prose">
+          <r.Content />
+        </div>
+      </section>
+    ))}
+
+    <footer class="colophon">
+      <p>{meta.title} — {meta.subtitle}</p>
+      <p>© {buildDate} {meta.authors.join(", ")}. Generated from the latest manuscript.</p>
+    </footer>
+
+    <style is:global>
+      @page {
+        size: Letter;
+        margin: 18mm 17mm 20mm;
+      }
+      :root { color-scheme: light; }
+      * { box-sizing: border-box; }
+      html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      body {
+        margin: 0;
+        background: #fff;
+        color: #1c2430;
+        font: 10.5pt/1.5 "Georgia", "Times New Roman", serif;
+        font-feature-settings: "kern", "liga";
+      }
+      h1, h2, h3, h4 {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        color: #0f1b2a;
+        line-height: 1.18;
+        break-after: avoid;
+      }
+
+      /* cover */
+      .cover {
+        height: calc(100vh - 38mm);
+        min-height: 220mm;
+        display: flex; flex-direction: column; justify-content: center;
+        break-after: page;
+      }
+      .cover-mark {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        font-weight: 800; font-size: 22pt; letter-spacing: 0.3em;
+        color: #0d9488; margin-bottom: 0.6em;
+      }
+      .cover-kicker {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        text-transform: uppercase; letter-spacing: 0.22em; font-size: 9pt;
+        color: #5b6b7f; margin: 0 0 0.8em;
+      }
+      .cover h1 {
+        font-size: 34pt; margin: 0; letter-spacing: -0.01em; max-width: 16cm;
+      }
+      .cover-sub { font-size: 15pt; color: #0d9488; margin: 0.5em 0 2.4em; font-family: "Helvetica Neue", Arial, sans-serif; }
+      .cover-author { font-size: 12pt; font-weight: bold; margin: 0; font-family: "Helvetica Neue", Arial, sans-serif; }
+      .cover-meta { font-size: 9.5pt; color: #5b6b7f; margin: 0.4em 0 0; font-family: "Helvetica Neue", Arial, sans-serif; }
+
+      /* contents */
+      .toc { break-after: page; }
+      .toc > h2 { font-size: 20pt; margin: 0 0 1em; }
+      .toc-group { margin-bottom: 1.1em; }
+      .toc-group-name {
+        font-family: "Helvetica Neue", Arial, sans-serif; font-size: 8.5pt;
+        text-transform: uppercase; letter-spacing: 0.14em; color: #8a99ab;
+        margin: 0 0 0.3em; border-bottom: 0.5pt solid #dde3ea; padding-bottom: 0.3em;
+      }
+      .toc ul { list-style: none; margin: 0; padding: 0; }
+      .toc li { display: flex; gap: 0.9em; padding: 0.18em 0; font-family: "Helvetica Neue", Arial, sans-serif; font-size: 10pt; }
+      .toc-num { color: #0d9488; font-variant-numeric: tabular-nums; width: 2.4em; }
+
+      /* chapters */
+      .chapter { break-before: page; }
+      .ch-head { margin-bottom: 1.4em; padding-bottom: 0.8em; border-bottom: 1.5pt solid #0d9488; }
+      .ch-kicker {
+        font-family: "Helvetica Neue", Arial, sans-serif; text-transform: uppercase;
+        letter-spacing: 0.16em; font-size: 8.5pt; color: #0d9488; margin: 0 0 0.4em;
+      }
+      .ch-head h1 { font-size: 23pt; margin: 0; }
+
+      /* prose */
+      .prose { hyphens: auto; }
+      .prose p { margin: 0 0 0.7em; orphans: 2; widows: 2; }
+      .prose h2 { font-size: 15pt; margin: 1.4em 0 0.5em; }
+      .prose h3 { font-size: 12pt; margin: 1.1em 0 0.4em; }
+      .prose h4 { font-size: 10.5pt; margin: 1em 0 0.3em; }
+      .prose ul, .prose ol { margin: 0 0 0.7em; padding-left: 1.3em; }
+      .prose li { margin: 0.2em 0; }
+      .prose a { color: #0b5; color: #0a7b6f; text-decoration: none; word-break: break-word; }
+      .prose strong { color: #0f1b2a; }
+      .prose .heading-anchor { display: none; }
+
+      .prose code {
+        font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.85em;
+        background: #f1f5f8; padding: 0.05em 0.3em; border-radius: 3px; color: #0a7b6f;
+      }
+      .prose pre {
+        background: #f5f7fa; border: 0.5pt solid #dde3ea; border-radius: 5px;
+        padding: 0.7em 0.9em; overflow: hidden; white-space: pre-wrap; font-size: 8.5pt;
+        break-inside: avoid;
+      }
+      .prose pre code { background: none; padding: 0; color: #1c2430; }
+
+      .prose blockquote {
+        margin: 1em 0; padding: 0.7em 1em; background: #f0faf8;
+        border: 0.5pt solid #cfe9e4; border-left: 2.5pt solid #0d9488; border-radius: 4px;
+        break-inside: avoid; font-size: 9.8pt;
+      }
+      .prose blockquote p { margin: 0 0 0.3em; }
+      .prose blockquote strong:first-child { color: #0d9488; }
+
+      .prose img {
+        display: block; max-width: 100%; max-height: 150mm; margin: 1em auto;
+        border: 0.5pt solid #e2e8f0; border-radius: 4px;
+      }
+      .prose em { color: #5b6b7f; }
+
+      .prose table {
+        width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 8.6pt;
+        font-family: "Helvetica Neue", Arial, sans-serif; break-inside: auto;
+      }
+      .prose th, .prose td {
+        border: 0.5pt solid #d7dee6; padding: 0.35em 0.5em; text-align: left; vertical-align: top;
+      }
+      .prose thead th { background: #eef3f7; color: #0f1b2a; }
+      .prose tr { break-inside: avoid; }
+
+      .colophon {
+        break-before: page; padding-top: 30vh; text-align: center; color: #5b6b7f;
+        font-family: "Helvetica Neue", Arial, sans-serif; font-size: 9pt;
+      }
+      .colophon p { margin: 0.3em 0; }
+    </style>
+  </body>
+</html>

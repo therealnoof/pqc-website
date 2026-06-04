@@ -1,0 +1,106 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+const path = Astro.url.pathname;
+const isReading = path.startsWith("/read");
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2 4 6v6c0 5 3.4 8.3 8 10 4.6-1.7 8-5 8-10V6z"></path>
+          <path d="M9 12l2 2 4-4"></path>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <strong>PQC Field Guide</strong>
+        <small>Post-Quantum Cryptography</small>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <a href="/read/" class={isReading ? "active" : ""}>Read</a>
+      <a href="/read/15-glossary/">Glossary</a>
+      <a href="/read/20-bibliography/">References</a>
+      <button id="open-search" class="nav-search" type="button" aria-label="Search the guide">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path>
+        </svg>
+        <span>Search</span>
+        <kbd>/</kbd>
+      </button>
+      <a class="pdf-link" href="/pqc-field-guide.pdf" download>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3v12m0 0 4-4m-4 4-4-4"></path><path d="M5 21h14"></path>
+        </svg>
+        <span>PDF</span>
+      </a>
+      <ThemeToggle />
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: saturate(140%) blur(10px);
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 4rem;
+  }
+  .brand { display: inline-flex; align-items: center; gap: 0.7rem; color: var(--text-strong); }
+  .brand:hover { text-decoration: none; }
+  .brand-mark {
+    display: grid; place-items: center;
+    width: 2.3rem; height: 2.3rem; border-radius: 9px;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .brand-text strong { font-size: 1rem; letter-spacing: -0.01em; }
+  .brand-text small { color: var(--muted); font-size: 0.7rem; letter-spacing: 0.04em; }
+
+  .nav { display: flex; align-items: center; gap: 0.35rem; }
+  .nav > a {
+    color: var(--muted);
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.92rem;
+  }
+  .nav > a:hover { color: var(--text-strong); background: var(--surface); text-decoration: none; }
+  .nav > a.active { color: var(--accent); }
+
+  .nav-search {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--muted); border-radius: 8px; padding: 0.45rem 0.7rem;
+    cursor: pointer; font-size: 0.9rem;
+  }
+  .nav-search:hover { border-color: var(--accent); color: var(--text-strong); }
+  .nav-search kbd {
+    font-size: 0.7rem; background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 5px; padding: 0.05rem 0.35rem; color: var(--faint);
+  }
+  .pdf-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    color: var(--muted); font-size: 0.9rem; padding: 0.45rem 0.6rem; border-radius: 8px;
+  }
+  .pdf-link:hover { color: var(--accent); background: var(--surface); text-decoration: none; }
+
+  @media (max-width: 760px) {
+    .brand-text small { display: none; }
+    .nav > a:not(.active) { display: none; }
+    .nav-search span, .nav-search kbd, .pdf-link span { display: none; }
+  }
+</style>

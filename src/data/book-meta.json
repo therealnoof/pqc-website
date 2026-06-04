@@ -1,0 +1,236 @@
+{
+  "title": "The Post-Quantum Cryptography Field Guide",
+  "subtitle": "A Practitioner's Handbook",
+  "authors": [
+    "Arnulfo “Noof” Hernandez"
+  ],
+  "abstract": "A few years ago, I came across a TED talk presented by Quantum Physicist, Dr. Shohini Ghose.1 It had been many years since I last attended an academic course on anything physics much less quantum. During her talk she explained the concept of superposition and entanglement amongst other topics related to quantum mechanics. I had heard of these concepts in previous readings and academic studies, but I took notice considering the recent grumblings about a future world where quantum computers will break modern encryption.",
+  "totalWords": 45953,
+  "readingMinutes": 209,
+  "pageCount": 20,
+  "chapterCount": 9,
+  "images": 12,
+  "source": "pqc-field-guide-complete.docx",
+  "chapters": [
+    {
+      "slug": "01-foreword",
+      "title": "Foreword",
+      "displayTitle": "Foreword",
+      "section": "Front Matter",
+      "chapter": null,
+      "order": 1,
+      "words": 1572,
+      "readingMinutes": 7,
+      "excerpt": "A few years ago, I came across a TED talk presented by Quantum Physicist, Dr. Shohini Ghose.1 It had been many years since I last attended an academic course on anything physics much less quantum. During her talk she exp"
+    },
+    {
+      "slug": "02-how-to-read-this-book",
+      "title": "How to Read This Book",
+      "displayTitle": "How to Read This Book",
+      "section": "Front Matter",
+      "chapter": null,
+      "order": 2,
+      "words": 448,
+      "readingMinutes": 2,
+      "excerpt": "We designed this guide so you don’t have to read it cover to cover. Different roles need different chapters. Here’s where to start depending on what you’re trying to accomplish."
+    },
+    {
+      "slug": "03-about-the-author",
+      "title": "About the Author",
+      "displayTitle": "About the Author",
+      "section": "Front Matter",
+      "chapter": null,
+      "order": 3,
+      "words": 93,
+      "readingMinutes": 1,
+      "excerpt": "Arnulfo “Noof” Hernandez is a Solutions Architect at F5, Inc. supporting public sector customers including the Department of War, Intelligence communities, and federal civilian agencies. Arnulfo’s current focus areas inc"
+    },
+    {
+      "slug": "04-the-quantum-threat-why-this-matters-now",
+      "title": "The Quantum Threat: Why This Matters Now",
+      "displayTitle": "Chapter 1: The Quantum Threat: Why This Matters Now",
+      "section": "Chapters",
+      "chapter": 1,
+      "order": 4,
+      "words": 7039,
+      "readingMinutes": 32,
+      "excerpt": "Before we can understand why post-quantum cryptography matters, we need to understand the strange and beautiful science that makes it necessary. This chapter is a guided tour—from the birth of quantum mechanics over a ce"
+    },
+    {
+      "slug": "05-whats-vulnerable-and-whats-not",
+      "title": "What’s Vulnerable and What’s Not",
+      "displayTitle": "Chapter 2: What’s Vulnerable and What’s Not",
+      "section": "Chapters",
+      "chapter": 2,
+      "order": 5,
+      "words": 2630,
+      "readingMinutes": 12,
+      "excerpt": "Chapter 1 explained why quantum computing threatens our cryptographic infrastructure. This chapter answers the next logical question: what, specifically, is at risk?"
+    },
+    {
+      "slug": "06-the-new-algorithms-a-practitioners-guide",
+      "title": "The New Algorithms: A Practitioner’s Guide",
+      "displayTitle": "Chapter 3: The New Algorithms: A Practitioner’s Guide",
+      "section": "Chapters",
+      "chapter": 3,
+      "order": 6,
+      "words": 2807,
+      "readingMinutes": 13,
+      "excerpt": "In Chapter 1, we learned that quantum computing breaks the math behind today’s encryption—not the concept of encryption itself. In Chapter 2, we mapped exactly which algorithms and protocols are vulnerable. Now we answer"
+    },
+    {
+      "slug": "07-the-regulatory-landscape",
+      "title": "The Regulatory Landscape",
+      "displayTitle": "Chapter 4: The Regulatory Landscape",
+      "section": "Chapters",
+      "chapter": 4,
+      "order": 7,
+      "words": 4022,
+      "readingMinutes": 18,
+      "excerpt": "If the first three chapters answered “why should we care?” and “what’s at risk?”, this chapter answers the question that gets CISOs and program managers out of their chairs: “Who says we have to do this, and by when?”"
+    },
+    {
+      "slug": "08-know-what-you-have-cryptographic-discovery",
+      "title": "Know What You Have: Cryptographic Discovery",
+      "displayTitle": "Chapter 5: Know What You Have: Cryptographic Discovery",
+      "section": "Chapters",
+      "chapter": 5,
+      "order": 8,
+      "words": 2791,
+      "readingMinutes": 13,
+      "excerpt": "Every PQC migration plan begins with the same question: “Where is cryptography in my environment?” The answer, invariably, is “more places than you think.”"
+    },
+    {
+      "slug": "09-building-your-migration-roadmap",
+      "title": "Building Your Migration Roadmap",
+      "displayTitle": "Chapter 6: Building Your Migration Roadmap",
+      "section": "Chapters",
+      "chapter": 6,
+      "order": 9,
+      "words": 4436,
+      "readingMinutes": 20,
+      "excerpt": "You’ve catalogued the threat (Chapters 1–2), learned the replacements (Chapter 3), mapped the mandates (Chapter 4), and inventoried your exposure (Chapter 5). Now comes the question that separates planning from action: “"
+    },
+    {
+      "slug": "10-hybrid-mode-bridging-classical-and-quantum-safe",
+      "title": "Hybrid Mode: Bridging Classical and Quantum-Safe",
+      "displayTitle": "Chapter 7: Hybrid Mode: Bridging Classical and Quantum-Safe",
+      "section": "Chapters",
+      "chapter": 7,
+      "order": 10,
+      "words": 2942,
+      "readingMinutes": 13,
+      "excerpt": "In an ideal world, you’d flip a switch and every system in your environment would instantly use post-quantum algorithms. In the real world, migration happens gradually—and during that transition, classical and post-quant"
+    },
+    {
+      "slug": "11-protocol-deep-dives-tls-ipsec-ssh-and-pki",
+      "title": "Protocol Deep Dives: TLS, IPsec, SSH, and PKI",
+      "displayTitle": "Chapter 8: Protocol Deep Dives: TLS, IPsec, SSH, and PKI",
+      "section": "Chapters",
+      "chapter": 8,
+      "order": 11,
+      "words": 6355,
+      "readingMinutes": 29,
+      "excerpt": "This is the engineering chapter. The previous seven chapters built the case for why migration matters, what algorithms replace the vulnerable ones, and how to plan the program. This chapter goes inside the protocols them"
+    },
+    {
+      "slug": "12-day-2-operations-monitoring-rotation-and-long-term-assurance",
+      "title": "Day-2 Operations: Monitoring, Rotation, and Long-Term Assurance",
+      "displayTitle": "Chapter 9: Day-2 Operations: Monitoring, Rotation, and Long-Term Assurance",
+      "section": "Chapters",
+      "chapter": 9,
+      "order": 12,
+      "words": 3025,
+      "readingMinutes": 14,
+      "excerpt": "Deploying post-quantum cryptography is a milestone, not a finish line. Once PQC is live in your environment—hybrid TLS on the edge, updated SSH key exchanges, new certificate chains in the pipeline—a new set of operation"
+    },
+    {
+      "slug": "13-quantum-risk-scoring-methodology",
+      "title": "Quantum Risk Scoring Methodology",
+      "displayTitle": "Quantum Risk Scoring Methodology",
+      "section": "Appendices & Reference",
+      "chapter": null,
+      "order": 13,
+      "words": 1122,
+      "readingMinutes": 5,
+      "excerpt": "This appendix provides a reusable, quantitative risk scoring methodology for assessing the quantum threat to specific systems and applications. It is adapted from the TNO/AIVD quantum risk methodology and designed to plu"
+    },
+    {
+      "slug": "14-pqc-migration-maturity-assessment",
+      "title": "PQC Migration Maturity Assessment",
+      "displayTitle": "PQC Migration Maturity Assessment",
+      "section": "Appendices & Reference",
+      "chapter": null,
+      "order": 14,
+      "words": 752,
+      "readingMinutes": 3,
+      "excerpt": "This self-assessment tool helps organizations evaluate their current readiness for the PQC migration across eight key dimensions. It is adapted from the TNO/AIVD PQC growth model and designed for use by your CCOE (Chapte"
+    },
+    {
+      "slug": "15-glossary",
+      "title": "Glossary",
+      "displayTitle": "Glossary",
+      "section": "Appendices & Reference",
+      "chapter": null,
+      "order": 15,
+      "words": 1273,
+      "readingMinutes": 6,
+      "excerpt": "Quick-reference definitions for terms used throughout this book. Terms are listed alphabetically."
+    },
+    {
+      "slug": "16-algorithm-cheat-sheet",
+      "title": "Algorithm Cheat Sheet",
+      "displayTitle": "Algorithm Cheat Sheet",
+      "section": "Appendices & Reference",
+      "chapter": null,
+      "order": 16,
+      "words": 285,
+      "readingMinutes": 1,
+      "excerpt": "One-page reference for algorithm selection. Sizes are approximate and include DER/X.509 encoding overhead where applicable."
+    },
+    {
+      "slug": "17-pqc-compliance-checklist",
+      "title": "PQC Compliance Checklist",
+      "displayTitle": "PQC Compliance Checklist",
+      "section": "Appendices & Reference",
+      "chapter": null,
+      "order": 17,
+      "words": 621,
+      "readingMinutes": 3,
+      "excerpt": "A consolidated timeline and action checklist for PQC-related mandates. Check off items as your organization completes them."
+    },
+    {
+      "slug": "18-vendor-pqc-readiness-assessment-template",
+      "title": "Vendor PQC Readiness Assessment Template",
+      "displayTitle": "Vendor PQC Readiness Assessment Template",
+      "section": "Appendices & Reference",
+      "chapter": null,
+      "order": 18,
+      "words": 241,
+      "readingMinutes": 1,
+      "excerpt": "Use this template when evaluating vendors, suppliers, and third-party service providers. Distribute to procurement, security architecture, and CCOE team members."
+    },
+    {
+      "slug": "19-federal-framework-crosswalk",
+      "title": "Federal Framework Crosswalk",
+      "displayTitle": "Federal Framework Crosswalk",
+      "section": "Appendices & Reference",
+      "chapter": null,
+      "order": 19,
+      "words": 1336,
+      "readingMinutes": 6,
+      "excerpt": "Federal agencies operate under multiple overlapping cybersecurity and acquisition frameworks. This appendix maps the book’s five-phase PQC migration model (Chapter 6) against the four frameworks most commonly encountered"
+    },
+    {
+      "slug": "20-bibliography",
+      "title": "Bibliography",
+      "displayTitle": "Bibliography",
+      "section": "Appendices & Reference",
+      "chapter": null,
+      "order": 20,
+      "words": 2163,
+      "readingMinutes": 10,
+      "excerpt": "Master reference list for all sources cited in chapter endnotes. Organized by category. ~95 entries covering all 128 endnotes across Chapters 1–9."
+    }
+  ]
+}

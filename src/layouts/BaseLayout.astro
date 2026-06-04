@@ -1,0 +1,63 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Search from "../components/Search.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Render the reader layout shell with no max-width padding wrapper. */
+  wide?: boolean;
+  ogType?: string;
+}
+
+const {
+  title,
+  description = "A practitioner's field guide to post-quantum cryptography: the quantum threat, the new NIST algorithms, regulatory mandates, discovery, migration, and day-2 operations.",
+  ogType = "website",
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const siteName = "The PQC Field Guide";
+const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#080b11" />
+    <meta name="generator" content={Astro.generator} />
+
+    {/* No-flash theme bootstrap: applies saved/system theme before paint. */}
+    <script is:inline>
+      (() => {
+        try {
+          // Dark is the brand default; honor an explicit saved choice only.
+          const saved = localStorage.getItem("pqc-theme");
+          document.documentElement.dataset.theme = saved === "light" ? "light" : "dark";
+        } catch (_) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <slot />
+    <Footer />
+    <Search />
+  </body>
+</html>

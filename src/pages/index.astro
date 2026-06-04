@@ -1,0 +1,408 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import meta from "../data/book-meta.json";
+
+const chapters = meta.chapters
+  .filter((c) => c.section === "Chapters")
+  .sort((a, b) => a.order - b.order);
+const appendices = meta.chapters
+  .filter((c) => c.section === "Appendices & Reference")
+  .sort((a, b) => a.order - b.order);
+const front = meta.chapters.filter((c) => c.section === "Front Matter");
+
+const firstChapter = chapters[0];
+const intro =
+  "A concise, opinionated handbook for security architects, engineers, and " +
+  "leaders preparing real systems for the quantum era — grounded in NIST " +
+  "standards, federal mandates, and field-tested migration practice.";
+
+// --- Reader orientation: layout + role-based reading paths ---
+// (mirrors the book's own "How to Read This Book" guidance)
+const howToRead =
+  meta.chapters.find((c) => c.slug.includes("how-to-read"))?.slug ?? "";
+const checklistSlug =
+  meta.chapters.find((c) => c.slug.includes("compliance-checklist"))?.slug ?? "";
+
+const byNum = Object.fromEntries(
+  meta.chapters.filter((c) => c.chapter).map((c) => [c.chapter, c])
+);
+const shortTitle: Record<number, string> = {
+  1: "The Quantum Threat",
+  2: "What's Vulnerable",
+  3: "The New Algorithms",
+  4: "Regulatory Landscape",
+  5: "Crypto Discovery",
+  6: "Migration Roadmap",
+  7: "Hybrid Mode",
+  8: "Protocol Deep Dives",
+  9: "Day-2 Operations",
+};
+const step = (n: number) => ({ n, title: shortTitle[n], slug: byNum[n]?.slug });
+
+const layout = [
+  { tag: "Front matter", desc: "Orientation — why it matters, how to read it, who wrote it.", n: front.length },
+  { tag: "Chapters 1–9", desc: "The core: threat → algorithms → mandates → discovery → migration → operations.", n: chapters.length },
+  { tag: "Reference", desc: "Reusable tools — scoring, maturity model, checklists, templates, glossary.", n: appendices.length },
+];
+
+const paths = [
+  {
+    role: "CISO / Security Leader",
+    q: "Brief the board, justify budget, understand compliance exposure.",
+    steps: [1, 2, 4, 6].map(step),
+  },
+  {
+    role: "Security Architect",
+    q: "Design a crypto-agile architecture and plan the migration phases.",
+    steps: [3, 5, 6, 7, 8].map(step),
+  },
+  {
+    role: "Network / Security Engineer",
+    q: "Know what changes in TLS, IPsec, SSH and PKI — and what breaks.",
+    steps: [3, 7, 8, 9].map(step),
+  },
+  {
+    role: "Federal / DoD Program Manager",
+    q: "Compliance timelines, procurement language, and ATO impact.",
+    steps: [4, 5, 6].map(step),
+    extra: checklistSlug ? { title: "Compliance Checklist", slug: checklistSlug } : null,
+  },
+];
+
+const conventions = [
+  { k: "⚠ Mandate Alert", v: "A specific compliance requirement with dates and sources." },
+  { k: "Plain-Language Sidebar", v: "The “brief the general” version of a complex concept." },
+  { k: "F5 Perspective", v: "Optional vendor mapping — skip it without missing core content." },
+];
+
+const stats = [
+  { n: meta.chapterCount, l: "chapters" },
+  { n: "~" + meta.readingMinutes, l: "min read" },
+  { n: appendices.length, l: "reference appendices" },
+];
+
+const highlights = [
+  { k: "FIPS 203 / 204 / 205", v: "The new ML-KEM, ML-DSA, and SLH-DSA standards in plain language." },
+  { k: "Harvest Now, Decrypt Later", v: "Why the quantum threat is a present-tense risk, not a future one." },
+  { k: "CNSA 2.0 & NIST timelines", v: "What's mandated, for whom, and by when — U.S. and international." },
+  { k: "Discovery → Migration → Day-2", v: "A phased, crypto-agile roadmap from inventory to long-term assurance." },
+];
+---
+
+<BaseLayout title="The PQC Field Guide">
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <span class="chip">Post-Quantum Cryptography · Field Guide</span>
+        <h1 class="hero-title">
+          The Post-Quantum<br />Cryptography <span class="grad">Field Guide</span>
+        </h1>
+        <p class="hero-sub">{meta.subtitle}</p>
+        <p class="hero-intro">{intro}</p>
+
+        <div class="hero-cta">
+          <a class="btn btn-primary" href={`/read/${firstChapter.slug}/`}>
+            Start reading
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </a>
+          <a class="btn btn-guide" href="#how-to-read">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 2.5-3 3v2"></path><circle cx="15" cy="17.5" r="0.6" fill="currentColor"></circle><path d="M3 5h6a3 3 0 0 1 3 3v11"></path></svg>
+            How to read this guide
+          </a>
+          <a class="btn" href="/pqc-field-guide.pdf" download>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4"></path><path d="M5 21h14"></path></svg>
+            Download PDF
+          </a>
+        </div>
+
+        <ul class="stats">
+          {stats.map((s) => (
+            <li><strong>{s.n}</strong><span>{s.l}</span></li>
+          ))}
+        </ul>
+      </div>
+      <div class="hero-glow" aria-hidden="true"></div>
+    </section>
+
+    <!-- HOW TO READ / ORIENTATION -->
+    <section class="container block" id="how-to-read">
+      <header class="block-head">
+        <span class="chip">Start here</span>
+        <h2>How to read this guide</h2>
+        <p>
+          It's a {meta.chapterCount}-chapter guide (~{meta.readingMinutes} min) with reusable reference
+          appendices — but you don't need to read it cover to cover. Here's how it's
+          laid out, and where to focus based on your role.
+        </p>
+      </header>
+
+      <div class="layout-row">
+        {layout.map((l, i) => (
+          <div class="layout-pill">
+            <span class="layout-step">{String(i + 1).padStart(2, "0")}</span>
+            <div>
+              <p class="layout-tag">{l.tag}<span class="layout-count">{l.n}</span></p>
+              <p class="layout-desc">{l.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <h3 class="paths-title">Find your path</h3>
+      <div class="paths-grid">
+        {paths.map((p) => (
+          <div class="path-card">
+            <p class="path-role">{p.role}</p>
+            <p class="path-q">{p.q}</p>
+            <ol class="path-steps">
+              {p.steps.filter((s) => s.slug).map((s, i) => (
+                <li>
+                  {i > 0 && <span class="path-arrow" aria-hidden="true">→</span>}
+                  <a href={`/read/${s.slug}/`}><span class="path-num">{s.n}</span>{s.title}</a>
+                </li>
+              ))}
+              {p.extra && (
+                <li>
+                  <span class="path-arrow" aria-hidden="true">→</span>
+                  <a href={`/read/${p.extra.slug}/`} class="path-extra">{p.extra.title}</a>
+                </li>
+              )}
+            </ol>
+            {p.steps[0]?.slug && (
+              <a class="path-start" href={`/read/${p.steps[0].slug}/`}>
+                Start this path
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div class="orient-foot">
+        <div class="conventions">
+          <p class="conv-title">Watch for these in the text</p>
+          <ul>
+            {conventions.map((c) => (
+              <li><strong>{c.k}</strong> — {c.v}</li>
+            ))}
+          </ul>
+        </div>
+        {howToRead && (
+          <a class="btn" href={`/read/${howToRead}/`}>
+            Full reading guide &amp; chapter reference
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </a>
+        )}
+      </div>
+    </section>
+
+    <!-- HIGHLIGHTS -->
+    <section class="container block">
+      <div class="highlights">
+        {highlights.map((h) => (
+          <div class="hl-card">
+            <p class="hl-k">{h.k}</p>
+            <p class="hl-v">{h.v}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- CHAPTERS -->
+    <section class="container block">
+      <header class="block-head">
+        <h2>Chapters</h2>
+        <p>From the quantum threat to day-2 operations — read cover to cover or jump to what you need.</p>
+      </header>
+      <div class="chap-grid">
+        {chapters.map((c) => (
+          <a class="chap-card" href={`/read/${c.slug}/`}>
+            <span class="chap-num">{String(c.chapter).padStart(2, "0")}</span>
+            <span class="chap-body">
+              <span class="chap-title">{c.title}</span>
+              <span class="chap-ex">{c.excerpt}</span>
+              <span class="chap-meta">{c.readingMinutes} min read</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- REFERENCE -->
+    <section class="container block">
+      <header class="block-head">
+        <h2>Reference & Appendices</h2>
+        <p>Practical, reusable tools: scoring methodology, maturity model, checklists, templates, glossary, and full bibliography.</p>
+      </header>
+      <ul class="ref-list">
+        {appendices.map((c) => (
+          <li><a href={`/read/${c.slug}/`}>{c.title}</a><span>{c.readingMinutes} min</span></li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- AUTHOR -->
+    <section class="container block">
+      <div class="authors">
+        <div>
+          <h2>About the author</h2>
+          <p class="authors-names">{meta.authors.join(", ")}</p>
+          <p class="authors-blurb">
+            Written from the field — working with public-sector and enterprise
+            customers on real post-quantum migrations. Everything here is grounded
+            in primary sources: NIST standards, NSA guidance, and IETF drafts.
+          </p>
+          <a class="btn" href={`/read/${front.find((f) => f.slug.includes("about")).slug}/`}>Read author bio</a>
+        </div>
+        <div class="cta-card">
+          <h3>Ready to dig in?</h3>
+          <p>Begin with the quantum threat and why it matters now.</p>
+          <a class="btn btn-primary" href={`/read/${firstChapter.slug}/`}>Open Chapter 1</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .hero { position: relative; overflow: hidden; padding: clamp(3.5rem, 9vw, 7rem) 0 clamp(2.5rem, 6vw, 4.5rem); }
+  .hero-inner { position: relative; z-index: 2; max-width: 52rem; }
+  .hero-title {
+    font-size: clamp(2.4rem, 7vw, 4.4rem);
+    line-height: 1.04;
+    margin: 1.1rem 0 0;
+    letter-spacing: -0.03em;
+  }
+  .grad {
+    background: linear-gradient(110deg, var(--accent), var(--accent-3) 45%, var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero-sub { font-size: clamp(1.05rem, 2.5vw, 1.3rem); color: var(--text-strong); font-weight: 600; margin: 1rem 0 0; }
+  .hero-intro { font-size: 1.08rem; color: var(--muted); max-width: 40rem; margin: 0.9rem 0 0; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.8rem; }
+  .stats { display: flex; flex-wrap: wrap; gap: 2.2rem; list-style: none; padding: 0; margin: 2.6rem 0 0; }
+  .stats li { display: flex; flex-direction: column; }
+  .stats strong { font-size: 1.7rem; color: var(--text-strong); font-family: var(--font-mono); }
+  .stats span { color: var(--muted); font-size: 0.85rem; }
+  .hero-glow {
+    position: absolute; z-index: 1; top: -30%; right: -10%;
+    width: 60vw; height: 60vw; max-width: 720px; max-height: 720px;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent-2) 22%, transparent), transparent 62%);
+    filter: blur(20px); pointer-events: none;
+  }
+
+  .block { padding: clamp(2rem, 5vw, 3.2rem) 0; }
+  .block-head { margin-bottom: 1.6rem; }
+  .block-head h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); margin: 0; }
+  .block-head p { color: var(--muted); margin: 0.5rem 0 0; max-width: 46rem; }
+
+  .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  .hl-card {
+    padding: 1.2rem 1.3rem; border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .hl-k { margin: 0; font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent); letter-spacing: 0.02em; }
+  .hl-v { margin: 0.5rem 0 0; color: var(--text); font-size: 0.95rem; }
+
+  .chap-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; }
+  .chap-card {
+    display: flex; gap: 1rem; padding: 1.3rem; border: 1px solid var(--border);
+    border-radius: var(--radius); background: var(--surface); color: var(--text);
+    transition: border-color 0.18s ease, transform 0.18s ease;
+  }
+  .chap-card:hover { border-color: var(--accent); transform: translateY(-2px); text-decoration: none; }
+  .chap-num { font-family: var(--font-mono); font-size: 1.1rem; color: var(--accent); flex: none; }
+  .chap-body { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+  .chap-title { font-weight: 700; color: var(--text-strong); }
+  .chap-ex {
+    color: var(--muted); font-size: 0.9rem; line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .chap-meta { font-family: var(--font-mono); font-size: 0.74rem; color: var(--faint); margin-top: auto; }
+
+  .ref-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.4rem 1.5rem; }
+  .ref-list li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--border); }
+  .ref-list a { color: var(--text); font-weight: 500; }
+  .ref-list a:hover { color: var(--accent); }
+  .ref-list span { color: var(--faint); font-family: var(--font-mono); font-size: 0.78rem; flex: none; }
+
+  .authors { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.6rem; align-items: stretch; }
+  .authors h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); margin: 0; }
+  .authors-names { font-weight: 700; color: var(--accent); margin: 0.8rem 0 0; }
+  .authors-blurb { color: var(--muted); margin: 0.6rem 0 1.3rem; max-width: 34rem; }
+  .cta-card {
+    padding: 1.8rem; border-radius: var(--radius);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+    background: linear-gradient(160deg, color-mix(in srgb, var(--accent-2) 10%, var(--surface)), var(--surface));
+    display: flex; flex-direction: column; gap: 0.6rem; justify-content: center;
+  }
+  .cta-card h3 { margin: 0; }
+  .cta-card p { margin: 0; color: var(--muted); }
+  .cta-card .btn { margin-top: 0.6rem; align-self: flex-start; }
+
+  @media (max-width: 720px) { .authors { grid-template-columns: 1fr; } }
+
+  /* ---- hero guide button ---- */
+  .btn-guide { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); color: var(--text-strong); }
+  .btn-guide:hover { border-color: var(--accent); }
+
+  /* ---- orientation / how to read ---- */
+  #how-to-read .block-head .chip { margin-bottom: 0.8rem; }
+  #how-to-read { scroll-margin-top: 5rem; }
+
+  .layout-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+  .layout-pill {
+    display: flex; gap: 0.9rem; align-items: flex-start;
+    padding: 1.1rem 1.2rem; border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .layout-step { font-family: var(--font-mono); color: var(--accent); font-size: 0.9rem; }
+  .layout-tag { margin: 0; font-weight: 700; color: var(--text-strong); display: flex; align-items: center; gap: 0.5rem; }
+  .layout-count {
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--faint);
+    border: 1px solid var(--border); border-radius: 999px; padding: 0.05rem 0.45rem;
+  }
+  .layout-desc { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.9rem; }
+
+  .paths-title { font-size: 1.15rem; margin: 2.2rem 0 1rem; }
+  .paths-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+  .path-card {
+    display: flex; flex-direction: column;
+    padding: 1.3rem; border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .path-card:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+  .path-role { margin: 0; font-weight: 700; color: var(--text-strong); }
+  .path-q { margin: 0.35rem 0 0.9rem; color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
+  .path-steps {
+    list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap;
+    align-items: center; gap: 0.35rem 0.4rem;
+  }
+  .path-steps li { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .path-arrow { color: var(--faint); font-size: 0.8rem; }
+  .path-steps a {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 999px; padding: 0.28rem 0.6rem; font-size: 0.82rem; color: var(--text);
+  }
+  .path-steps a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .path-num { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent); }
+  .path-extra { font-style: italic; }
+  .path-start {
+    margin-top: 1.1rem; align-self: flex-start;
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    color: var(--accent); font-weight: 600; font-size: 0.9rem;
+  }
+  .path-start:hover { gap: 0.7rem; text-decoration: none; }
+
+  .orient-foot {
+    margin-top: 1.8rem; display: flex; flex-wrap: wrap; gap: 1.2rem 2rem;
+    align-items: center; justify-content: space-between;
+    padding: 1.3rem 1.4rem; border: 1px dashed var(--border-strong); border-radius: var(--radius);
+  }
+  .conv-title { margin: 0 0 0.5rem; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
+  .conventions ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.3rem; }
+  .conventions li { color: var(--muted); font-size: 0.88rem; }
+  .conventions strong { color: var(--text); }
+</style>

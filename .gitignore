@@ -1,0 +1,13 @@
+# build output
+dist/
+# astro
+.astro/
+# deps
+node_modules/
+# cloudflare
+.wrangler/
+# misc
+.DS_Store
+*.log
+.env
+.env.*
