@@ -4,7 +4,7 @@ displayTitle: "Chapter 1: The Quantum Threat: Why This Matters Now"
 section: "Chapters"
 chapter: 1
 order: 4
-words: 7039
+words: 7125
 readingMinutes: 32
 excerpt: "Before we can understand why post-quantum cryptography matters, we need to understand the strange and beautiful science that makes it necessary. This chapter is a guided tour—from the birth of quantum mechanics over a ce"
 ---
@@ -17,19 +17,19 @@ We promise to keep the math and complexity to a minimum. But some of these ideas
 
 The story of quantum mechanics begins, like many great scientific stories, with a problem nobody could solve.
 
-In 1900, German physicist Max Planck was wrestling with a puzzle called the “blackbody radiation problem”—the question of why hot objects glow certain colors at certain temperatures. Classical physics predicted that a hot object should radiate infinite energy at short wavelengths, which clearly didn’t match reality. In what he later described as “an act of desperation,” Planck proposed a radical idea: energy isn’t emitted in a continuous stream. Instead, it comes in discrete packets—tiny, indivisible bundles that he called quanta.1
+In 1900, German physicist Max Planck was wrestling with a puzzle called the “blackbody radiation problem”—the question of why hot objects glow certain colors at certain temperatures. Classical physics predicted that a hot object should radiate infinite energy at short wavelengths, which clearly didn’t match reality. In what he later described as “an act of desperation,” Planck proposed a radical idea: energy isn’t emitted in a continuous stream. Instead, it comes in discrete packets—tiny, indivisible bundles that he called quanta.<sup>1</sup>
 
-Planck didn’t fully appreciate what he’d done. It fell to a 26-year-old patent clerk named Albert Einstein to take the next leap. In 1905—the same year he published the theory of special relativity—Einstein proposed that light itself exists as particles (later called photons), not just waves. This was heresy. Maxwell’s equations had convinced the physics world that light was a wave phenomenon. Einstein was saying it was both.2
+Planck didn’t fully appreciate what he’d done. It fell to a 26-year-old patent clerk named Albert Einstein to take the next leap. In 1905—the same year he published the theory of special relativity—Einstein proposed that light itself exists as particles (later called photons), not just waves. This was heresy. Maxwell’s equations had convinced the physics world that light was a wave phenomenon. Einstein was saying it was both.<sup>2</sup>
 
-In 1913, the Danish physicist Niels Bohr took quantum ideas and applied them to the atom. His model proposed that electrons orbit the nucleus in fixed, quantized energy levels—and that they can “jump” between these levels by absorbing or emitting photons. Bohr’s model accurately predicted the spectral lines of hydrogen, lending real credibility to quantum ideas.3
+In 1913, the Danish physicist Niels Bohr took quantum ideas and applied them to the atom. His model proposed that electrons orbit the nucleus in fixed, quantized energy levels—and that they can “jump” between these levels by absorbing or emitting photons. Bohr’s model accurately predicted the spectral lines of hydrogen, lending real credibility to quantum ideas.<sup>3</sup>
 
-Then, in 1924, French physicist Louis de Broglie proposed something even stranger: if light (a wave) can behave like a particle, then particles—like electrons—should also behave like waves.4 This idea of wave-particle duality was confirmed experimentally and opened the door to the modern quantum revolution.
+Then, in 1924, French physicist Louis de Broglie proposed something even stranger: if light (a wave) can behave like a particle, then particles—like electrons—should also behave like waves.<sup>4</sup> This idea of wave-particle duality was confirmed experimentally and opened the door to the modern quantum revolution.
 
-The floodgates opened in 1925–1927. Werner Heisenberg developed matrix mechanics, Erwin Schrödinger developed wave mechanics (and the famous equation bearing his name), and Max Born provided the probabilistic interpretation of the wave function—the idea that quantum mechanics doesn’t tell us where a particle is, but rather the probability of finding it in any given place.5
+The floodgates opened in 1925–1927. Werner Heisenberg developed matrix mechanics, Erwin Schrödinger developed wave mechanics (and the famous equation bearing his name), and Max Born provided the probabilistic interpretation of the wave function—the idea that quantum mechanics doesn’t tell us where a particle is, but rather the probability of finding it in any given place.<sup>5</sup>
 
-In 1927, Heisenberg published his uncertainty principle: you cannot simultaneously know both the exact position and the exact momentum of a particle. This isn’t a measurement limitation—it’s a fundamental property of nature.6
+In 1927, Heisenberg published his uncertainty principle: you cannot simultaneously know both the exact position and the exact momentum of a particle. This isn’t a measurement limitation—it’s a fundamental property of nature.<sup>6</sup>
 
-These discoveries shook the foundations of physics. Einstein himself was deeply uncomfortable with the probabilistic nature of quantum mechanics, famously objecting: “God does not play dice with the universe.” But experiment after experiment confirmed that at the subatomic level, the universe does exactly that.7
+These discoveries shook the foundations of physics. Einstein himself was deeply uncomfortable with the probabilistic nature of quantum mechanics, famously objecting: “God does not play dice with the universe.” But experiment after experiment confirmed that at the subatomic level, the universe does exactly that.<sup>7</sup>
 
 > **PLAIN-LANGUAGE SIDEBAR**
 > Think of quantum mechanics as the operating system of reality at the smallest scales. Just as your computer’s behavior is governed by code you never see, every atom in the universe follows quantum rules—rules that are fundamentally different from the physics we experience in everyday life. The key insight: at the quantum level, things aren’t certain. They’re probabilistic.
@@ -48,7 +48,7 @@ This isn’t a metaphor. It’s not that we don’t know the state and it could 
 
 ### Schrödinger’s Cat: A Thought Experiment
 
-In 1935, Erwin Schrödinger devised a famous thought experiment to illustrate just how strange superposition is when scaled up.8 Imagine a cat sealed in a box with a vial of poison, a radioactive atom, and a Geiger counter. If the atom decays (a quantum event), the Geiger counter triggers, breaks the vial, and the cat dies. If the atom doesn’t decay, the cat lives.
+In 1935, Erwin Schrödinger devised a famous thought experiment to illustrate just how strange superposition is when scaled up.<sup>8</sup> Imagine a cat sealed in a box with a vial of poison, a radioactive atom, and a Geiger counter. If the atom decays (a quantum event), the Geiger counter triggers, breaks the vial, and the cat dies. If the atom doesn’t decay, the cat lives.
 
 According to quantum mechanics, until someone opens the box and observes the result, the radioactive atom is in a superposition of “decayed” and “not decayed.” And since the cat’s fate is tied to that atom, the cat is—in a quantum mechanical sense—both alive and dead simultaneously.
 
@@ -60,7 +60,7 @@ For quantum computing, superposition is not a paradox—it’s a feature. A quan
 
 If superposition is strange, **entanglement** is downright out of science fiction.
 
-In 1935, Einstein, Boris Podolsky, and Nathan Rosen published a paper (known as the EPR paradox) arguing that quantum mechanics must be incomplete.9 Their thought experiment showed that two particles could be prepared in a way that measuring one would instantly determine the state of the other—no matter how far apart they were. Einstein called this “spukhafte Fernwirkung”: spooky action at a distance.
+In 1935, Einstein, Boris Podolsky, and Nathan Rosen published a paper (known as the EPR paradox) arguing that quantum mechanics must be incomplete.<sup>9</sup> Their thought experiment showed that two particles could be prepared in a way that measuring one would instantly determine the state of the other—no matter how far apart they were. Einstein called this “spukhafte Fernwirkung”: spooky action at a distance.
 
 Here’s how it works: two particles interact and become “entangled.” Their quantum states are now correlated. Separate them by inches or by light-years—it doesn’t matter. Measure the spin of particle A and you will instantly know the spin of particle B, because their states are linked. Distance has no bearing on the relationship…spooky…indeed.
 
@@ -68,7 +68,7 @@ Here’s how it works: two particles interact and become “entangled.” Their 
 
 *Figure 1.2 — Quantum Entanglement*
 
-This doesn’t violate Einstein’s speed-of-light limit (you can’t use it to send information faster than light), but it reveals that entangled particles share information in a way that has no classical analogue. When Irish physicist John Bell proposed a test in 1964—and experiments by Alain Aspect and others confirmed it in the 1980s—the physics community had to accept that entanglement is real.10
+This doesn’t violate Einstein’s speed-of-light limit (you can’t use it to send information faster than light), but it reveals that entangled particles share information in a way that has no classical analogue. When Irish physicist John Bell proposed a test in 1964—and experiments by Alain Aspect and others confirmed it in the 1980s—the physics community had to accept that entanglement is real.<sup>10</sup>
 
 For quantum computing, entanglement is the secret sauce. It allows qubits to be correlated in ways that classical bits cannot, enabling quantum algorithms to explore vast solution spaces simultaneously. Combined with superposition, entanglement is what makes a quantum computer fundamentally more powerful than a classical one for certain problems.
 
@@ -80,7 +80,7 @@ In the classical world, you can measure something without changing it. You can l
 
 When a particle is in superposition and you measure it, the wave function “collapses”—the particle snaps into one definite state. Before measurement: all possibilities exist. After measurement: only one reality remains. This is sometimes called the observer effect or the “measurement problem,” and it sits at the heart of every interpretation of quantum mechanics.
 
-The most dramatic demonstration is the now famous **double-slit experiment**. Fire electrons one at a time at a barrier with two slits and a detector screen behind it. Without observation, the electrons produce an interference pattern—as if each electron passed through both slits simultaneously as a wave. But place a detector at the slits to observe which path the electron takes, and the interference pattern vanishes. The electron behaves like a particle going through one slit or the other.11 It’s as if the particles “know” they are being watched!
+The most dramatic demonstration is the now famous **double-slit experiment**. Fire electrons one at a time at a barrier with two slits and a detector screen behind it. Without observation, the electrons produce an interference pattern—as if each electron passed through both slits simultaneously as a wave. But place a detector at the slits to observe which path the electron takes, and the interference pattern vanishes. The electron behaves like a particle going through one slit or the other.<sup>11</sup> It’s as if the particles “know” they are being watched!
 
 The mere act of looking changes the outcome. For our purposes, this has a practical implication: quantum states are fragile. This fragility is both a challenge for building quantum computers (qubits are notoriously difficult to keep stable) and a feature of quantum cryptography (any attempt to eavesdrop on a quantum communication channel disturbs the signal and is detectable).
 
@@ -88,16 +88,16 @@ The mere act of looking changes the outcome. For our purposes, this has a practi
 
 You might think quantum effects are limited to laboratory conditions near absolute zero. Nature disagrees.
 
-One of the most fascinating discoveries of the past two decades is that **photosynthesis**—the process by which plants convert sunlight into chemical energy—may exploit quantum mechanics to achieve its remarkable efficiency.12
+One of the most fascinating discoveries of the past two decades is that **photosynthesis**—the process by which plants convert sunlight into chemical energy—may exploit quantum mechanics to achieve its remarkable efficiency.<sup>12</sup>
 
 Here’s the puzzle: when a photon of sunlight hits a chlorophyll molecule in a plant leaf, it dislodges an electron, creating an “exciton” (a paired electron-hole that acts like a tiny battery). This exciton must travel through a maze of molecular structures to reach the reaction center where photosynthesis actually happens. Classical physics would predict a random walk—the exciton bouncing from molecule to molecule like a pinball until it stumbles upon the right destination. That random process would be slow and inefficient, most of the energy would be lossed.
 
-But photosynthesis operates at near-perfect quantum efficiency—virtually every photon captured is converted to usable energy. In 2007, researchers at UC Berkeley led by Graham Fleming observed something remarkable in the Fenna-Matthews-Olson (FMO) photosynthetic complex of green sulfur bacteria: the exciton wasn’t hopping randomly. It was moving as a quantum wave, exploring multiple pathways simultaneously through quantum coherence—then collapsing along the most efficient route.13
+But photosynthesis operates at near-perfect quantum efficiency—virtually every photon captured is converted to usable energy. In 2007, researchers at UC Berkeley led by Graham Fleming observed something remarkable in the Fenna-Matthews-Olson (FMO) photosynthetic complex of green sulfur bacteria: the exciton wasn’t hopping randomly. It was moving as a quantum wave, exploring multiple pathways simultaneously through quantum coherence—then collapsing along the most efficient route.<sup>13</sup>
 
 > **PLAIN-LANGUAGE SIDEBAR**
 > Think of it this way: a classical exciton is like a lost tourist wandering city streets, trying random turns until they find their hotel. A quantum exciton is like that same tourist existing on every street at once, then instantly appearing at the hotel via the shortest path. Nature figured out quantum computing long before we did.
 
-The scientific community continues to debate the exact role of quantum effects in photosynthesis—some recent studies suggest that molecular vibrations, rather than purely electronic quantum coherence, may explain the observed efficiency.14 But the broader point stands: quantum phenomena operate in warm, wet, noisy biological systems, not just in pristine laboratory conditions. Researchers have also found evidence of quantum effects in bird navigation (the “quantum compass” used by European robins), enzyme catalysis, and even the human sense of smell.15
+The scientific community continues to debate the exact role of quantum effects in photosynthesis—some recent studies suggest that molecular vibrations, rather than purely electronic quantum coherence, may explain the observed efficiency.<sup>14</sup> But the broader point stands: quantum phenomena operate in warm, wet, noisy biological systems, not just in pristine laboratory conditions. Researchers have also found evidence of quantum effects in bird navigation (the “quantum compass” used by European robins), enzyme catalysis, and even the human sense of smell.<sup>15</sup>
 
 Why does this matter for a book about cryptography? Because it demonstrates that quantum mechanics isn’t abstract theory trapped in a physics journal. It’s an operational reality—one that engineers are learning to harness for computing, and one that will inevitably transform the security landscape.
 
@@ -105,7 +105,7 @@ Why does this matter for a book about cryptography? Because it demonstrates that
 
 A classical computer stores information in **bits**—binary digits that are either 0 or 1. Every computation, from loading a webpage to encrypting a file, is ultimately a sequence of operations on billions of these binary values.
 
-A quantum computer replaces bits with **qubits** (quantum bits). Thanks to superposition, a single qubit can represent 0, 1, or both simultaneously. And when you entangle multiple qubits, their combined state space grows exponentially. Two entangled qubits can represent 4 states simultaneously (22). Three qubits: 8 states (23). Ten qubits: 1,024 states. Three hundred qubits can represent more states than there are atoms in the observable universe (2300).16 That’s right…more atoms than the observable universe contains.
+A quantum computer replaces bits with **qubits** (quantum bits). Thanks to superposition, a single qubit can represent 0, 1, or both simultaneously. And when you entangle multiple qubits, their combined state space grows exponentially. Two entangled qubits can represent 4 states simultaneously (2<sup>2</sup>). Three qubits: 8 states (2<sup>3</sup>). Ten qubits: 1,024 states. Three hundred qubits can represent more states than there are atoms in the observable universe (2<sup>300</sup>).<sup>16</sup> That’s right…more atoms than the observable universe contains.
 
 This isn’t just more computing power—it’s a fundamentally different kind of computing power. A quantum computer doesn’t just try answers faster. It can explore an enormous number of possibilities at once, using interference to amplify correct answers and cancel out wrong ones. For certain types of problems, this approach is exponentially more efficient than anything a classical computer can do.
 
@@ -121,14 +121,14 @@ Before we go further, we need to address an important distinction that trips up 
 
 The qubits we’ve been describing—the ones that can exist in superposition and become entangled—are **physical qubits**. These are the actual hardware: superconducting circuits cooled to near absolute zero, trapped ions held in electromagnetic fields, photons routed through optical networks, or any of the other physical systems being explored today. The problem with physical qubits is that they are extraordinarily fragile. They are susceptible to environmental noise, thermal fluctuations, and electromagnetic interference. A stray vibration or a slight temperature change can cause a qubit to lose its quantum state—a phenomenon called decoherence. And when a qubit decoheres, it introduces errors into the computation.
 
-This is where **logical qubits** come in. A logical qubit is an error-corrected qubit—a single, reliable computational unit built from many physical qubits working together. The additional physical qubits act as a safety net, continuously detecting and correcting errors in real time through a process called **quantum error correction (QEC)**. Think of it like RAID in storage: you use redundancy to protect against failure.16
+This is where **logical qubits** come in. A logical qubit is an error-corrected qubit—a single, reliable computational unit built from many physical qubits working together. The additional physical qubits act as a safety net, continuously detecting and correcting errors in real time through a process called **quantum error correction (QEC)**. Think of it like RAID in storage: you use redundancy to protect against failure.<sup>16</sup>
 
 The overhead is staggering. Depending on the error rate of the underlying hardware and the error correction scheme used (the most common today is the surface code), you might need **1,000 to 10,000 physical qubits to create a single reliable logical qubit.** This is why quantum computing resource estimates are often expressed in physical qubit counts—they represent the total hardware required, including all the error correction overhead.
 
 > **PLAIN-LANGUAGE SIDEBAR**
 > When a vendor announces a “1,000-qubit processor,” they’re talking about physical qubits—the raw hardware. After error correction, that 1,000-qubit chip might yield just one or two usable logical qubits. It’s the logical qubits that perform the meaningful computation. Shor’s algorithm needs roughly 4,000–6,000 logical qubits to factor RSA-2048. When researchers say you need “20 million physical qubits” for that job, the vast majority of those qubits are dedicated to error correction—keeping those few thousand logical qubits stable long enough to finish the calculation.
 
-This is both good news and bad news. The good news: we’re a long way from having enough stable logical qubits to threaten real-world encryption. The bad news: error correction techniques are improving rapidly, physical qubit quality is increasing, and alternative error correction codes (such as quantum LDPC codes) promise to dramatically reduce the overhead ratio.16 The distance between where we are and where an adversary needs to be is shrinking from both directions—better hardware and better algorithms.
+This is both good news and bad news. The good news: we’re a long way from having enough stable logical qubits to threaten real-world encryption. The bad news: error correction techniques are improving rapidly, physical qubit quality is increasing, and alternative error correction codes (such as quantum LDPC codes) promise to dramatically reduce the overhead ratio.<sup>16</sup> The distance between where we are and where an adversary needs to be is shrinking from both directions—better hardware and better algorithms.
 
 ## How Modern Encryption Actually Works
 
@@ -136,20 +136,20 @@ Before we can understand what quantum computing breaks, we need to understand wh
 
 ### The Trapdoor: Easy One Way, Impossible the Other
 
-Modern public-key cryptography is built on a concept mathematicians call a **trapdoor function**—a mathematical operation that is easy to perform in one direction but practically impossible to reverse without a secret key.17
+Modern public-key cryptography is built on a concept mathematicians call a **trapdoor function**—a mathematical operation that is easy to perform in one direction but practically impossible to reverse without a secret key.<sup>17</sup>
 
 Here’s the simplest example. Take two large prime numbers—let’s call them p and q—and multiply them together to get a product N. A fourth grader can multiply two numbers together, and a computer can do it in microseconds, even when those primes are hundreds of digits long. But now try going backward: given only N (the product), figure out which two primes were multiplied to create it. That’s the trapdoor. Multiplication is easy. Factoring is extraordinarily hard.
 
 > **PLAIN-LANGUAGE SIDEBAR**
 > Think of it like mixing paint. If someone hands you a can of yellow paint and a can of blue paint, you can mix them into green in seconds. But if someone hands you a can of green paint and says “tell me the exact shades of yellow and blue that were mixed to make this,” you’re in trouble. That’s the trapdoor: easy to combine, practically impossible to decompose.
 
-RSA, the most widely deployed public-key algorithm in history, depends on exactly this asymmetry.18 When you generate an RSA key pair, you pick two huge random prime numbers (each typically 1,024 bits long—roughly 300 digits), multiply them together, and publish the result as your **public key**. Anyone can use that public key to encrypt a message to you. But only someone who knows the original two primes—your **private key**—can decrypt it.
+RSA, the most widely deployed public-key algorithm in history, depends on exactly this asymmetry.<sup>18</sup> When you generate an RSA key pair, you pick two huge random prime numbers (each typically 1,024 bits long—roughly 300 digits), multiply them together, and publish the result as your **public key**. Anyone can use that public key to encrypt a message to you. But only someone who knows the original two primes—your **private key**—can decrypt it.
 
 Elliptic Curve Cryptography (ECC) and Diffie-Hellman key exchange work on different mathematical structures (elliptic curves and discrete logarithms, respectively), but they share the same fundamental design principle: there’s a mathematical operation that’s trivially easy in one direction and computationally infeasible to reverse.
 
 ### Why Classical Computers Can’t Break the Lock
 
-To factor a 2048-bit RSA key, a classical computer would need to find the two prime factors of a number that is 617 digits long. The best known classical factoring algorithm (the General Number Field Sieve) would require approximately 2112 operations for this key size.19 To put that in perspective: if you harnessed every classical computer on Earth and ran them until the sun burned out, you still wouldn’t come close.
+To factor a 2048-bit RSA key, a classical computer would need to find the two prime factors of a number that is 617 digits long. The best known classical factoring algorithm (the General Number Field Sieve) would require approximately 2<sup>112</sup> operations for this key size.<sup>19</sup> To put that in perspective: if you harnessed every classical computer on Earth and ran them until the sun burned out, you still wouldn’t come close.
 
 This isn’t a guess or an approximation—it’s a mathematical wall. Classical computers can only test potential factors one at a time (or a few at a time with parallelism), and the number of possibilities grows exponentially with key size. The entire security model of the modern internet rests on this simple bet: **no classical computer will ever be powerful enough to reverse the trapdoor.**
 
@@ -159,13 +159,13 @@ For over 40 years, that bet has held. RSA was published in 1977. The largest RSA
 
 ### Shor’s Algorithm: The Lock Pick That Changes Everything
 
-In 1994, mathematician Peter Shor published a paper that fundamentally changed the security landscape—even though the hardware to execute his idea didn’t exist yet.20 He proved that a quantum computer, using the unique properties of superposition and entanglement, could factor large numbers exponentially faster than any known classical algorithm. The trapdoor—the one-way function that the entire internet depends on—suddenly had a back door.
+In 1994, mathematician Peter Shor published a paper that fundamentally changed the security landscape—even though the hardware to execute his idea didn’t exist yet.<sup>20</sup> He proved that a quantum computer, using the unique properties of superposition and entanglement, could factor large numbers exponentially faster than any known classical algorithm. The trapdoor—the one-way function that the entire internet depends on—suddenly had a back door.
 
 Here’s how it works, in plain language:
 
 Remember that a classical computer trying to factor a large number is essentially guessing and checking—trying one potential factor after another, sequentially. A 2048-bit RSA key has a solution space so vast that a classical machine could search it for billions of years without success.
 
-Shor’s algorithm takes a completely different approach. Rather than trying to find the factors directly, it converts the factoring problem into a **period-finding problem**—a question about repeating patterns in a mathematical function. This is the key insight: finding the period (the repeating cycle) of a specific modular arithmetic function reveals information that can be used to calculate the prime factors.21
+Shor’s algorithm takes a completely different approach. Rather than trying to find the factors directly, it converts the factoring problem into a **period-finding problem**—a question about repeating patterns in a mathematical function. This is the key insight: finding the period (the repeating cycle) of a specific modular arithmetic function reveals information that can be used to calculate the prime factors.<sup>21</sup>
 
 Why does this matter? Because **quantum computers are exceptionally good at finding periods.** This is where superposition becomes a weapon. A quantum computer can prepare a massive superposition of all possible inputs simultaneously—not testing them one by one, but evaluating them all at once. Through a process called the Quantum Fourier Transform, the computer then uses interference to amplify the periodic patterns and suppress everything else. The correct period rises to the surface like a signal emerging from noise.
 
@@ -179,9 +179,9 @@ Shor’s algorithm doesn’t just work on RSA. It also solves the **discrete log
 
 ### How Close Are We? The Numbers Keep Dropping
 
-Shor’s algorithm itself needs only a few thousand logical qubits to factor RSA-2048—roughly 4,000 to 6,000, depending on the implementation.22 But as we discussed earlier, each logical qubit requires thousands of physical qubits for error correction. That’s why the total hardware estimates are so large.
+Shor’s algorithm itself needs only a few thousand logical qubits to factor RSA-2048—roughly 4,000 to 6,000, depending on the implementation.<sup>22</sup> But as we discussed earlier, each logical qubit requires thousands of physical qubits for error correction. That’s why the total hardware estimates are so large.
 
-In 2021, researchers Craig Gidney and Martin Ekerå estimated that breaking RSA-2048 would require approximately **20 million physical qubits** (supporting roughly 6,150 logical qubits with surface code error correction) operating for about 8 hours.23 In 2025, Gidney published a further optimization—leveraging innovations in approximate arithmetic, more efficient qubit storage, and a technique called magic state cultivation—that reduced the estimate to **fewer than 1 million physical qubits** over roughly one week.24 That’s a 20x reduction in hardware requirements in just four years, using the same underlying hardware assumptions.
+In 2021, researchers Craig Gidney and Martin Ekerå estimated that breaking RSA-2048 would require approximately **20 million physical qubits** (supporting roughly 6,150 logical qubits with surface code error correction) operating for about 8 hours.<sup>23</sup> In 2025, Gidney published a further optimization—leveraging innovations in approximate arithmetic, more efficient qubit storage, and a technique called magic state cultivation—that reduced the estimate to **fewer than 1 million physical qubits** over roughly one week.<sup>24</sup> That’s a 20x reduction in hardware requirements in just four years, using the same underlying hardware assumptions.
 
 These numbers matter because they define the finish line for adversaries. While no quantum computer exists today with this capacity, the trajectory is clear: multiple hardware vendors have published roadmaps targeting millions of physical qubits by the early 2030s. And as we’ve seen, progress comes from two fronts simultaneously—better physical hardware and smarter algorithms that reduce how many qubits you need in the first place.
 
@@ -226,9 +226,9 @@ Let’s walk through what actually happens when your browser connects to a websi
 
 ### What Grover’s Algorithm Actually Does
 
-In 1996, Lov Grover published an algorithm for searching unsorted databases quadratically faster than any classical approach.25 While this doesn’t sound as dramatic as Shor’s exponential speedup, the impact on symmetric cryptography is straightforward and significant.
+In 1996, Lov Grover published an algorithm for searching unsorted databases quadratically faster than any classical approach.<sup>25</sup> While this doesn’t sound as dramatic as Shor’s exponential speedup, the impact on symmetric cryptography is straightforward and significant.
 
-Classically, if you want to brute-force an AES-256 key, you need to try up to 2256 possible keys—a number so large it would take every computer on Earth longer than the age of the universe. Grover’s algorithm lets a quantum computer search that same key space in only the square root of the number of attempts. That means AES-256’s effective security strength drops from 2256 to 2128 operations. AES-128 drops to 264—which begins to enter the range of a feasible attack.
+Classically, if you want to brute-force an AES-256 key, you need to try up to 2<sup>256</sup> possible keys—a number so large it would take every computer on Earth longer than the age of the universe. Grover’s algorithm lets a quantum computer search that same key space in only the square root of the number of attempts. That means AES-256’s effective security strength drops from 2<sup>256</sup> to 2<sup>128</sup> operations. AES-128 drops to 2<sup>64</sup>—which begins to enter the range of a feasible attack.
 
 Grover’s also impacts **hash functions**—the algorithms (like SHA-256) used for digital fingerprinting, certificate validation, password storage, and blockchain integrity. A hash function’s security against collision and preimage attacks is similarly halved by Grover’s. SHA-256 drops from 256-bit security to 128-bit equivalent.
 
@@ -256,20 +256,20 @@ When will Q-Day arrive? Honest answer: nobody knows for certain. Here’s what w
 
 - Multiple vendors—IBM, Google, Quantinuum, PsiQuantum, Microsoft—have published roadmaps targeting systems with hundreds of thousands to millions of qubits by the early 2030s.
 
-- Algorithmic improvements continue to reduce the hardware threshold. Gidney’s 2025 paper cut the required qubits by 20x compared to the 2021 estimate.24
+- Algorithmic improvements continue to reduce the hardware threshold. Gidney’s 2025 paper cut the required qubits by 20x compared to the 2021 estimate.<sup>24</sup>
 
 - Error correction remains the critical bottleneck. Today’s qubits are noisy; thousands of physical qubits are needed to create one reliable logical qubit.
 
-Most expert assessments place Q-Day somewhere between 2030 and 2045, with significant uncertainty.26 But the exact date is less important than a simple fact: **cryptographic migration takes 10–15 years for large organizations.** If Q-Day arrives in 2035 and you haven’t started migrating, you’re already too late.
+Most expert assessments place Q-Day somewhere between 2030 and 2045, with significant uncertainty.<sup>26</sup> But the exact date is less important than a simple fact: **cryptographic migration takes 10–15 years for large organizations.** If Q-Day arrives in 2035 and you haven’t started migrating, you’re already too late.
 
 > **⚠  MANDATE ALERT**
-> Industry Q-Day estimates have shortened materially since this book was first drafted. On March 25, 2026, Google’s VP of Security Engineering announced an internal target to migrate all Google infrastructure to PQC by **2029**, citing faster-than-expected progress on quantum hardware, error correction, and factoring resource estimates. Cloudflare followed within days with a matching 2029 timeline. Scott Aaronson—historically the field’s most prominent skeptic of overheated quantum claims—wrote in May 2026 that quantum-hardware and error-correction researchers he trusts now believe a fault-tolerant machine capable of breaking deployed cryptography “ought to be possible by around 2029.” None of these are formal Q-Day announcements, but when the most cautious voices and the largest internet-scale infrastructure providers converge on a single year, the planning assumption shifts. Don’t anchor your migration on 2035.28
+> Industry Q-Day estimates have shortened materially since this book was first drafted. On March 25, 2026, Google’s VP of Security Engineering announced an internal target to migrate all Google infrastructure to PQC by **2029**, citing faster-than-expected progress on quantum hardware, error correction, and factoring resource estimates. Cloudflare followed within days with a matching 2029 timeline. Scott Aaronson—historically the field’s most prominent skeptic of overheated quantum claims—wrote in May 2026 that quantum-hardware and error-correction researchers he trusts now believe a fault-tolerant machine capable of breaking deployed cryptography “ought to be possible by around 2029.” None of these are formal Q-Day announcements, but when the most cautious voices and the largest internet-scale infrastructure providers converge on a single year, the planning assumption shifts. Don’t anchor your migration on 2035.<sup>28</sup>
 
 ## Harvest Now, Decrypt Later: A Present-Tense Threat
 
 There’s a reason this chapter is called “The Quantum Threat” and not “The Quantum Future.” The threat is already here.
 
-The strategy is called **Harvest Now, Decrypt Later (HNDL)**, and it works like this: an adversary captures encrypted data today—intercepting TLS sessions, VPN tunnels, classified communications, financial transactions, healthcare records—and stores it. The adversary can’t read the data now. But when a CRQC becomes available, they can retroactively decrypt everything they’ve collected.27
+The strategy is called **Harvest Now, Decrypt Later (HNDL)**, and it works like this: an adversary captures encrypted data today—intercepting TLS sessions, VPN tunnels, classified communications, financial transactions, healthcare records—and stores it. The adversary can’t read the data now. But when a CRQC becomes available, they can retroactively decrypt everything they’ve collected.<sup>27</sup>
 
 For data with a long sensitivity lifetime—classified intelligence, trade secrets, medical records, attorney-client communications, strategic military plans—HNDL means the clock started ticking the moment the data was transmitted. If your organization sent encrypted data over the wire in 2020 and a CRQC appears in 2035, that 2020 data is compromised.
 

@@ -4,7 +4,7 @@ displayTitle: "Chapter 2: What’s Vulnerable and What’s Not"
 section: "Chapters"
 chapter: 2
 order: 5
-words: 2630
+words: 2652
 readingMinutes: 12
 excerpt: "Chapter 1 explained why quantum computing threatens our cryptographic infrastructure. This chapter answers the next logical question: what, specifically, is at risk?"
 ---
@@ -48,7 +48,7 @@ The following table is your reference sheet. Tear this page out and tape it to y
 | **SHA-256 / SHA-384 / SHA-512** | Hash functions | **Grover’s — Adequate** | 128-bit+ effective — safe | No change needed (avoid SHA-1) |
 | **HMAC-SHA-256+** | Message authentication | **No known quantum advantage** | Safe | No change needed |
 
-Source: Classification based on NIST IR 8547 (Transition to Post-Quantum Cryptography) and NIST SP 800-131A Rev. 3.1
+Source: Classification based on NIST IR 8547 (Transition to Post-Quantum Cryptography) and NIST SP 800-131A Rev. 3.<sup>1</sup>
 
 ## Protocol by Protocol: Where Quantum Hits Your Network
 
@@ -58,9 +58,9 @@ Algorithms don’t exist in isolation—they’re embedded inside protocols. The
 
 TLS is the most widely deployed security protocol on the planet. It protects web traffic (HTTPS), API calls, email transmission (STARTTLS), and countless other connections. In Chapter 1, we walked through the TLS 1.3 handshake in two acts. Here’s where quantum hits each act:
 
-**Handshake (key exchange):** TLS 1.3 uses ECDHE (X25519 or P-256) for key agreement. **Broken by Shor’s.** Must be replaced with ML-KEM or a hybrid (ML-KEM + X25519).2
+**Handshake (key exchange):** TLS 1.3 uses ECDHE (X25519 or P-256) for key agreement. **Broken by Shor’s.** Must be replaced with ML-KEM or a hybrid (ML-KEM + X25519).<sup>2</sup>
 
-**Handshake (authentication):** Server certificates typically use ECDSA or RSA signatures. **Broken by Shor’s.** Must be replaced with ML-DSA or SLH-DSA signatures.3
+**Handshake (authentication):** Server certificates typically use ECDSA or RSA signatures. **Broken by Shor’s.** Must be replaced with ML-DSA or SLH-DSA signatures.<sup>3</sup>
 
 **Bulk encryption:** AES-128-GCM or AES-256-GCM. AES-256 is **safe.** AES-128 should be upgraded to AES-256 as a precaution.
 
@@ -73,9 +73,9 @@ TLS is the most widely deployed security protocol on the planet. It protects web
 
 IPsec protects site-to-site VPNs, remote access VPNs, and classified network tunnels (including many DoD and federal environments). The IKEv2 protocol handles key exchange and authentication before the IPsec tunnel is established.
 
-**IKE key exchange:** Uses DH or ECDH groups. **Broken by Shor’s.** Must be replaced with ML-KEM. The IETF is developing PQC profiles for IKEv2, and the NSA’s CNSA 2.0 specifies ML-KEM-1024 for IPsec.4
+**IKE key exchange:** Uses DH or ECDH groups. **Broken by Shor’s.** Must be replaced with ML-KEM. The IETF is developing PQC profiles for IKEv2, and the NSA’s CNSA 2.0 specifies ML-KEM-1024 for IPsec.<sup>4</sup>
 
-**IKE authentication:** Typically RSA or ECDSA certificate-based, or pre-shared keys (PSKs). Certificate-based auth is **broken by Shor’s.** PSK-based authentication is **quantum-safe** (symmetric). This is why the NSA has recommended post-quantum pre-shared keys (PPKs) as an interim measure.5
+**IKE authentication:** Typically RSA or ECDSA certificate-based, or pre-shared keys (PSKs). Certificate-based auth is **broken by Shor’s.** PSK-based authentication is **quantum-safe** (symmetric). This is why the NSA has recommended post-quantum pre-shared keys (PPKs) as an interim measure.<sup>5</sup>
 
 **ESP encryption:** AES-256-GCM or AES-256-CBC. **Safe.**
 
@@ -83,7 +83,7 @@ IPsec protects site-to-site VPNs, remote access VPNs, and classified network tun
 
 SSH is the primary remote administration protocol for Linux/Unix systems, network devices, and cloud infrastructure. It’s also widely used for secure file transfer (SFTP/SCP) and Git operations.
 
-**Key exchange:** Typically ECDH (curve25519-sha256) or DH. **Broken by Shor’s.** OpenSSH 9.0+ introduced a hybrid post-quantum key exchange (sntrup761x25519-sha512) using a lattice-based algorithm. OpenSSH 10.0 defaults to mlkem768x25519-sha256.6
+**Key exchange:** Typically ECDH (curve25519-sha256) or DH. **Broken by Shor’s.** OpenSSH 9.0+ introduced a hybrid post-quantum key exchange (sntrup761x25519-sha512) using a lattice-based algorithm. OpenSSH 10.0 defaults to mlkem768x25519-sha256.<sup>6</sup>
 
 **Authentication:** RSA, ECDSA, or Ed25519 keys for user/host auth. **Broken by Shor’s.** Must be replaced with PQC signature algorithms. Note: password-based auth (derived via symmetric hashing) is not directly affected by Shor’s but has its own well-known security limitations.
 
@@ -93,11 +93,11 @@ SSH is the primary remote administration protocol for Linux/Unix systems, networ
 
 Public Key Infrastructure is the trust fabric of the internet. Every TLS certificate, code signing certificate, email certificate, and device identity certificate relies on public-key cryptography for its digital signature.
 
-This is arguably the most complex PQC migration challenge. Certificates are everywhere—embedded in web servers, load balancers, API gateways, IoT devices, mobile apps, firmware, smart cards, and hardware security modules (HSMs). They’re issued by Certificate Authorities (CAs) in hierarchical trust chains, and changing the signature algorithm means updating every link in that chain.7
+This is arguably the most complex PQC migration challenge. Certificates are everywhere—embedded in web servers, load balancers, API gateways, IoT devices, mobile apps, firmware, smart cards, and hardware security modules (HSMs). They’re issued by Certificate Authorities (CAs) in hierarchical trust chains, and changing the signature algorithm means updating every link in that chain.<sup>7</sup>
 
 **Root and intermediate CA signatures:** RSA or ECDSA. **Broken by Shor’s.** Every certificate in the chain must eventually use PQC signatures.
 
-**End-entity certificates:** RSA or ECDSA public keys and signatures. **Broken by Shor’s.** Certificate sizes will increase significantly—ML-DSA-87 signatures are 4,627 bytes vs. 64 bytes for ECDSA P-256.8
+**End-entity certificates:** RSA or ECDSA public keys and signatures. **Broken by Shor’s.** Certificate sizes will increase significantly—ML-DSA-87 signatures are 4,627 bytes vs. 64 bytes for ECDSA P-256.<sup>8</sup>
 
 > **⚠  MANDATE ALERT**
 > Certificate size explosion is a real operational concern. An ML-DSA-87 public key is 2,592 bytes; an ML-DSA-87 signature is 4,627 bytes. Compare that to ECDSA P-256: 64-byte public key, 64-byte signature. A TLS certificate chain with three PQC certificates could exceed 20 KB—potentially fragmenting the TLS handshake across multiple TCP packets and causing performance issues on constrained networks. Chapter 8 covers this in detail.
@@ -106,7 +106,7 @@ This is arguably the most complex PQC migration challenge. Certificates are ever
 
 Every signed software package, firmware update, OS patch, and container image relies on digital signatures to prove authenticity and integrity. These signatures almost universally use RSA or ECDSA.
 
-**Code signing signatures:** RSA or ECDSA. **Broken by Shor’s.** An attacker with a CRQC could forge signatures on malicious software, making it appear to come from a trusted vendor. This is why the NSA’s CNSA 2.0 timeline prioritizes software and firmware signing first—with exclusive use of PQC signatures required by 2030.9
+**Code signing signatures:** RSA or ECDSA. **Broken by Shor’s.** An attacker with a CRQC could forge signatures on malicious software, making it appear to come from a trusted vendor. This is why the NSA’s CNSA 2.0 timeline prioritizes software and firmware signing first—with exclusive use of PQC signatures required by 2030.<sup>9</sup>
 
 This has particular implications for long-lived systems: embedded devices, SCADA controllers, medical equipment, and military platforms that may run the same firmware for a decade or more. A signature that was secure when applied in 2024 may be forgeable by 2035. The integrity of every software update these systems have ever received becomes retroactively questionable.
 
@@ -133,11 +133,11 @@ The critical insight: **your migration priority should be driven by data sensiti
 
 ## The Official Clock: NIST’s Deprecation Timeline
 
-In late 2024, NIST published IR 8547, “Transition to Post-Quantum Cryptography,” which for the first time set explicit deprecation dates for quantum-vulnerable algorithms.1 This document transformed PQC migration from a best-practice recommendation into a compliance requirement with hard deadlines:
+In late 2024, NIST published IR 8547, “Transition to Post-Quantum Cryptography,” which for the first time set explicit deprecation dates for quantum-vulnerable algorithms.<sup>1</sup> This document transformed PQC migration from a best-practice recommendation into a compliance requirement with hard deadlines:
 
 - **By 2030:** RSA, ECDSA, EdDSA, DH, and ECDH will be **deprecated** at the 112-bit security level. Organizations should have migration plans in place and active.
 
-- **By 2035:** All quantum-vulnerable public-key algorithms will be **disallowed**—completely removed from NIST standards. No exceptions.10
+- **By 2035:** All quantum-vulnerable public-key algorithms will be **disallowed**—completely removed from NIST standards. No exceptions.<sup>10</sup>
 
 For context, “deprecated” means the algorithm is still technically permitted but actively discouraged—new systems should not use it. “Disallowed” means NIST-compliant systems cannot use it at all. If your organization’s compliance framework references NIST standards (and nearly all federal and most private-sector frameworks do), 2035 is the hard stop.
 

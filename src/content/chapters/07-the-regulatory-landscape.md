@@ -4,7 +4,7 @@ displayTitle: "Chapter 4: The Regulatory Landscape"
 section: "Chapters"
 chapter: 4
 order: 7
-words: 4022
+words: 4052
 readingMinutes: 18
 excerpt: "If the first three chapters answered “why should we care?” and “what’s at risk?”, this chapter answers the question that gets CISOs and program managers out of their chairs: “Who says we have to do this, and by when?”"
 ---
@@ -25,13 +25,13 @@ Before we map the specific mandates, we need to establish a critical distinction
 | **OMB Memo** | Implementation guidance from the Office of Management and Budget. Binding on federal agencies. | Yes, by OMB. But typically remains until replaced. | M-23-02 (crypto inventories) |
 | **Agency Guidance / Standard** | Recommendations and standards from NIST, NSA, CISA. Compliance often required by federal procurement or accreditation frameworks. | Standards can be revised but rarely fully withdrawn. | NIST IR 8547, CNSA 2.0, CISA PQC product list |
 
-This hierarchy matters enormously. The Quantum Computing Cybersecurity Preparedness Act is **federal law**—no executive order can override it. NSM-10 has not been rescinded. NIST standards are embedded in federal procurement requirements across the entire government. Understanding which mandates are durable versus which are politically contingent is essential for building a migration plan that survives the next election cycle.1
+This hierarchy matters enormously. The Quantum Computing Cybersecurity Preparedness Act is **federal law**—no executive order can override it. NSM-10 has not been rescinded. NIST standards are embedded in federal procurement requirements across the entire government. Understanding which mandates are durable versus which are politically contingent is essential for building a migration plan that survives the next election cycle.<sup>1</sup>
 
 ## United States: The Federal PQC Framework
 
 ### The Quantum Computing Cybersecurity Preparedness Act (Federal Law)
 
-Signed into law on December 21, 2022, this is the **bedrock of US PQC policy**—the one mandate that cannot be rescinded by any president.2
+Signed into law on December 21, 2022, this is the **bedrock of US PQC policy**—the one mandate that cannot be rescinded by any president.<sup>2</sup>
 
 The Act requires:
 
@@ -43,11 +43,11 @@ The Act requires:
 
 - Annual progress reports to Congress
 
-Whether OMB actually met the August 2025 statutory deadline for issuing migration guidance remains unclear in the public record as of early 2026. But the legal obligation on agencies to inventory and plan is active regardless.3
+Whether OMB actually met the August 2025 statutory deadline for issuing migration guidance remains unclear in the public record as of early 2026. But the legal obligation on agencies to inventory and plan is active regardless.<sup>3</sup>
 
 ### NSM-10: The Policy Foundation
 
-National Security Memorandum 10, “Promoting United States Leadership in Quantum Computing While Mitigating Risks to Vulnerable Cryptographic Systems,” was signed by President Biden on May 4, 2022.4 NSM-10 established the **2035 end-state target** for completing the transition to quantum-resistant cryptography across federal systems.
+National Security Memorandum 10, “Promoting United States Leadership in Quantum Computing While Mitigating Risks to Vulnerable Cryptographic Systems,” was signed by President Biden on May 4, 2022.<sup>4</sup> NSM-10 established the **2035 end-state target** for completing the transition to quantum-resistant cryptography across federal systems.
 
 Key requirements include:
 
@@ -64,7 +64,7 @@ Key requirements include:
 
 ### Executive Order 14306 (June 2025): What Changed
 
-President Trump’s EO 14306, “Sustaining Select Efforts to Strengthen the Nation’s Cybersecurity,” modified the Biden-era PQC framework in important ways.5 Understanding what was kept, what was removed, and what was added is critical for compliance planning:
+President Trump’s EO 14306, “Sustaining Select Efforts to Strengthen the Nation’s Cybersecurity,” modified the Biden-era PQC framework in important ways.<sup>5</sup> Understanding what was kept, what was removed, and what was added is critical for compliance planning:
 
 **What was preserved:**
 
@@ -86,7 +86,7 @@ The practical effect: EO 14306 loosened the federal urgency of PQC adoption whil
 
 ## CNSA 2.0: The NSA’s Timeline for National Security Systems
 
-For organizations operating in or selling to National Security Systems (NSS) environments—DoD, intelligence community, classified networks—the NSA’s Commercial National Security Algorithm Suite 2.0 is the binding standard.6 CNSA 2.0 is more aggressive than the general federal timeline:
+For organizations operating in or selling to National Security Systems (NSS) environments—DoD, intelligence community, classified networks—the NSA’s Commercial National Security Algorithm Suite 2.0 is the binding standard.<sup>6</sup> CNSA 2.0 is more aggressive than the general federal timeline:
 
 | **System Category** | **Support & Prefer CNSA 2.0 By** | **Exclusively Use CNSA 2.0 By** | **Notes** |
 | --- | --- | --- | --- |
@@ -98,11 +98,11 @@ For organizations operating in or selling to National Security Systems (NSS) env
 | **Niche / constrained devices** | 2030 | 2033 | IoT, PKI systems |
 | **Legacy / custom applications** | — | 2033 (update or replace) | Hard deadline |
 
-CNSA 2.0 specifies exact algorithms: **ML-KEM-1024** for key establishment and **ML-DSA-87** for general-purpose digital signatures (Level 5 security). For software and firmware signing specifically, **LMS and XMSS** (stateful hash-based signatures from SP 800-208) are approved for immediate use, with ML-DSA approved once FIPS-validated implementations become available.7
+CNSA 2.0 specifies exact algorithms: **ML-KEM-1024** for key establishment and **ML-DSA-87** for general-purpose digital signatures (Level 5 security). For software and firmware signing specifically, **LMS and XMSS** (stateful hash-based signatures from SP 800-208) are approved for immediate use, with ML-DSA approved once FIPS-validated implementations become available.<sup>7</sup>
 
 ## DoW CIO Direction: The November 2025 Memorandum
 
-CNSA 2.0 specifies the algorithms. NSM-10 sets the destination. But for organizations that operate or deliver into Department of War networks, a third document now sits on top of both: the DoW CIO memorandum *Preparing for Migration to Post Quantum Cryptography*, issued November 18, 2025 by Katherine Arrington (Performing the Duties of the CIO).13
+CNSA 2.0 specifies the algorithms. NSM-10 sets the destination. But for organizations that operate or deliver into Department of War networks, a third document now sits on top of both: the DoW CIO memorandum *Preparing for Migration to Post Quantum Cryptography*, issued November 18, 2025 by Katherine Arrington (Performing the Duties of the CIO).<sup>13</sup>
 
 The memo creates a new, DoW-specific approval gate. Every DoW Component—Services, Combatant Commands, Defense Agencies, and Field Activities—must now coordinate cryptographic migration through a centralized **DoW CIO PQC Directorate**, led by Dr. Britta Hale. Any “engagement” with PQC technology—defined broadly as testing, evaluating, piloting, researching, investing in, prototyping, demonstrating, implementing, integrating, or any planned or actual acquisition—requires two new authorizations issued by the Directorate:
 
@@ -124,16 +124,16 @@ The memo also issues three immediate prohibitions and two phase-out deadlines th
 
 - **By December 31, 2031,** the same phase-out applies to solutions currently registered with NSA CSfC. Pre-2010 symmetric key distribution use cases are explicitly grandfathered as legacy.
 
-A DoW PQC Strategy is referenced repeatedly throughout the memo and is in preparation. It will be the master execution document. As of this writing, it has not been published; new requirements, approval processes, and updates are being maintained centrally at https://cybersecurityks.osd.mil/DoDcs/pqc. Component-level PQC migration leads were due to the Directorate within twenty days of the memo’s issuance, with annual updates each September 30.14
+A DoW PQC Strategy is referenced repeatedly throughout the memo and is in preparation. It will be the master execution document. As of this writing, it has not been published; new requirements, approval processes, and updates are being maintained centrally at https://cybersecurityks.osd.mil/DoDcs/pqc. Component-level PQC migration leads were due to the Directorate within twenty days of the memo’s issuance, with annual updates each September 30.<sup>14</sup>
 
 > **⚠  MANDATE ALERT**
 > The DoW CIO PQC Directorate’s intake and deployment approvals are an **additional** gate on top of FIPS 140-3, NIAP Common Criteria, and NSA CSfC—not a replacement. A DoW Component cannot lawfully acquire, pilot, deploy, or use any PQC-enabling or PQC-related technology without explicit Directorate approval, even when the underlying product holds every existing federal certification. As of this writing, the operational machinery for this approval (forms, criteria, SLAs, vendor-facing process documentation) is still being stood up; expect this to evolve as the DoW PQC Strategy is published and the Directorate matures.
 
-The practical implication for vendors and integrators: a product that has cleared FIPS 140-3, NIAP CC, and CSfC is no longer sufficient on its own to be acquired or deployed by a DoW Component for PQC purposes. The Directorate’s intake and deployment approvals are now decision points in the procurement path, and the artifacts the Directorate will demand—test plans, test results, acquisition artifacts, risk mitigations—should be assembled in parallel with traditional certification work, not after.15
+The practical implication for vendors and integrators: a product that has cleared FIPS 140-3, NIAP CC, and CSfC is no longer sufficient on its own to be acquired or deployed by a DoW Component for PQC purposes. The Directorate’s intake and deployment approvals are now decision points in the procurement path, and the artifacts the Directorate will demand—test plans, test results, acquisition artifacts, risk mitigations—should be assembled in parallel with traditional certification work, not after.<sup>15</sup>
 
 ## NIST IR 8547: The Deprecation Timeline
 
-Published in November 2024 as an initial public draft, NIST IR 8547 (“Transition to Post-Quantum Cryptography Standards”) established for the first time a formal deprecation schedule for quantum-vulnerable algorithms.8
+Published in November 2024 as an initial public draft, NIST IR 8547 (“Transition to Post-Quantum Cryptography Standards”) established for the first time a formal deprecation schedule for quantum-vulnerable algorithms.<sup>8</sup>
 
 - **Deprecated after 2030:** All quantum-vulnerable algorithms at the 112-bit security level (RSA-2048, ECC P-256, DH-2048, etc.). “Deprecated” means the algorithm is still permitted but actively discouraged; new systems should not use it.
 
@@ -145,7 +145,7 @@ NIST IR 8547 also supports hybrid cryptographic solutions during the transition�
 
 ### United Kingdom — NCSC Three-Phase Roadmap
 
-The UK’s National Cyber Security Centre (part of GCHQ) published its PQC migration timeline in March 2025—the first major regulatory jurisdiction to endorse NIST’s standardized algorithms and set concrete deadlines.9
+The UK’s National Cyber Security Centre (part of GCHQ) published its PQC migration timeline in March 2025—the first major regulatory jurisdiction to endorse NIST’s standardized algorithms and set concrete deadlines.<sup>9</sup>
 
 - **By 2028:** Complete discovery—identify all cryptographic services needing upgrades, build a migration plan, create a cryptographic inventory.
 
@@ -157,7 +157,7 @@ The NCSC prioritizes critical national infrastructure: NHS healthcare systems, C
 
 ### European Union — NIS2 PQC Roadmap
 
-The EU’s approach is structured through the NIS Cooperation Group’s coordinated implementation roadmap, published in early 2025.10
+The EU’s approach is structured through the NIS Cooperation Group’s coordinated implementation roadmap, published in early 2025.<sup>10</sup>
 
 - **By end of 2026:** Member states initiate national PQC transition strategies.
 
@@ -169,7 +169,7 @@ In January 2026, the European Commission published a proposed directive amending
 
 ### Financial Sector — G7 Roadmap
 
-The G7 Cyber Expert Group released a financial sector PQC roadmap on January 13, 2026, co-chaired by the US Treasury and Bank of England.11 It targets critical financial systems for migration by 2030–2032 and full transition by 2035. FINRA, FS-ISAC, and national financial regulators are expected to align sector-specific guidance with this framework.
+The G7 Cyber Expert Group released a financial sector PQC roadmap on January 13, 2026, co-chaired by the US Treasury and Bank of England.<sup>11</sup> It targets critical financial systems for migration by 2030–2032 and full transition by 2035. FINRA, FS-ISAC, and national financial regulators are expected to align sector-specific guidance with this framework.
 
 ## Sector-Specific Considerations
 
@@ -187,7 +187,7 @@ The PQC mandates don’t apply uniformly. Your migration urgency depends on your
 
 ### Sector Acquisition Lifecycles: When PQC Requirements Bite
 
-The mandates described above ride on top of existing acquisition frameworks. Understanding when a regulatory date (“CNSA 2.0 for all new NSS acquisitions by January 1, 2027”) intersects a program’s actual procurement lifecycle matters because the framework, not the calendar, governs when PQC requirements get baked into contracts, solicitations, and systems engineering reviews. Three frameworks dominate federal sector acquisition.12
+The mandates described above ride on top of existing acquisition frameworks. Understanding when a regulatory date (“CNSA 2.0 for all new NSS acquisitions by January 1, 2027”) intersects a program’s actual procurement lifecycle matters because the framework, not the calendar, governs when PQC requirements get baked into contracts, solicitations, and systems engineering reviews. Three frameworks dominate federal sector acquisition.<sup>12</sup>
 
 **FAA Acquisition Management System (AMS).** Codified at fast.faa.gov, the AMS governs FAA capital investments through six lifecycle phases (Service Analysis & Strategic Planning, Concept & Requirements Definition, Initial Investment Analysis, Final Investment Analysis, Solution Implementation, In-Service Management) with decision points overseen by the Joint Resources Council. PQC requirements typically enter at Concept & Requirements Definition through the Information Systems Security Engineering (ISSE) process and are finalized in the Final Investment Analysis phase as part of the Solicitation Information Request, Statement of Work, and Contract Data Requirements List.
 

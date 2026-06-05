@@ -4,7 +4,7 @@ displayTitle: "Chapter 5: Know What You Have: Cryptographic Discovery"
 section: "Chapters"
 chapter: 5
 order: 8
-words: 2791
+words: 2804
 readingMinutes: 13
 excerpt: "Every PQC migration plan begins with the same question: “Where is cryptography in my environment?” The answer, invariably, is “more places than you think.”"
 ---
@@ -13,7 +13,7 @@ Every PQC migration plan begins with the same question: “Where is cryptography
 
 Cryptography is embedded in every layer of modern IT infrastructure—TLS certificates on web servers and load balancers, SSH keys on Linux hosts, IPsec tunnels between sites, code signing certificates in CI/CD pipelines, S/MIME certificates in email clients, API tokens, database encryption, disk encryption, HSMs, smart cards, and dozens of applications that implement their own cryptographic functions. Most organizations have no comprehensive inventory of these assets. That’s the problem this chapter solves.
 
-Without a cryptographic inventory, you’re migrating blind. You can’t prioritize what you can’t see, you can’t track progress against what you haven’t catalogued, and you can’t prove compliance with mandates that require you to “submit cryptographic inventories.”1
+Without a cryptographic inventory, you’re migrating blind. You can’t prioritize what you can’t see, you can’t track progress against what you haven’t catalogued, and you can’t prove compliance with mandates that require you to “submit cryptographic inventories.”<sup>1</sup>
 
 ## Why Discovery Is Harder Than It Sounds
 
@@ -34,7 +34,7 @@ If you’ve ever tried to audit certificates across an enterprise network, you k
 
 ## Three Approaches to Cryptographic Discovery
 
-NIST SP 1800-38B (“Quantum Readiness: Cryptographic Discovery”) identifies a multi-faceted approach to discovery.2 No single method catches everything. A comprehensive inventory requires combining at least three techniques:
+NIST SP 1800-38B (“Quantum Readiness: Cryptographic Discovery”) identifies a multi-faceted approach to discovery.<sup>2</sup> No single method catches everything. A comprehensive inventory requires combining at least three techniques:
 
 | **Discovery Type** | **What It Finds** | **Limitations** |
 | --- | --- | --- |
@@ -42,7 +42,7 @@ NIST SP 1800-38B (“Quantum Readiness: Cryptographic Discovery”) identifies a
 | **Endpoint Scanning** | Installed certificates, key stores, cryptographic libraries (OpenSSL, BoringSSL, NSS, Java KeyStore), SSH keys, disk encryption configurations. | Requires agent or authenticated access to each endpoint. Incomplete for unmanaged devices, IoT, and shadow IT. |
 | **Application Testing** | Crypto functions embedded in application code, API calls, hardcoded keys, custom TLS configurations, and third-party library dependencies. | Requires SAST/DAST integration or manual code review. Doesn’t scale easily across large application portfolios. |
 
-The key insight from NIST’s work: **most of the data items required for PQC compliance (algorithm in use, key size, protocol version, certificate authority, expiration date) cannot yet be fully collected with automated tools alone.** NIST SP 1800-38B found that only three of the nine data items required by OMB M-23-02 could be collected automatically. The rest require manual effort or enrichment.3
+The key insight from NIST’s work: **most of the data items required for PQC compliance (algorithm in use, key size, protocol version, certificate authority, expiration date) cannot yet be fully collected with automated tools alone.** NIST SP 1800-38B found that only three of the nine data items required by OMB M-23-02 could be collected automatically. The rest require manual effort or enrichment.<sup>3</sup>
 
 ## What to Catalog: The Cryptographic Bill of Materials
 
@@ -95,7 +95,7 @@ Transition from project-based discovery to **continuous inventory management.** 
 
 ## Inventory at Source: The Long-Term Strategy
 
-Discovery tools are essential for the initial inventory, but they’re not a sustainable long-term strategy on their own. The more mature approach is to **address inventory at source**—ensuring that new cryptographic assets are added to the inventory the moment they’re implemented, rather than waiting for a periodic scan to find them.4
+Discovery tools are essential for the initial inventory, but they’re not a sustainable long-term strategy on their own. The more mature approach is to **address inventory at source**—ensuring that new cryptographic assets are added to the inventory the moment they’re implemented, rather than waiting for a periodic scan to find them.<sup>4</sup>
 
 Practical ways to implement inventory at source:
 
@@ -148,7 +148,7 @@ The PQC migration is an opportunity to clean house. Frame it that way for your l
 
 ## Running a Discovery Pilot: Proof of Value
 
-Before committing to a full enterprise discovery program, run a well-scoped pilot. This serves two purposes: it validates your toolset and methodology, and it produces concrete findings that justify the budget for the full inventory.5
+Before committing to a full enterprise discovery program, run a well-scoped pilot. This serves two purposes: it validates your toolset and methodology, and it produces concrete findings that justify the budget for the full inventory.<sup>5</sup>
 
 ### Pilot Scope Recommendations
 
@@ -160,7 +160,7 @@ Before committing to a full enterprise discovery program, run a well-scoped pilo
 
 - **Document everything you find** that wasn’t expected—this is your “cryptographic debt” evidence, and it’s your most compelling argument for broader investment
 
-- **Expect surprises.** NIST’s NCCoE work found that automated discovery tools routinely reveal hundreds or thousands of cryptographic assets that organizations didn’t know existed6
+- **Expect surprises.** NIST’s NCCoE work found that automated discovery tools routinely reveal hundreds or thousands of cryptographic assets that organizations didn’t know existed<sup>6</sup>
 
 The pilot report becomes your proof of value—evidence that the quantum-vulnerable surface area is real, quantifiable, and larger than leadership assumed. That report is how you get the resources for Phases 1–4.
 

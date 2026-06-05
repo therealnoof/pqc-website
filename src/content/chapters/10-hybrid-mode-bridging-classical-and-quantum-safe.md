@@ -4,8 +4,8 @@ displayTitle: "Chapter 7: Hybrid Mode: Bridging Classical and Quantum-Safe"
 section: "Chapters"
 chapter: 7
 order: 10
-words: 2942
-readingMinutes: 13
+words: 2972
+readingMinutes: 14
 excerpt: "In an ideal world, you’d flip a switch and every system in your environment would instantly use post-quantum algorithms. In the real world, migration happens gradually—and during that transition, classical and post-quant"
 ---
 
@@ -17,18 +17,18 @@ This chapter explains what hybrid mode is, why it matters, how it works across T
 
 The post-quantum algorithms in FIPS 203, 204, and 205 have been rigorously evaluated through an eight-year international competition. But they are younger than the classical algorithms they replace. RSA has been scrutinized for over 40 years. ML-KEM has been scrutinized for roughly 8. The cryptographic community has high confidence in the new algorithms—but not 40 years of confidence.
 
-Hybrid mode provides a hedge: **combine a classical algorithm with a PQC algorithm so that the system remains secure as long as at least one of them holds.** If ML-KEM is someday broken by a novel attack, the classical X25519 component still protects the session. If a quantum computer arrives and breaks X25519, the ML-KEM component protects it. You need to break both to compromise the connection.1
+Hybrid mode provides a hedge: **combine a classical algorithm with a PQC algorithm so that the system remains secure as long as at least one of them holds.** If ML-KEM is someday broken by a novel attack, the classical X25519 component still protects the session. If a quantum computer arrives and breaks X25519, the ML-KEM component protects it. You need to break both to compromise the connection.<sup>1</sup>
 
 > **PLAIN-LANGUAGE SIDEBAR**
 > Think of hybrid mode like a deadbolt paired with a smart lock on your front door. If someone picks the deadbolt, the smart lock still holds. If someone hacks the smart lock, the deadbolt still holds. An attacker has to defeat both to get in. That’s the security guarantee of hybrid cryptography.
 
-NIST IR 8547 explicitly supports hybrid implementations during the transition period.2 ENISA recommends hybrid schemes for EU organizations. The UK NCSC endorses hybrid key exchange. And the real-world deployment numbers speak for themselves: as of September 2025, approximately 43% of human-generated HTTPS connections to Cloudflare used hybrid PQC key exchange.3
+NIST IR 8547 explicitly supports hybrid implementations during the transition period.<sup>2</sup> ENISA recommends hybrid schemes for EU organizations. The UK NCSC endorses hybrid key exchange. And the real-world deployment numbers speak for themselves: as of September 2025, approximately 43% of human-generated HTTPS connections to Cloudflare used hybrid PQC key exchange.<sup>3</sup>
 
 ## Hybrid TLS: Already in Your Browser
 
 If you’re reading this chapter in Chrome, Edge, Brave, or another Chromium-based browser, there’s a good chance your current connection is already using hybrid PQC key exchange—and you didn’t do a thing to enable it.
 
-The dominant hybrid TLS key exchange is **X25519MLKEM768**, which combines the classical X25519 elliptic curve key agreement with ML-KEM-768 post-quantum key encapsulation. The IETF has formalized this in draft-ietf-tls-ecdhe-mlkem, specifying three hybrid groups:4
+The dominant hybrid TLS key exchange is **X25519MLKEM768**, which combines the classical X25519 elliptic curve key agreement with ML-KEM-768 post-quantum key encapsulation. The IETF has formalized this in draft-ietf-tls-ecdhe-mlkem, specifying three hybrid groups:<sup>4</sup>
 
 | **Hybrid Group** | **Components** | **Client Key Share Size** | **Security Level** |
 | --- | --- | --- | --- |
@@ -37,13 +37,13 @@ The dominant hybrid TLS key exchange is **X25519MLKEM768**, which combines the c
 | **SecP384r1MLKEM1024** | P-384 + ML-KEM-1024 | 1,665 bytes | Level 5 (AES-256) |
 | X25519 alone (classical) | X25519 only | 32 bytes | — (broken by Shor’s) |
 
-The overhead is modest: X25519MLKEM768 adds approximately 1.1 KB to the client’s key share compared to classical X25519. In practice, this adds only 1–2 milliseconds to the TLS handshake—imperceptible to users. Multiple studies and production deployments have confirmed that the performance impact of hybrid key exchange is negligible on modern networks.5
+The overhead is modest: X25519MLKEM768 adds approximately 1.1 KB to the client’s key share compared to classical X25519. In practice, this adds only 1–2 milliseconds to the TLS handshake—imperceptible to users. Multiple studies and production deployments have confirmed that the performance impact of hybrid key exchange is negligible on modern networks.<sup>5</sup>
 
 ### Who’s Already Deployed
 
 - **Google Chrome:** Enabled X25519MLKEM768 by default for TLS 1.3 connections. Previously used the pre-standard X25519Kyber768Draft00, now migrating to the final standard.
 
-- **Cloudflare:** 43% of human HTTPS traffic using hybrid PQC as of September 2025. Scanning origins to enable hybrid edge-to-origin connections automatically.3
+- **Cloudflare:** 43% of human HTTPS traffic using hybrid PQC as of September 2025. Scanning origins to enable hybrid edge-to-origin connections automatically.<sup>3</sup>
 
 - **AWS:** Hybrid TLS support in s2n-tls and AWS services. Contributors to the IETF hybrid TLS draft.
 
@@ -57,7 +57,7 @@ The point: hybrid PQC isn’t experimental. It’s production-grade infrastructu
 
 For most enterprises, the fastest path to PQC progress is not upgrading every application, library, and origin server simultaneously. It’s upgrading the edge—the TLS termination point where internet traffic enters your environment.
 
-The **bridge architecture** works like this: your TLS termination device (load balancer, reverse proxy, ADC) negotiates hybrid TLS 1.3 with modern clients on the front side while maintaining classical TLS 1.2 or TLS 1.3 connections to backend origins. The internet-exposed leg is PQC-hardened against HNDL; the internal leg remains classical until origins are upgraded. In federal and enterprise architecture vocabulary, this pattern is also called a **cryptographic proxy layer**—a dedicated enforcement point that performs cryptographic upgrade on behalf of downstream systems that aren’t yet PQC-capable. Both terms describe the same architecture; “bridge” emphasizes the temporal aspect (carrying systems across the migration), while “cryptographic proxy layer” emphasizes the structural aspect (a distinct layer in the trust architecture).6
+The **bridge architecture** works like this: your TLS termination device (load balancer, reverse proxy, ADC) negotiates hybrid TLS 1.3 with modern clients on the front side while maintaining classical TLS 1.2 or TLS 1.3 connections to backend origins. The internet-exposed leg is PQC-hardened against HNDL; the internal leg remains classical until origins are upgraded. In federal and enterprise architecture vocabulary, this pattern is also called a **cryptographic proxy layer**—a dedicated enforcement point that performs cryptographic upgrade on behalf of downstream systems that aren’t yet PQC-capable. Both terms describe the same architecture; “bridge” emphasizes the temporal aspect (carrying systems across the migration), while “cryptographic proxy layer” emphasizes the structural aspect (a distinct layer in the trust architecture).<sup>6</sup>
 
 ![figure](/book-media/img-09.png)
 
@@ -79,9 +79,9 @@ The **bridge architecture** works like this: your TLS termination device (load b
 
 IPsec environments—particularly in DoD and federal networks—face a different hybrid challenge. Full PQC integration into IKEv2 is still maturing through IETF drafts, and many VPN devices don’t yet support ML-KEM in their key exchange.
 
-The interim solution is **Post-Quantum Pre-Shared Keys (PPKs)**, specified in RFC 8784. PPKs add a quantum-resistant pre-shared secret to the IKEv2 key derivation process—effectively layering a symmetric (quantum-safe) secret on top of the existing classical key exchange. Even if an adversary captures the IKE handshake and later breaks the DH/ECDH component with a quantum computer, the PPK ensures the derived session keys are still protected.7
+The interim solution is **Post-Quantum Pre-Shared Keys (PPKs)**, specified in RFC 8784. PPKs add a quantum-resistant pre-shared secret to the IKEv2 key derivation process—effectively layering a symmetric (quantum-safe) secret on top of the existing classical key exchange. Even if an adversary captures the IKE handshake and later breaks the DH/ECDH component with a quantum computer, the PPK ensures the derived session keys are still protected.<sup>7</sup>
 
-PPKs are a bridge, not a destination. The long-term solution is native ML-KEM integration in IKEv2, which the IETF and NSA are actively developing through the CNSA 2.0 IPsec profile.8 But for organizations that need quantum-resistant VPN tunnels today, PPKs are the fastest path available and are already supported by multiple VPN vendors.
+PPKs are a bridge, not a destination. The long-term solution is native ML-KEM integration in IKEv2, which the IETF and NSA are actively developing through the CNSA 2.0 IPsec profile.<sup>8</sup> But for organizations that need quantum-resistant VPN tunnels today, PPKs are the fastest path available and are already supported by multiple VPN vendors.
 
 ## Hybrid SSH: Already the Default
 
@@ -89,7 +89,7 @@ SSH may be the simplest hybrid success story. OpenSSH introduced hybrid post-qua
 
 - **OpenSSH 9.0 (April 2022):** Introduced sntrup761x25519-sha512 as the default key exchange. This combined a lattice-based algorithm (NTRU Prime) with X25519.
 
-- **OpenSSH 10.0 (April 2025):** Switched the default to mlkem768x25519-sha256, aligning with NIST’s ML-KEM standard.9
+- **OpenSSH 10.0 (April 2025):** Switched the default to mlkem768x25519-sha256, aligning with NIST’s ML-KEM standard.<sup>9</sup>
 
 If your servers are running a current OpenSSH version, your SSH key exchanges are already quantum-safe in hybrid mode. Authentication (host and user keys) still uses classical algorithms and will need migration to PQC signatures—but the key exchange leg is handled.
 
@@ -99,7 +99,7 @@ Hybrid key exchange is solved. Hybrid authentication—specifically, hybrid cert
 
 A **hybrid certificate** carries two public keys and two signatures: one classical (e.g., ECDSA) and one post-quantum (e.g., ML-DSA). Old clients that don’t understand PQC can validate the classical signature and ignore the PQC component. New clients can validate both. This ensures backward compatibility during the transition.
 
-The challenge: hybrid certificates are even larger than pure PQC certificates. A certificate with both an ECDSA and ML-DSA-65 signature carries the overhead of both—roughly 5+ KB for a single certificate, compared to ~1 KB for today’s ECDSA certificates. In a three-certificate chain, the overhead becomes significant and can trigger TLS handshake fragmentation. Chapter 8 covers this in detail.10
+The challenge: hybrid certificates are even larger than pure PQC certificates. A certificate with both an ECDSA and ML-DSA-65 signature carries the overhead of both—roughly 5+ KB for a single certificate, compared to ~1 KB for today’s ECDSA certificates. In a three-certificate chain, the overhead becomes significant and can trigger TLS handshake fragmentation. Chapter 8 covers this in detail.<sup>10</sup>
 
 For now, the industry approach is: deploy hybrid key exchange first (it’s the HNDL priority) and defer hybrid certificate migration until the size and interoperability challenges are resolved. Chrome, NIST, and the IETF are all aligned on this sequencing.
 
@@ -109,13 +109,13 @@ In customer conversations about PQC, someone will inevitably ask: “Why don’t
 
 It’s not. At least not for most organizations. Here’s why.
 
-**QKD requires dedicated physical infrastructure** —typically fiber optic links or satellite channels—between every pair of communicating parties. It cannot operate over the existing internet. It cannot protect a connection between a mobile device and a web server. It cannot secure email. It doesn’t scale to the millions of connections per second that modern applications demand.11
+**QKD requires dedicated physical infrastructure** —typically fiber optic links or satellite channels—between every pair of communicating parties. It cannot operate over the existing internet. It cannot protect a connection between a mobile device and a web server. It cannot secure email. It doesn’t scale to the millions of connections per second that modern applications demand.<sup>11</sup>
 
-**QKD provides key distribution only.** It does not authenticate. It cannot verify that the other party is who they claim to be. To use QKD securely, you still need classical or post-quantum digital signatures for authentication—which means you need PQC anyway.12
+**QKD provides key distribution only.** It does not authenticate. It cannot verify that the other party is who they claim to be. To use QKD securely, you still need classical or post-quantum digital signatures for authentication—which means you need PQC anyway.<sup>12</sup>
 
 **QKD has limited range.** Current fiber-based QKD systems work over distances of roughly 100–200 km before requiring “trusted nodes” (relay points that must be physically secured). Quantum repeaters that could extend the range are still in early research stages.
 
-**Major security agencies recommend against QKD for most use cases.** The NSA does not support QKD for protecting National Security Systems. The UK NCSC states: “PQC is the best mitigation to the threat to cryptography from quantum computers” and will not endorse QKD for government or military applications. ANSSI (France), BSI (Germany), and NLNCSA (Netherlands) have all taken similar positions.13 The November 18, 2025 DoW CIO memorandum *Preparing for Migration to Post Quantum Cryptography* made this position binding for the Department of War: DoW Components are prohibited from testing, evaluating, piloting, using, or procuring QKD—or any solution combining QKD with other cryptographic key establishment—for confidentiality, authenticity, integrity, key distribution, or randomness generation, absent specific exception from the DoW CIO PQC Directorate. See Chapter 4 for the full memo treatment.14
+**Major security agencies recommend against QKD for most use cases.** The NSA does not support QKD for protecting National Security Systems. The UK NCSC states: “PQC is the best mitigation to the threat to cryptography from quantum computers” and will not endorse QKD for government or military applications. ANSSI (France), BSI (Germany), and NLNCSA (Netherlands) have all taken similar positions.<sup>13</sup> The November 18, 2025 DoW CIO memorandum *Preparing for Migration to Post Quantum Cryptography* made this position binding for the Department of War: DoW Components are prohibited from testing, evaluating, piloting, using, or procuring QKD—or any solution combining QKD with other cryptographic key establishment—for confidentiality, authenticity, integrity, key distribution, or randomness generation, absent specific exception from the DoW CIO PQC Directorate. See Chapter 4 for the full memo treatment.<sup>14</sup>
 
 > **PLAIN-LANGUAGE SIDEBAR**
 > QKD is a real technology with genuine strengths, and it has a role in specialized, high-security, point-to-point links where dedicated fiber infrastructure already exists and the cost is justified. China has deployed a working QKD network of approximately 5,000 km and a QKD satellite. The EU’s EuroQCI initiative is building an EU-wide QKD network. These are significant investments.

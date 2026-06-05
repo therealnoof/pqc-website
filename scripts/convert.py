@@ -120,11 +120,21 @@ def fmt_run(r) -> str:
     stripped = txt.strip()
     if not stripped:
         return txt  # whitespace only — keep spacing, don't decorate
+    lead = txt[: len(txt) - len(txt.lstrip())]
+    trail = txt[len(txt.rstrip()):]
+    # superscript / subscript (e.g. footnote reference markers)
+    rPr = r.find(W + "rPr")
+    if rPr is not None:
+        va = rPr.find(W + "vertAlign")
+        if va is not None:
+            val = va.get(W + "val")
+            if val == "superscript":
+                return f"{lead}<sup>{stripped}</sup>{trail}"
+            if val == "subscript":
+                return f"{lead}<sub>{stripped}</sub>{trail}"
     if run_is_mono(r):
         return f"`{txt}`"
     b, i = run_flags(r)
-    lead = txt[: len(txt) - len(txt.lstrip())]
-    trail = txt[len(txt.rstrip()):]
     core = stripped
     if b and i:
         core = f"***{core}***"
@@ -229,6 +239,11 @@ DROP_HEADINGS = {"additional contributors"}
 # Rename section titles (keyed by lowercased original). Single-author edition.
 TITLE_REMAP = {"about the authors": "About the Author"}
 
+# Profile links appended to the author page (not present in the source doc).
+AUTHOR_LINKS = [
+    ("LinkedIn", "https://www.linkedin.com/in/arnulfo-hernandez-cissp-ccsp-0990b6a0/"),
+]
+
 
 def drop_sections(blocks, drop_titles):
     """Remove any heading whose text is in drop_titles, plus all blocks beneath
@@ -297,6 +312,15 @@ def run_text_all(p) -> str:
 # --------------------------------------------------------------------------- #
 # Assemble sections
 # --------------------------------------------------------------------------- #
+def plain_text(s: str) -> str:
+    """Strip markdown/HTML to readable plain text for excerpts and metadata."""
+    s = re.sub(r"<sup>.*?</sup>|<sub>.*?</sub>", "", s)  # drop footnote markers
+    s = re.sub(r"<[^>]+>", "", s)                         # any other inline HTML
+    s = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", s)        # md links -> link text
+    s = re.sub(r"[*`]", "", s)                            # emphasis / code ticks
+    return re.sub(r"\s+", " ", s).strip()
+
+
 def slugify(s: str) -> str:
     s = s.lower().replace("’", "").replace("'", "")
     s = re.sub(r"[^\w\s-]", "", s)
@@ -385,6 +409,9 @@ def main():
     toc = []
     for order, pg in enumerate(pages, 1):
         pg["blocks"] = drop_sections(pg["blocks"], DROP_HEADINGS)
+        if pg["title"].strip().lower().startswith("about the author") and AUTHOR_LINKS:
+            links = "  ·  ".join(f"[{name} ↗]({url})" for name, url in AUTHOR_LINKS)
+            pg["blocks"].append(("p", f"**Connect:** {links}"))
         display = (f"Chapter {pg['chapter']}: " if pg["chapter"] else "") + pg["title"]
         slug = f"{order:02d}-" + slugify(pg["title"])
         body_md = "\n\n".join(block_to_md(k, v) for k, v in pg["blocks"])
@@ -392,7 +419,7 @@ def main():
         excerpt = ""
         for k, v in pg["blocks"]:
             if k == "p" and len(v) > 80:
-                excerpt = re.sub(r"[*`\[\]]|\(http[^)]*\)", "", v)[:220].strip()
+                excerpt = plain_text(v)[:220].strip()
                 break
         fm = {
             "title": pg["title"],
@@ -416,7 +443,7 @@ def main():
     if foreword:
         for k, v in foreword["blocks"]:
             if k == "p" and len(v) > 120:
-                abstract = re.sub(r"[*`\[\]]|\(http[^)]*\)", "", v).strip()
+                abstract = plain_text(v)
                 break
 
     meta = {

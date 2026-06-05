@@ -4,9 +4,9 @@
   "authors": [
     "Arnulfo “Noof” Hernandez"
   ],
-  "abstract": "A few years ago, I came across a TED talk presented by Quantum Physicist, Dr. Shohini Ghose.1 It had been many years since I last attended an academic course on anything physics much less quantum. During her talk she explained the concept of superposition and entanglement amongst other topics related to quantum mechanics. I had heard of these concepts in previous readings and academic studies, but I took notice considering the recent grumblings about a future world where quantum computers will break modern encryption.",
-  "totalWords": 45953,
-  "readingMinutes": 209,
+  "abstract": "A few years ago, I came across a TED talk presented by Quantum Physicist, Dr. Shohini Ghose. It had been many years since I last attended an academic course on anything physics much less quantum. During her talk she explained the concept of superposition and entanglement amongst other topics related to quantum mechanics. I had heard of these concepts in previous readings and academic studies, but I took notice considering the recent grumblings about a future world where quantum computers will break modern encryption.",
+  "totalWords": 46270,
+  "readingMinutes": 210,
   "pageCount": 20,
   "chapterCount": 9,
   "images": 12,
@@ -19,9 +19,9 @@
       "section": "Front Matter",
       "chapter": null,
       "order": 1,
-      "words": 1572,
+      "words": 1586,
       "readingMinutes": 7,
-      "excerpt": "A few years ago, I came across a TED talk presented by Quantum Physicist, Dr. Shohini Ghose.1 It had been many years since I last attended an academic course on anything physics much less quantum. During her talk she exp"
+      "excerpt": "A few years ago, I came across a TED talk presented by Quantum Physicist, Dr. Shohini Ghose. It had been many years since I last attended an academic course on anything physics much less quantum. During her talk she expl"
     },
     {
       "slug": "02-how-to-read-this-book",
@@ -41,7 +41,7 @@
       "section": "Front Matter",
       "chapter": null,
       "order": 3,
-      "words": 93,
+      "words": 105,
       "readingMinutes": 1,
       "excerpt": "Arnulfo “Noof” Hernandez is a Solutions Architect at F5, Inc. supporting public sector customers including the Department of War, Intelligence communities, and federal civilian agencies. Arnulfo’s current focus areas inc"
     },
@@ -52,7 +52,7 @@
       "section": "Chapters",
       "chapter": 1,
       "order": 4,
-      "words": 7039,
+      "words": 7125,
       "readingMinutes": 32,
       "excerpt": "Before we can understand why post-quantum cryptography matters, we need to understand the strange and beautiful science that makes it necessary. This chapter is a guided tour—from the birth of quantum mechanics over a ce"
     },
@@ -63,7 +63,7 @@
       "section": "Chapters",
       "chapter": 2,
       "order": 5,
-      "words": 2630,
+      "words": 2652,
       "readingMinutes": 12,
       "excerpt": "Chapter 1 explained why quantum computing threatens our cryptographic infrastructure. This chapter answers the next logical question: what, specifically, is at risk?"
     },
@@ -74,7 +74,7 @@
       "section": "Chapters",
       "chapter": 3,
       "order": 6,
-      "words": 2807,
+      "words": 2835,
       "readingMinutes": 13,
       "excerpt": "In Chapter 1, we learned that quantum computing breaks the math behind today’s encryption—not the concept of encryption itself. In Chapter 2, we mapped exactly which algorithms and protocols are vulnerable. Now we answer"
     },
@@ -85,7 +85,7 @@
       "section": "Chapters",
       "chapter": 4,
       "order": 7,
-      "words": 4022,
+      "words": 4052,
       "readingMinutes": 18,
       "excerpt": "If the first three chapters answered “why should we care?” and “what’s at risk?”, this chapter answers the question that gets CISOs and program managers out of their chairs: “Who says we have to do this, and by when?”"
     },
@@ -96,7 +96,7 @@
       "section": "Chapters",
       "chapter": 5,
       "order": 8,
-      "words": 2791,
+      "words": 2804,
       "readingMinutes": 13,
       "excerpt": "Every PQC migration plan begins with the same question: “Where is cryptography in my environment?” The answer, invariably, is “more places than you think.”"
     },
@@ -107,7 +107,7 @@
       "section": "Chapters",
       "chapter": 6,
       "order": 9,
-      "words": 4436,
+      "words": 4454,
       "readingMinutes": 20,
       "excerpt": "You’ve catalogued the threat (Chapters 1–2), learned the replacements (Chapter 3), mapped the mandates (Chapter 4), and inventoried your exposure (Chapter 5). Now comes the question that separates planning from action: “"
     },
@@ -118,8 +118,8 @@
       "section": "Chapters",
       "chapter": 7,
       "order": 10,
-      "words": 2942,
-      "readingMinutes": 13,
+      "words": 2972,
+      "readingMinutes": 14,
       "excerpt": "In an ideal world, you’d flip a switch and every system in your environment would instantly use post-quantum algorithms. In the real world, migration happens gradually—and during that transition, classical and post-quant"
     },
     {
@@ -129,7 +129,7 @@
       "section": "Chapters",
       "chapter": 8,
       "order": 11,
-      "words": 6355,
+      "words": 6399,
       "readingMinutes": 29,
       "excerpt": "This is the engineering chapter. The previous seven chapters built the case for why migration matters, what algorithms replace the vulnerable ones, and how to plan the program. This chapter goes inside the protocols them"
     },
@@ -140,7 +140,7 @@
       "section": "Chapters",
       "chapter": 9,
       "order": 12,
-      "words": 3025,
+      "words": 3045,
       "readingMinutes": 14,
       "excerpt": "Deploying post-quantum cryptography is a milestone, not a finish line. Once PQC is live in your environment—hybrid TLS on the edge, updated SSH key exchanges, new certificate chains in the pipeline—a new set of operation"
     },

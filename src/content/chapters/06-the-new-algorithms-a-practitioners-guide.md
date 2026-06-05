@@ -4,14 +4,14 @@ displayTitle: "Chapter 3: The New Algorithms: A Practitioner’s Guide"
 section: "Chapters"
 chapter: 3
 order: 6
-words: 2807
+words: 2835
 readingMinutes: 13
 excerpt: "In Chapter 1, we learned that quantum computing breaks the math behind today’s encryption—not the concept of encryption itself. In Chapter 2, we mapped exactly which algorithms and protocols are vulnerable. Now we answer"
 ---
 
 In Chapter 1, we learned that quantum computing breaks the math behind today’s encryption—not the concept of encryption itself. In Chapter 2, we mapped exactly which algorithms and protocols are vulnerable. Now we answer the next question: what are we replacing them with?
 
-The good news is that the replacements are already here. NIST finalized the first three post-quantum standards in August 2024 and selected a fourth in March 2025, with a fifth in draft. These aren’t experimental—they’re the result of an eight-year international competition involving 82 submissions from 25 countries, whittled down through multiple rounds of analysis, attack, and optimization.1
+The good news is that the replacements are already here. NIST finalized the first three post-quantum standards in August 2024 and selected a fourth in March 2025, with a fifth in draft. These aren’t experimental—they’re the result of an eight-year international competition involving 82 submissions from 25 countries, whittled down through multiple rounds of analysis, attack, and optimization.<sup>1</sup>
 
 This chapter introduces each algorithm in plain language: what mathematical problem it’s built on, what it does, how big its keys and signatures are, and when to use it. We’re not going to teach you the math—we’re going to give you the intuition you need to make architecture and procurement decisions.
 
@@ -31,7 +31,7 @@ NIST’s post-quantum standards draw from three distinct mathematical families, 
 | **Hash-Based** | Security of cryptographic hash functions (SHA-2/SHA-3) | SLH-DSA (FIPS 205), LMS/XMSS (SP 800-208) | Ultra-conservative security. Small keys, very large signatures. Slower. |
 | **Code-Based** | Syndrome decoding in error-correcting codes | HQC (selected March 2025) | Backup KEM. Larger keys than lattices. Different math for diversity. |
 
-NIST deliberately chose algorithms from multiple mathematical families. If a future breakthrough cracks lattice problems, the hash-based and code-based backups still stand. This **algorithmic diversity** is a core design principle of the post-quantum landscape.2
+NIST deliberately chose algorithms from multiple mathematical families. If a future breakthrough cracks lattice problems, the hash-based and code-based backups still stand. This **algorithmic diversity** is a core design principle of the post-quantum landscape.<sup>2</sup>
 
 > **PLAIN-LANGUAGE SIDEBAR**
 > Think of it like building three separate bridges across a canyon, each using different engineering principles—one suspension, one arch, one cantilever. If an earthquake reveals a flaw in suspension bridge design, the arch and cantilever bridges still hold. NIST built multiple mathematical bridges for the same reason.
@@ -40,7 +40,7 @@ NIST deliberately chose algorithms from multiple mathematical families. If a fut
 
 **What it replaces:** RSA key exchange, ECDH, X25519, Diffie-Hellman—any algorithm used to establish a shared secret between two parties.
 
-**What it is:** ML-KEM stands for Module-Lattice-Based Key-Encapsulation Mechanism. It’s based on the CRYSTALS-Kyber algorithm, which won NIST’s competition and was renamed for standardization.3
+**What it is:** ML-KEM stands for Module-Lattice-Based Key-Encapsulation Mechanism. It’s based on the CRYSTALS-Kyber algorithm, which won NIST’s competition and was renamed for standardization.<sup>3</sup>
 
 ### How It Works (The Intuition)
 
@@ -49,7 +49,7 @@ ML-KEM’s security is based on the **Module Learning With Errors (MLWE)** probl
 > **PLAIN-LANGUAGE SIDEBAR**
 > Think of it this way: someone gives you the results of 1,000 math equations, but each answer is slightly off by a random amount. Could you figure out the original variables? For low-dimensional problems, maybe. But in the high-dimensional spaces ML-KEM operates in (hundreds of dimensions), the noise makes the problem impossibly hard. That hardness is the trapdoor.
 
-Technically, ML-KEM is a **Key Encapsulation Mechanism (KEM)**, not a traditional key exchange. The distinction matters: in a KEM, one party generates a shared secret and “encapsulates” it using the other party’s public key. The recipient “decapsulates” it with their private key. The result is the same—a shared secret both parties can use for symmetric encryption—but the mechanics are slightly different from Diffie-Hellman’s interactive exchange.4
+Technically, ML-KEM is a **Key Encapsulation Mechanism (KEM)**, not a traditional key exchange. The distinction matters: in a KEM, one party generates a shared secret and “encapsulates” it using the other party’s public key. The recipient “decapsulates” it with their private key. The result is the same—a shared secret both parties can use for symmetric encryption—but the mechanics are slightly different from Diffie-Hellman’s interactive exchange.<sup>4</sup>
 
 ### The Numbers
 
@@ -60,7 +60,7 @@ Technically, ML-KEM is a **Key Encapsulation Mechanism (KEM)**, not a traditiona
 | **ML-KEM-1024** | 1,568 bytes | 1,568 bytes | 3,168 bytes | Level 5 (AES-256) |
 | **X25519 (classical)** | 32 bytes | 32 bytes | 32 bytes | — (broken by Shor’s) |
 
-The size increase is real but manageable. ML-KEM-768 (the recommended default for most applications) adds about 1.1 KB to each side of a handshake. For a TLS connection, that’s barely noticeable. The performance story is actually encouraging: **ML-KEM is often faster than the elliptic curve algorithms it replaces** for key generation and encapsulation operations.5
+The size increase is real but manageable. ML-KEM-768 (the recommended default for most applications) adds about 1.1 KB to each side of a handshake. For a TLS connection, that’s barely noticeable. The performance story is actually encouraging: **ML-KEM is often faster than the elliptic curve algorithms it replaces** for key generation and encapsulation operations.<sup>5</sup>
 
 > **⚠  MANDATE ALERT**
 > CNSA 2.0 requires ML-KEM-1024 for National Security Systems (not ML-KEM-768). Commercial and non-NSS federal systems may use ML-KEM-768. Plan your parameter set selection based on your compliance requirements.
@@ -69,11 +69,11 @@ The size increase is real but manageable. ML-KEM-768 (the recommended default fo
 
 **What it replaces:** RSA signatures, ECDSA, EdDSA—any algorithm used to prove identity and verify data integrity in certificates, code signing, and authentication.
 
-**What it is:** ML-DSA stands for Module-Lattice-Based Digital Signature Algorithm, based on CRYSTALS-Dilithium. It’s NIST’s primary recommended signature scheme—the general-purpose workhorse.6
+**What it is:** ML-DSA stands for Module-Lattice-Based Digital Signature Algorithm, based on CRYSTALS-Dilithium. It’s NIST’s primary recommended signature scheme—the general-purpose workhorse.<sup>6</sup>
 
 ### How It Works (The Intuition)
 
-ML-DSA uses a technique called **Fiat-Shamir with Aborts.** The signer creates a mathematical commitment, generates a challenge by hashing the message and commitment together, then computes a response. The clever part is the “aborts” mechanism: before publishing the response, the algorithm checks whether it would leak any information about the private key. If it does, it throws the result away and tries again with fresh randomness. This rejection sampling ensures the final signature is mathematically independent of the secret key’s internal structure.7
+ML-DSA uses a technique called **Fiat-Shamir with Aborts.** The signer creates a mathematical commitment, generates a challenge by hashing the message and commitment together, then computes a response. The clever part is the “aborts” mechanism: before publishing the response, the algorithm checks whether it would leak any information about the private key. If it does, it throws the result away and tries again with fresh randomness. This rejection sampling ensures the final signature is mathematically independent of the secret key’s internal structure.<sup>7</sup>
 
 ### The Numbers
 
@@ -86,19 +86,19 @@ ML-DSA uses a technique called **Fiat-Shamir with Aborts.** The signer creates a
 
 This is where the sticker shock hits. An ML-DSA-65 signature is **3,309 bytes versus 64 bytes for ECDSA P-256**—a 50x increase. Public keys grow from 64 bytes to nearly 2 KB. For a TLS certificate chain with three certificates, the total signature and key payload could exceed 15–20 KB. We’ll dig into the protocol-level implications of this in Chapter 8.
 
-The silver lining: **ML-DSA is actually faster than RSA-2048 for both signing and verification**—roughly 10x faster for signing operations.8 The performance penalty compared to ECDSA exists but is modest on modern hardware. The real challenge isn’t CPU time—it’s bandwidth and packet size.
+The silver lining: **ML-DSA is actually faster than RSA-2048 for both signing and verification**—roughly 10x faster for signing operations.<sup>8</sup> The performance penalty compared to ECDSA exists but is modest on modern hardware. The real challenge isn’t CPU time—it’s bandwidth and packet size.
 
 ## SLH-DSA: The Conservative Backup (FIPS 205)
 
 **What it replaces:** Same use cases as ML-DSA (digital signatures), but intended as a backup with a different security foundation.
 
-**What it is:** SLH-DSA stands for Stateless Hash-Based Digital Signature Algorithm, based on SPHINCS+. Its security rests entirely on the strength of hash functions (SHA-2 or SHAKE)—mathematical objects that have been studied intensively for decades and are extremely well understood.9
+**What it is:** SLH-DSA stands for Stateless Hash-Based Digital Signature Algorithm, based on SPHINCS+. Its security rests entirely on the strength of hash functions (SHA-2 or SHAKE)—mathematical objects that have been studied intensively for decades and are extremely well understood.<sup>9</sup>
 
 ### Why It Matters
 
 SLH-DSA is NIST’s insurance policy. If a future mathematical breakthrough weakens lattice-based cryptography (threatening both ML-KEM and ML-DSA), SLH-DSA remains standing because it’s built on completely different mathematics. Its security assumptions are the most conservative in the entire PQC portfolio.
 
-The tradeoff is severe: SLH-DSA signatures are enormous. At the NIST Level 1 security (“small” variant), a signature is 7,856 bytes. At Level 5 with the “fast” variant, signatures can reach nearly 50 KB.10 Public keys are tiny (32–64 bytes), but the signing process is significantly slower than ML-DSA.
+The tradeoff is severe: SLH-DSA signatures are enormous. At the NIST Level 1 security (“small” variant), a signature is 7,856 bytes. At Level 5 with the “fast” variant, signatures can reach nearly 50 KB.<sup>10</sup> Public keys are tiny (32–64 bytes), but the signing process is significantly slower than ML-DSA.
 
 SLH-DSA comes in two flavors for each security level: **"f" (fast)** optimizes for speed at the cost of larger signatures, and **"s" (small)** optimizes for signature size at the cost of speed.
 
@@ -106,19 +106,19 @@ SLH-DSA comes in two flavors for each security level: **"f" (fast)** optimizes f
 
 ## FN-DSA: Compact Signatures (FIPS 206 — Draft)
 
-**What it is:** FN-DSA stands for FFT over NTRU-Lattice-Based Digital Signature Algorithm, based on the FALCON submission. It offers the smallest signatures of any PQC signature scheme—roughly 666 bytes at Level 1 and 1,280 bytes at Level 5—making it attractive for bandwidth-constrained environments.11
+**What it is:** FN-DSA stands for FFT over NTRU-Lattice-Based Digital Signature Algorithm, based on the FALCON submission. It offers the smallest signatures of any PQC signature scheme—roughly 666 bytes at Level 1 and 1,280 bytes at Level 5—making it attractive for bandwidth-constrained environments.<sup>11</sup>
 
-**Why it isn’t the primary standard:** FN-DSA’s implementation requires Gaussian sampling using floating-point arithmetic, which is notoriously difficult to implement correctly and prone to side-channel attacks. NIST selected ML-DSA as the primary standard specifically because it is easier to implement securely. FN-DSA is the specialist tool, not the default.12
+**Why it isn’t the primary standard:** FN-DSA’s implementation requires Gaussian sampling using floating-point arithmetic, which is notoriously difficult to implement correctly and prone to side-channel attacks. NIST selected ML-DSA as the primary standard specifically because it is easier to implement securely. FN-DSA is the specialist tool, not the default.<sup>12</sup>
 
 **Best use cases:** IoT devices, embedded systems, DNSSEC, and other environments where signature size is a critical constraint and the implementation team has deep cryptographic expertise.
 
 ## HQC: The Backup KEM (Expected 2027)
 
-**What it is:** HQC stands for Hamming Quasi-Cyclic, a Key Encapsulation Mechanism built on **error-correcting codes** rather than lattices. NIST selected HQC in March 2025 as a backup to ML-KEM, with a finalized standard expected in 2027.13
+**What it is:** HQC stands for Hamming Quasi-Cyclic, a Key Encapsulation Mechanism built on **error-correcting codes** rather than lattices. NIST selected HQC in March 2025 as a backup to ML-KEM, with a finalized standard expected in 2027.<sup>13</sup>
 
 HQC serves the same purpose as ML-KEM (establishing shared secrets for symmetric encryption) but uses fundamentally different mathematics. If a cryptanalytic breakthrough ever compromised lattice-based schemes, HQC would provide an alternative path to quantum-safe key exchange.
 
-The tradeoff: HQC’s keys and ciphertexts are 3–4x larger than ML-KEM at equivalent security levels (roughly 4,500 bytes for a public key at Level 3, compared to 1,184 bytes for ML-KEM-768).14 It also requires more computation. For now, ML-KEM remains the clear default for production deployments, with HQC as the strategic fallback.
+The tradeoff: HQC’s keys and ciphertexts are 3–4x larger than ML-KEM at equivalent security levels (roughly 4,500 bytes for a public key at Level 3, compared to 1,184 bytes for ML-KEM-768).<sup>14</sup> It also requires more computation. For now, ML-KEM remains the clear default for production deployments, with HQC as the strategic fallback.
 
 > **PLAIN-LANGUAGE SIDEBAR**
 > You don’t need to deploy HQC today. Think of it as the spare tire in your trunk—you hope you never need it, but you’re glad it’s there. Organizations designing for crypto-agility (covered in Chapter 6) should ensure their architectures can accommodate HQC if ML-KEM ever needs to be swapped out.

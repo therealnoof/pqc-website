@@ -4,7 +4,7 @@ displayTitle: "Chapter 6: Building Your Migration Roadmap"
 section: "Chapters"
 chapter: 6
 order: 9
-words: 4436
+words: 4454
 readingMinutes: 20
 excerpt: "You’ve catalogued the threat (Chapters 1–2), learned the replacements (Chapter 3), mapped the mandates (Chapter 4), and inventoried your exposure (Chapter 5). Now comes the question that separates planning from action: “"
 ---
@@ -17,7 +17,7 @@ This chapter provides the organizational structure, prioritization framework, an
 
 PQC migration is not a network project. It’s not a security project. It’s not a compliance project. It’s all of them simultaneously—which means it dies in the gaps between teams unless you create a **cross-functional body with a clear mandate.**
 
-We recommend establishing a **Cryptographic Center of Excellence (CCOE)**—a small, empowered group of strategic thinkers and complex problem solvers drawn from across the organization. The CCOE doesn’t replace existing teams. It coordinates them, sets cryptographic policy, and owns the migration roadmap.1
+We recommend establishing a **Cryptographic Center of Excellence (CCOE)**—a small, empowered group of strategic thinkers and complex problem solvers drawn from across the organization. The CCOE doesn’t replace existing teams. It coordinates them, sets cryptographic policy, and owns the migration roadmap.<sup>1</sup>
 
 ### Recommended CCOE Composition
 
@@ -41,7 +41,7 @@ The CCOE should be small (8–12 people), empowered to set cryptographic policy,
 
 Before you start replacing algorithms, establish a design principle that will save you from doing this again in a decade: **crypto-agility.**
 
-NIST defines crypto-agility as “the capabilities needed to replace and adapt cryptographic algorithms in protocols, applications, software, hardware, and infrastructures without interrupting the flow of a running system.”2 In December 2025, NIST published CSWP 39 (“Considerations for Achieving Crypto Agility: Strategies and Practices”), elevating crypto-agility from a nice-to-have to a formal strategic framework.
+NIST defines crypto-agility as “the capabilities needed to replace and adapt cryptographic algorithms in protocols, applications, software, hardware, and infrastructures without interrupting the flow of a running system.”<sup>2</sup> In December 2025, NIST published CSWP 39 (“Considerations for Achieving Crypto Agility: Strategies and Practices”), elevating crypto-agility from a nice-to-have to a formal strategic framework.
 
 The core idea: **never hard-code cryptographic choices again.** The PQC migration should be the last time your organization does a panic-driven, multi-year cryptographic overhaul. After this transition, your architecture should support algorithm swaps as routine maintenance, not emergency projects.
 
@@ -49,19 +49,19 @@ The core idea: **never hard-code cryptographic choices again.** The PQC migratio
 
 - **Modularity:** Separate cryptographic algorithms from application logic. Use cryptographic APIs that abstract the algorithm choice, so the same API call can invoke classical or PQC algorithms without application changes.
 
-- **Policy-driven configuration:** Cryptographic choices should be set by external policy—machine-readable configuration profiles—not compiled into software. When an algorithm is deprecated, an administrator updates a policy; developers don’t rewrite code.3
+- **Policy-driven configuration:** Cryptographic choices should be set by external policy—machine-readable configuration profiles—not compiled into software. When an algorithm is deprecated, an administrator updates a policy; developers don’t rewrite code.<sup>3</sup>
 
 - **Inventory and monitoring:** You can’t be agile about what you can’t see. The CBOM from Chapter 5 isn’t a one-time deliverable—it’s a living system that continuously tracks what cryptography is deployed where.
 
 - **Testing and validation:** Build automated tests that verify cryptographic configurations against policy. When a new algorithm is approved or an old one deprecated, the test suite catches drift before auditors do.
 
-CSWP 39 introduces a maturity model for crypto-agility, ranging from unstructured and reactive practices at the low end to fully adaptive programs integrated into enterprise risk management.2 The PQC migration is your opportunity to climb that maturity curve. Don’t just solve the quantum problem—build the capability to solve the next cryptographic problem, whatever it is.
+CSWP 39 introduces a maturity model for crypto-agility, ranging from unstructured and reactive practices at the low end to fully adaptive programs integrated into enterprise risk management.<sup>2</sup> The PQC migration is your opportunity to climb that maturity curve. Don’t just solve the quantum problem—build the capability to solve the next cryptographic problem, whatever it is.
 
 ### Crypto-Agility in Five Layers
 
 The four pillars above describe what crypto-agility looks like as a design discipline. But ”be crypto-agile” is the kind of advice that’s easy to nod at and hard to operationalize. What does it actually mean to build agility into an organization’s cryptographic stack?
 
-Gartner’s PQC journey guide offers one of the cleanest decompositions we’ve found: crypto-agility shows up at five distinct layers, and each requires its own decisions, its own tools, and its own owners. Treating agility as a single objective tends to make it everyone’s job and therefore nobody’s. Treating it as five layers — each with concrete deliverables — makes it tractable.7
+Gartner’s PQC journey guide offers one of the cleanest decompositions we’ve found: crypto-agility shows up at five distinct layers, and each requires its own decisions, its own tools, and its own owners. Treating agility as a single objective tends to make it everyone’s job and therefore nobody’s. Treating it as five layers — each with concrete deliverables — makes it tractable.<sup>7</sup>
 
 ![figure](/book-media/img-07.png)
 
@@ -114,11 +114,11 @@ The temptation is to prioritize by compliance deadline—“CNSA 2.0 says networ
 | **P3** | Internal infrastructure + moderate data sensitivity | Internal TLS between microservices, east-west traffic, internal PKI, SSH keys | Migrate within NIST timeline. Plan for 2028–2032 execution. |
 | **P4** | Low-sensitivity + short-lived data + low interception risk | Ephemeral session tokens, internal API keys, transient development environments | Upgrade during normal refresh cycles. Low urgency. |
 
-Notice that key exchange (confidentiality) consistently outranks signatures (authentication) in priority. That’s because the HNDL threat applies to key exchange today—captured traffic can be decrypted retroactively. Signatures, by contrast, only need to be quantum-resistant at the time they’re verified. This is why Chrome, NIST, and most migration frameworks recommend **key exchange first, signatures second.**4
+Notice that key exchange (confidentiality) consistently outranks signatures (authentication) in priority. That’s because the HNDL threat applies to key exchange today—captured traffic can be decrypted retroactively. Signatures, by contrast, only need to be quantum-resistant at the time they’re verified. This is why Chrome, NIST, and most migration frameworks recommend **key exchange first, signatures second.**<sup>4</sup>
 
 ## Step 4: Assess HSM and Infrastructure Readiness
 
-Before you can execute the migration, you need to know whether your infrastructure can actually support the new algorithms. The most common blocker is **HSM readiness**—Hardware Security Modules sit at the root of trust for most certificate and signing operations, and if your HSM can’t handle PQC algorithms, your PKI migration stalls before it starts.5
+Before you can execute the migration, you need to know whether your infrastructure can actually support the new algorithms. The most common blocker is **HSM readiness**—Hardware Security Modules sit at the root of trust for most certificate and signing operations, and if your HSM can’t handle PQC algorithms, your PKI migration stalls before it starts.<sup>5</sup>
 
 ### Five HSM Planning Questions
 
@@ -132,7 +132,7 @@ Before you can execute the migration, you need to know whether your infrastructu
 
 - **Validation and compliance timing:** Algorithm availability in a product is not the same as FIPS 140-3 validation. Verify the exact firmware version, validation state, and expected certification timeline for your environment.
 
-HSM vendor readiness is improving rapidly but unevenly. Thales Luna HSMs support ML-DSA through firmware 7.9.0+. Entrust nShield 5 has NIST CAVP-validated support for ML-DSA, ML-KEM, and SLH-DSA with FIPS 140-3 certification work following.6 The planning lesson: verify the exact firmware, SDK, connector, and validation path before committing a PKI or signing architecture to a date.
+HSM vendor readiness is improving rapidly but unevenly. Thales Luna HSMs support ML-DSA through firmware 7.9.0+. Entrust nShield 5 has NIST CAVP-validated support for ML-DSA, ML-KEM, and SLH-DSA with FIPS 140-3 certification work following.<sup>6</sup> The planning lesson: verify the exact firmware, SDK, connector, and validation path before committing a PKI or signing architecture to a date.
 
 ## Step 5: Execute in Phases
 
@@ -185,7 +185,7 @@ A migration roadmap without budget is a wish list. Here’s how to frame the inv
 
 ## Building the Financial Case
 
-The arguments above frame the pitch. Securing the actual funding is a separate exercise — one that depends less on the strength of the pitch and more on how the program integrates with the organization’s financial planning cycle. Funding for a multi-year cryptographic program is not a line item your finance team has seen before; the financial pattern has to be built from scratch.7
+The arguments above frame the pitch. Securing the actual funding is a separate exercise — one that depends less on the strength of the pitch and more on how the program integrates with the organization’s financial planning cycle. Funding for a multi-year cryptographic program is not a line item your finance team has seen before; the financial pattern has to be built from scratch.<sup>7</sup>
 
 A useful working frame: the postquantum program is a multi-year capital and operating investment that competes with every other multi-year initiative in the organization. Treat finance as a partner, not a gatekeeper. The earlier they understand the cryptographic risk and the migration shape, the more likely they are to defend the budget when other priorities crowd it.
 

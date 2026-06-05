@@ -38,9 +38,29 @@
 .prose {
   max-width: var(--reading);
   font-size: 1.06rem;
+  line-height: 1.6;
 }
-.prose > * + * { margin-top: 1.15rem; }
-.prose p { margin: 0; color: var(--text); }
+/* Vertical rhythm via per-element bottom-margins (so per-element resets can't
+   defeat it on specificity). The block gap (~1.85em ≈ 31px) is kept clearly
+   larger than the in-paragraph line spacing (1.6em ≈ 27px) so paragraphs read
+   as distinct blocks rather than one squashed wall of text. */
+.prose > p,
+.prose > ul,
+.prose > ol,
+.prose > pre { margin: 0 0 1.85em; }
+.prose p { color: var(--text); }
+.prose > :last-child { margin-bottom: 0; }
+
+/* footnote reference markers (superscript) — small, raised, no line-height shift */
+.prose sup,
+.prose sub {
+  font-size: 0.7em;
+  line-height: 0;
+  font-weight: 600;
+  color: var(--accent);
+}
+.prose sup { vertical-align: super; }
+.prose sub { vertical-align: sub; }
 
 .prose h2 {
   font-size: 1.55rem;
@@ -60,8 +80,8 @@
 .prose a { color: var(--accent-3); word-break: break-word; }
 .prose strong { color: var(--text-strong); }
 
-.prose ul, .prose ol { margin: 0; padding-left: 1.4rem; }
-.prose li { margin: 0.3rem 0; }
+.prose ul, .prose ol { padding-left: 1.4rem; }
+.prose li { margin: 0.45rem 0; line-height: 1.62; }
 .prose li::marker { color: var(--accent); }
 
 /* heading anchor links from rehype-autolink-headings */

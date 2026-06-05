@@ -4,12 +4,12 @@ displayTitle: "Foreword"
 section: "Front Matter"
 chapter: null
 order: 1
-words: 1572
+words: 1586
 readingMinutes: 7
-excerpt: "A few years ago, I came across a TED talk presented by Quantum Physicist, Dr. Shohini Ghose.1 It had been many years since I last attended an academic course on anything physics much less quantum. During her talk she exp"
+excerpt: "A few years ago, I came across a TED talk presented by Quantum Physicist, Dr. Shohini Ghose. It had been many years since I last attended an academic course on anything physics much less quantum. During her talk she expl"
 ---
 
-A few years ago, I came across a TED talk presented by Quantum Physicist, Dr. Shohini Ghose.1 It had been many years since I last attended an academic course on anything physics much less quantum. During her talk she explained the concept of superposition and entanglement amongst other topics related to quantum mechanics. I had heard of these concepts in previous readings and academic studies, but I took notice considering the recent grumblings about a future world where quantum computers will break modern encryption.
+A few years ago, I came across a TED talk presented by Quantum Physicist, Dr. Shohini Ghose.<sup>1</sup> It had been many years since I last attended an academic course on anything physics much less quantum. During her talk she explained the concept of superposition and entanglement amongst other topics related to quantum mechanics. I had heard of these concepts in previous readings and academic studies, but I took notice considering the recent grumblings about a future world where quantum computers will break modern encryption.
 
 Quantum physics is a weird spooky world. Particles and atoms behave differently in their sub-atomic world versus our classical macro world. Qubits, which are the unit of measure in quantum can exist in multiple states, and they can even share information with each other over vast distances.
 
@@ -23,15 +23,15 @@ If you are curious about Quantum and need to know how to prepare for Q-day then 
 
 ## The Clock We Can’t See
 
-Somewhere in the world, there’s an adversary capturing your organization’s encrypted traffic right now. This information can’t be read today—that’s not currently possible. But they’re relying on the idea that within the next decade or so, a sufficiently powerful quantum computer will let them decrypt everything they’ve been patiently collecting. The security community calls this **Harvest Now, Decrypt Later (HNDL)**,2 and it means the quantum threat isn’t a future problem. It’s a here today data exfiltration campaign with a delayed payoff.
+Somewhere in the world, there’s an adversary capturing your organization’s encrypted traffic right now. This information can’t be read today—that’s not currently possible. But they’re relying on the idea that within the next decade or so, a sufficiently powerful quantum computer will let them decrypt everything they’ve been patiently collecting. The security community calls this **Harvest Now, Decrypt Later (HNDL)**,<sup>2</sup> and it means the quantum threat isn’t a future problem. It’s a here today data exfiltration campaign with a delayed payoff.
 
 The day a cryptographically relevant quantum computer (CRQC) becomes operational—also known as **“Q-Day”**—isn’t something we’ll see coming with a press release. It may happen in a university lab or maybe in a classified nation state bunker. It may be announced months or years after it becomes operational. The point is: we won’t know the day it happens. All we can do now is prepare our networks for a future with Quantum.
 
 ## The Mandates Are Already Here
 
-If the HNDL argument feels too abstract, here’s the concrete version: the compliance clock is already ticking. NIST published the first three finalized post-quantum cryptography (PQC) standards in August 2024.3 The NSA’s CNSA 2.0 requires all new National Security Systems acquisitions to support quantum-resistant algorithms by January 2027.4 Federal agencies must submit PQC transition plans by April 2026.5 The Quantum Computing Cybersecurity Preparedness Act—that’s federal law, not an executive order that can be rescinded—mandates ongoing cryptographic inventories and migration planning.6
+If the HNDL argument feels too abstract, here’s the concrete version: the compliance clock is already ticking. NIST published the first three finalized post-quantum cryptography (PQC) standards in August 2024.<sup>3</sup> The NSA’s CNSA 2.0 requires all new National Security Systems acquisitions to support quantum-resistant algorithms by January 2027.<sup>4</sup> Federal agencies must submit PQC transition plans by April 2026.<sup>5</sup> The Quantum Computing Cybersecurity Preparedness Act—that’s federal law, not an executive order that can be rescinded—mandates ongoing cryptographic inventories and migration planning.<sup>6</sup>
 
-This isn’t a “maybe someday” situation. If you sell to, partner with, or operate within the federal ecosystem, post-quantum cryptography is now a procurement, compliance, and architectural requirement. And the private sector won’t be far behind—the EU has already published its own PQC migration roadmap targeting critical infrastructure by 2030.7
+This isn’t a “maybe someday” situation. If you sell to, partner with, or operate within the federal ecosystem, post-quantum cryptography is now a procurement, compliance, and architectural requirement. And the private sector won’t be far behind—the EU has already published its own PQC migration roadmap targeting critical infrastructure by 2030.<sup>7</sup>
 
 ## Why We Wrote This
 

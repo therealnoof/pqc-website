@@ -4,7 +4,7 @@ displayTitle: "Chapter 9: Day-2 Operations: Monitoring, Rotation, and Long-Term 
 section: "Chapters"
 chapter: 9
 order: 12
-words: 3025
+words: 3045
 readingMinutes: 14
 excerpt: "Deploying post-quantum cryptography is a milestone, not a finish line. Once PQC is live in your environment—hybrid TLS on the edge, updated SSH key exchanges, new certificate chains in the pipeline—a new set of operation"
 ---
@@ -15,7 +15,7 @@ Deploying post-quantum cryptography is a milestone, not a finish line. Once PQC 
 
 Most of the PQC migration discussion focuses on data in transit—TLS sessions, VPN tunnels, SSH connections. But some of the most consequential cryptographic artifacts in your environment aren’t protecting live traffic. They’re protecting evidence: signed firmware images, software bills of materials (SBOMs), audit logs, legal contracts, code signing certificates, and regulatory filings that must remain verifiable for years or decades.
 
-These artifacts face a threat that live TLS connections do not: **harvest-now, forge-later**. An adversary who captures a classically signed firmware image today could, with a future quantum computer, forge an altered version with a valid signature—retroactively compromising the trust chain. This isn’t theoretical; it’s the signature-side analog of the HNDL attack we described in Chapter 1.1
+These artifacts face a threat that live TLS connections do not: **harvest-now, forge-later**. An adversary who captures a classically signed firmware image today could, with a future quantum computer, forge an altered version with a valid signature—retroactively compromising the trust chain. This isn’t theoretical; it’s the signature-side analog of the HNDL attack we described in Chapter 1.<sup>1</sup>
 
 ### What Needs Protection
 
@@ -30,9 +30,9 @@ These artifacts face a threat that live TLS connections do not: **harvest-now, f
 
 ### Migration Patterns for Legacy Evidence
 
-Researchers have formalized three practical patterns for protecting existing signed artifacts:2
+Researchers have formalized three practical patterns for protecting existing signed artifacts:<sup>2</sup>
 
-**Pattern 1: Hybrid signatures for new artifacts.** Starting now, sign all new firmware, SBOMs, audit records, and code releases with both a classical signature and a PQC signature (ML-DSA). If the classical signature is later broken, the PQC signature preserves integrity. This is the CNSA 2.0 approach for software and firmware signing, with a “prefer PQC by 2025” target.3
+**Pattern 1: Hybrid signatures for new artifacts.** Starting now, sign all new firmware, SBOMs, audit records, and code releases with both a classical signature and a PQC signature (ML-DSA). If the classical signature is later broken, the PQC signature preserves integrity. This is the CNSA 2.0 approach for software and firmware signing, with a “prefer PQC by 2025” target.<sup>3</sup>
 
 **Pattern 2: Re-signing legacy artifacts.** For existing signed artifacts that must remain verifiable beyond Q-Day, re-sign them with a PQC key inside a trusted environment (HSM or TEE). This retroactively extends the evidentiary lifetime of legacy records. The trust assumption: the original artifacts were unmodified at the time of re-signing.
 
@@ -49,11 +49,11 @@ PQC certificates are larger, expire more frequently (per the CA/Browser Forum’
 
 **Storage and memory.** Certificate stores on endpoints, load balancers, and HSMs will consume significantly more space. A PQC certificate chain that once fit in 3–4 KB now requires 17–25 KB. At scale, this affects memory allocation per TLS session and certificate cache sizing.
 
-**Renewal velocity.** With publicly trusted certificates shrinking to 47-day maximum validity by 2029, automated certificate management becomes non-optional. Manual renewal processes will collapse under the volume.4 The tooling landscape has traditionally concentrated in three places: standalone ACME clients (certbot, acme.sh), Kubernetes controllers (cert-manager), and enterprise CLM platforms (Venafi, Keyfactor, AppViewX). A newer pattern worth tracking is native ACME support inside the TLS enforcement point itself. Apache HTTP Server has supported it since 2.4.30; Caddy and Traefik treat automatic certificate management as default behavior; NGINX released the ngx_http_acme_module in August 2025.5 This shift matters because it removes a class of external orchestration: the server or reverse proxy that terminates TLS also handles its own certificate renewal, with no intermediate automation tier to maintain. Expect native ACME support to expand across enterprise ADC platforms as 47-day validity approaches.
+**Renewal velocity.** With publicly trusted certificates shrinking to 47-day maximum validity by 2029, automated certificate management becomes non-optional. Manual renewal processes will collapse under the volume.<sup>4</sup> The tooling landscape has traditionally concentrated in three places: standalone ACME clients (certbot, acme.sh), Kubernetes controllers (cert-manager), and enterprise CLM platforms (Venafi, Keyfactor, AppViewX). A newer pattern worth tracking is native ACME support inside the TLS enforcement point itself. Apache HTTP Server has supported it since 2.4.30; Caddy and Traefik treat automatic certificate management as default behavior; NGINX released the ngx_http_acme_module in August 2025.<sup>5</sup> This shift matters because it removes a class of external orchestration: the server or reverse proxy that terminates TLS also handles its own certificate renewal, with no intermediate automation tier to maintain. Expect native ACME support to expand across enterprise ADC platforms as 47-day validity approaches.
 
 **Revocation checking.** OCSP responses and CRLs that carry PQC signatures will also be larger. Stapling OCSP responses (where the server pre-fetches and attaches the OCSP response to the TLS handshake) becomes even more important to avoid per-client OCSP lookup overhead.
 
-**HSM compatibility.** The five HSM readiness questions from Chapter 6 remain critical in Day-2 operations. Ongoing firmware updates from HSM vendors (Thales, Entrust, Marvell/Cavium) will add PQC algorithm support incrementally. Track vendor release notes and plan HSM firmware upgrades into your maintenance windows.6
+**HSM compatibility.** The five HSM readiness questions from Chapter 6 remain critical in Day-2 operations. Ongoing firmware updates from HSM vendors (Thales, Entrust, Marvell/Cavium) will add PQC algorithm support incrementally. Track vendor release notes and plan HSM firmware upgrades into your maintenance windows.<sup>6</sup>
 
 > **MANDATE ALERT**
 > Microsoft announced general availability of PQC APIs (ML-KEM and ML-DSA) in Windows Server 2025 and Windows 11 (24H2/25H2) via CNG, with Active Directory Certificate Services (ADCS) PQC support targeted for early 2026. If you run a Microsoft PKI, this is your on-ramp for issuing PQC certificates from your enterprise CA.
@@ -74,11 +74,11 @@ PQC introduces measurable performance changes. In most cases, they’re small en
 | **VPN tunnel establishment time** | IKEv2 rekeying with ML-KEM or PPK overhead | Monitor per-tunnel and aggregate; flag rekeying storms |
 | **Memory consumption per connection** | Larger cert chains stored in session memory | Correlate with connection count; plan for 5–10× cert memory growth |
 
-The key principle: **baseline before you migrate**. Capture your current TLS handshake latency distribution, failure rates, and memory profiles before enabling PQC. Without a clean baseline, you can’t distinguish PQC-induced regressions from unrelated changes.7
+The key principle: **baseline before you migrate**. Capture your current TLS handshake latency distribution, failure rates, and memory profiles before enabling PQC. Without a clean baseline, you can’t distinguish PQC-induced regressions from unrelated changes.<sup>7</sup>
 
 ## Vendor and Supply Chain Readiness
 
-Your PQC migration is only as strong as your weakest vendor. If a third-party SaaS provider, payment processor, or API gateway still uses RSA-2048, your data transiting that interface remains quantum-vulnerable regardless of your internal readiness.8
+Your PQC migration is only as strong as your weakest vendor. If a third-party SaaS provider, payment processor, or API gateway still uses RSA-2048, your data transiting that interface remains quantum-vulnerable regardless of your internal readiness.<sup>8</sup>
 
 ### The Vendor PQC Readiness Conversation
 
@@ -94,7 +94,7 @@ For each critical vendor and supplier, your procurement and security teams shoul
 
 - **CBOM disclosure:** Can you provide a Cryptographic Bill of Materials documenting which algorithms, key sizes, and protocols your product uses?
 
-The USDA has already embedded explicit PQC procurement language in its acquisition regulations—requiring that products in CISA-listed categories support PQC.9 Other federal agencies will follow. For vendors selling to the public sector, PQC readiness is quickly becoming a contract requirement, not a differentiator.
+The USDA has already embedded explicit PQC procurement language in its acquisition regulations—requiring that products in CISA-listed categories support PQC.<sup>9</sup> Other federal agencies will follow. For vendors selling to the public sector, PQC readiness is quickly becoming a contract requirement, not a differentiator.
 
 ## Building Institutional Knowledge
 
@@ -122,7 +122,7 @@ The loop has four steps:
 
 *Figure 9.1 — The Crypto-Agility Feedback Loop*
 
-**1. Monitor.** Continuously track which algorithms, key sizes, and protocols are in use across your environment. Your CBOM from Chapter 5 is a living document, not a one-time deliverable. Update it as systems change.10
+**1. Monitor.** Continuously track which algorithms, key sizes, and protocols are in use across your environment. Your CBOM from Chapter 5 is a living document, not a one-time deliverable. Update it as systems change.<sup>10</sup>
 
 **2. Evaluate.** Watch for NIST advisories, IETF draft updates, and cryptanalytic research. If a new attack weakens ML-KEM or ML-DSA, your team needs to assess the impact within days, not months. Subscribe to the NIST PQC mailing list, IETF TLS working group updates, and your vendors’ security advisories.
 

@@ -4,7 +4,7 @@ displayTitle: "Chapter 8: Protocol Deep Dives: TLS, IPsec, SSH, and PKI"
 section: "Chapters"
 chapter: 8
 order: 11
-words: 6355
+words: 6399
 readingMinutes: 29
 excerpt: "This is the engineering chapter. The previous seven chapters built the case for why migration matters, what algorithms replace the vulnerable ones, and how to plan the program. This chapter goes inside the protocols them"
 ---
@@ -19,9 +19,9 @@ Chapter 7 explained that hybrid key exchange is solved—X25519MLKEM768 adds rou
 
 ### The Math: Classical vs. PQC Authentication Data
 
-A typical TLS 1.3 handshake today transmits approximately **1,248 bytes** of authentication data: five signatures and two public keys across the certificate chain and Certificate Transparency SCTs (Signed Certificate Timestamps). This fits easily inside the initial TCP flight.1
+A typical TLS 1.3 handshake today transmits approximately **1,248 bytes** of authentication data: five signatures and two public keys across the certificate chain and Certificate Transparency SCTs (Signed Certificate Timestamps). This fits easily inside the initial TCP flight.<sup>1</sup>
 
-Replacing these with ML-DSA changes the picture dramatically. Here’s the byte-by-byte accounting for a standard three-certificate chain (root CA, intermediate CA, leaf server certificate):2
+Replacing these with ML-DSA changes the picture dramatically. Here’s the byte-by-byte accounting for a standard three-certificate chain (root CA, intermediate CA, leaf server certificate):<sup>2</sup>
 
 | **Component** | **ECDSA P-256** | **ML-DSA-44** | **ML-DSA-65** |
 | --- | --- | --- | --- |
@@ -46,7 +46,7 @@ That’s roughly a **14× increase with ML-DSA-44 and a 20× increase with ML-DS
 
 When a TCP connection opens, the server doesn’t flood the network with data. It starts with a limited **initial congestion window (initcwnd)**—the maximum amount of data it can send before waiting for the first acknowledgment from the client.
 
-RFC 6928 standardized this at **IW10: 10 segments × 1,460 bytes = approximately 14.6 KB**. Many production servers, CDNs, and cloud load balancers now run IW20 (~29 KB), but IW10 remains the default on most Linux systems and many enterprise appliances.3
+RFC 6928 standardized this at **IW10: 10 segments × 1,460 bytes = approximately 14.6 KB**. Many production servers, CDNs, and cloud load balancers now run IW20 (~29 KB), but IW10 remains the default on most Linux systems and many enterprise appliances.<sup>3</sup>
 
 Here’s the collision: a classical TLS 1.3 server response (ServerHello + certificate chain + key share + Finished) typically totals 4–6 KB—well within IW10. With PQC certificates:
 
@@ -56,11 +56,11 @@ Here’s the collision: a classical TLS 1.3 server response (ServerHello + certi
 
 - **ML-DSA-87 chain (~33 KB):** Exceeds even IW20. Multiple extra round trips on default configurations.
 
-Cloudflare’s testing measured the real-world impact: adding approximately 9 KB to TLS handshakes caused roughly a 15% slowdown. Crossing the 10 KB threshold triggered an extra round trip that slowed handshakes by over 60%.4 At scale—millions of new connections per second—that extra round trip adds measurable latency to every first page load, every API call, and every mobile app launch.
+Cloudflare’s testing measured the real-world impact: adding approximately 9 KB to TLS handshakes caused roughly a 15% slowdown. Crossing the 10 KB threshold triggered an extra round trip that slowed handshakes by over 60%.<sup>4</sup> At scale—millions of new connections per second—that extra round trip adds measurable latency to every first page load, every API call, and every mobile app launch.
 
 ### Google’s Viability Threshold
 
-Google’s Chrome team has published a candid assessment of what’s deployable:5
+Google’s Chrome team has published a candid assessment of what’s deployable:<sup>5</sup>
 
 - **Adding ~2 KB to TLS handshakes:** “Very painful, but plausible.”
 
@@ -72,7 +72,7 @@ This is why Chrome is not simply dropping PQC signatures into the existing X.509
 
 ## Merkle Tree Certificates: Google’s Architectural Answer
 
-In February 2026, Google announced **Merkle Tree Certificates (MTCs)**—a new certificate format that shrinks quantum-resistant TLS authentication data from roughly 14,700 bytes down to as little as 736 bytes. That’s potentially smaller than today’s classical certificate chains.6
+In February 2026, Google announced **Merkle Tree Certificates (MTCs)**—a new certificate format that shrinks quantum-resistant TLS authentication data from roughly 14,700 bytes down to as little as 736 bytes. That’s potentially smaller than today’s classical certificate chains.<sup>6</sup>
 
 The core insight: instead of every certificate carrying its own large post-quantum signature, a Certification Authority signs a single cryptographic commitment—a “Tree Head”—representing many certificates organized in a Merkle tree. Browsers receive compact inclusion proofs rather than full signature chains. The heavy ML-DSA signatures are applied once per batch of certificates, not once per individual certificate.
 
@@ -93,7 +93,7 @@ MTCs also integrate Certificate Transparency directly into the issuance model. B
 | **Phase 2** | Q1 2027 (target) | Invite existing CT Log operators to bootstrap public MTC infrastructure. Only operators with a “usable” Chrome CT log before Feb 1, 2026 eligible. |
 | **Phase 3** | Q3 2027 (target) | Launch Chrome Quantum-resistant Root Store (CQRS)—a separate trust store supporting only MTCs. Operates alongside existing Chrome Root Program. |
 
-The standardization work is proceeding through the IETF’s newly formed **PLANTS working group**, jointly developed by Google and Cloudflare. This is the most significant structural change to the Web PKI since Certificate Transparency itself.7
+The standardization work is proceeding through the IETF’s newly formed **PLANTS working group**, jointly developed by Google and Cloudflare. This is the most significant structural change to the Web PKI since Certificate Transparency itself.<sup>7</sup>
 
 > **MANDATE ALERT**
 > MTCs are a Chrome/Cloudflare initiative—not yet a universal standard. Non-browser TLS clients (API consumers, IoT devices, mobile apps, server-to-server traffic) will still need to handle traditional PQC certificates for the foreseeable future. Your migration plan must account for both paths: MTCs for web-facing traffic and traditional PQC certificates for everything else.
@@ -102,23 +102,23 @@ The standardization work is proceeding through the IETF’s newly formed **PLANT
 
 While MTCs are the long-term architectural answer for web browsers, there are near-term techniques to reduce the impact of large PQC certificates in traditional deployments:
 
-**Increase the initial congestion window.** Raising from IW10 to IW20 accommodates approximately 29 KB of server response in the first flight—enough for ML-DSA-44 and most ML-DSA-65 chains to complete in a single round trip. On Linux, this is a sysctl or ip route change.8
+**Increase the initial congestion window.** Raising from IW10 to IW20 accommodates approximately 29 KB of server response in the first flight—enough for ML-DSA-44 and most ML-DSA-65 chains to complete in a single round trip. On Linux, this is a sysctl or ip route change.<sup>8</sup>
 
-**TLS certificate compression.** RFC 8879 defines certificate compression for TLS 1.3. Compression can reduce on-the-wire certificate chain sizes by 40–60%, potentially keeping PQC chains within IW10. Both client and server must support it, but adoption is growing in modern browsers and web servers.9
+**TLS certificate compression.** RFC 8879 defines certificate compression for TLS 1.3. Compression can reduce on-the-wire certificate chain sizes by 40–60%, potentially keeping PQC chains within IW10. Both client and server must support it, but adoption is growing in modern browsers and web servers.<sup>9</sup>
 
 **Intermediate certificate suppression.** If browsers pre-load known intermediate CA certificates, servers don’t need to send them during the handshake. Firefox already pre-loads over 1,400 intermediate certificates. Suppressing the intermediate saves 4–5 KB per handshake—a substantial reduction when every kilobyte matters.
 
 **Use ML-DSA-44 where Level 3 isn’t required.** ML-DSA-44 provides NIST Security Level 2 (equivalent to AES-128) with 1,312-byte public keys and 2,420-byte signatures—roughly 35% smaller than ML-DSA-65. For web-facing TLS where certificate lifetimes are short and CNSA 2.0 compliance isn’t mandated, Level 2 may be sufficient.
 
-**FN-DSA (FIPS 206) for compact signatures.** Falcon produces 666-byte signatures at Level 1—3.6× smaller than ML-DSA-44. A full FN-DSA chain adds only 5–8 KB. The trade-off: Falcon’s signing algorithm requires precise floating-point arithmetic that makes constant-time implementation difficult, so it’s best suited for infrequent CA-level signing rather than high-volume leaf certificate issuance.10
+**FN-DSA (FIPS 206) for compact signatures.** Falcon produces 666-byte signatures at Level 1—3.6× smaller than ML-DSA-44. A full FN-DSA chain adds only 5–8 KB. The trade-off: Falcon’s signing algorithm requires precise floating-point arithmetic that makes constant-time implementation difficult, so it’s best suited for infrequent CA-level signing rather than high-volume leaf certificate issuance.<sup>10</sup>
 
 ## DNSSEC: The UDP Fragmentation Cascade
 
 If TLS has a certificate size problem, DNSSEC has a certificate size crisis. DNS operates primarily over UDP, where the constraints are far tighter than TCP.
 
-The recommended maximum DNS message size to avoid IP fragmentation is **1,232 bytes** (based on IPv6’s minimum MTU of 1,280 bytes minus 48 bytes for headers). Classical DNSSEC signatures from ECDSA P-256 (64 bytes) or RSA-2048 (256 bytes) fit comfortably.11
+The recommended maximum DNS message size to avoid IP fragmentation is **1,232 bytes** (based on IPv6’s minimum MTU of 1,280 bytes minus 48 bytes for headers). Classical DNSSEC signatures from ECDSA P-256 (64 bytes) or RSA-2048 (256 bytes) fit comfortably.<sup>11</sup>
 
-Post-quantum signatures do not. Even the smallest NIST-standardized PQC signature—FN-DSA-512 at 666 bytes per signature—exceeds the 1,232-byte limit when a DNSSEC response contains two or three signatures (as NSEC/NSEC3 denial-of-existence responses do). ML-DSA-44 signatures at 2,420 bytes each make the problem far worse.12
+Post-quantum signatures do not. Even the smallest NIST-standardized PQC signature—FN-DSA-512 at 666 bytes per signature—exceeds the 1,232-byte limit when a DNSSEC response contains two or three signatures (as NSEC/NSEC3 denial-of-existence responses do). ML-DSA-44 signatures at 2,420 bytes each make the problem far worse.<sup>12</sup>
 
 When a DNSSEC response exceeds the UDP limit, one of two things happens:
 
@@ -126,7 +126,7 @@ When a DNSSEC response exceeds the UDP limit, one of two things happens:
 
 - **TCP fallback:** The server sets the truncation (TC) bit, and the resolver retries the query over TCP. This adds a three-way handshake plus at least one additional round trip—roughly doubling DNS resolution time for affected queries.
 
-Research presented at IETF hackathons and the NIST PQC conferences has shown that even Falcon-512 can trigger TCP fallback in some DNSSEC scenarios. ML-DSA variants consistently force fallback.13
+Research presented at IETF hackathons and the NIST PQC conferences has shown that even Falcon-512 can trigger TCP fallback in some DNSSEC scenarios. ML-DSA variants consistently force fallback.<sup>13</sup>
 
 ### What the Community Is Exploring
 
@@ -138,23 +138,23 @@ DNSSEC’s PQC migration is further behind than TLS. The IETF has established a 
 
 - **Smaller signature algorithms:** NIST’s additional signature call includes candidates like MAYO, Hawk, and SNOVA that may offer better size profiles for DNS. These are still under evaluation.
 
-The DNS root zone’s Key Signing Key (KSK) rollover—the most consequential DNSSEC event—is expected around 2028–2029. Whether that rollover will incorporate PQC algorithms or remain classical is an open question with significant implications for the entire DNS hierarchy.14
+The DNS root zone’s Key Signing Key (KSK) rollover—the most consequential DNSSEC event—is expected around 2028–2029. Whether that rollover will incorporate PQC algorithms or remain classical is an open question with significant implications for the entire DNS hierarchy.<sup>14</sup>
 
 ## IPsec IKEv2: ML-KEM Integration
 
 Chapter 7 introduced Post-Quantum Pre-Shared Keys (PPKs) as the immediate stopgap for IPsec environments. The long-term destination is native ML-KEM integration in IKEv2, which replaces the classical Diffie-Hellman key exchange with post-quantum key encapsulation.
 
-The CNSA 2.0 IPsec profile specifies **ML-KEM-1024** for key establishment in National Security Systems. The protocol changes are relatively contained compared to TLS: IKEv2 already supports pluggable key exchange mechanisms through its Transform Type 4 (Diffie-Hellman Group) negotiation. Replacing a classical DH group with ML-KEM-1024 follows the same negotiation flow—the primary difference is message size.15
+The CNSA 2.0 IPsec profile specifies **ML-KEM-1024** for key establishment in National Security Systems. The protocol changes are relatively contained compared to TLS: IKEv2 already supports pluggable key exchange mechanisms through its Transform Type 4 (Diffie-Hellman Group) negotiation. Replacing a classical DH group with ML-KEM-1024 follows the same negotiation flow—the primary difference is message size.<sup>15</sup>
 
 ML-KEM-1024 produces a 1,568-byte public key and 1,568-byte ciphertext—substantially larger than the 256-byte DH group 14 or 32-byte X25519 shares used in classical IPsec. For typical site-to-site VPN tunnels with long-lived SAs, this per-SA overhead is manageable. For deployments with thousands of dynamic tunnels (large SD-WAN fabrics, hub-and-spoke architectures), the aggregate key exchange bandwidth becomes a capacity planning consideration.
 
-Authentication in IKEv2 also requires PQC migration. When ML-DSA certificates replace RSA or ECDSA certificates for IKE authentication, the same certificate size challenges from TLS apply—amplified in mutual TLS scenarios where both sides present certificate chains.16
+Authentication in IKEv2 also requires PQC migration. When ML-DSA certificates replace RSA or ECDSA certificates for IKE authentication, the same certificate size challenges from TLS apply—amplified in mutual TLS scenarios where both sides present certificate chains.<sup>16</sup>
 
 ## SSH: The Simplest Migration Path
 
 SSH continues to be the protocol with the smoothest PQC transition, as we previewed in Chapter 7.
 
-**Key exchange** is already PQC-ready. OpenSSH 10.0 (April 2025) defaults to mlkem768x25519-sha256. The hybrid exchange adds roughly 2.3 KB to the key exchange—noticeable in theory, but in practice, SSH sessions are long-lived and the one-time handshake overhead is amortized over the session’s lifetime.17
+**Key exchange** is already PQC-ready. OpenSSH 10.0 (April 2025) defaults to mlkem768x25519-sha256. The hybrid exchange adds roughly 2.3 KB to the key exchange—noticeable in theory, but in practice, SSH sessions are long-lived and the one-time handshake overhead is amortized over the session’s lifetime.<sup>17</sup>
 
 **Host key authentication** is the remaining migration task. SSH host keys are currently Ed25519 or RSA. Replacing them with ML-DSA host keys means larger SSH server identification payloads, but SSH doesn’t have TLS’s certificate chain overhead—there’s no intermediate CA hierarchy. A single ML-DSA-65 host key adds approximately 5.3 KB (1,952-byte public key + 3,309-byte signature), which is manageable.
 
@@ -179,7 +179,7 @@ The Public Key Infrastructure underpins everything above—TLS, IPsec, SSH certi
 
 ### Phased PKI Migration
 
-The practical migration sequence, informed by the NIST NCCoE’s guidance and the CA/Browser Forum’s evolving requirements:18
+The practical migration sequence, informed by the NIST NCCoE’s guidance and the CA/Browser Forum’s evolving requirements:<sup>18</sup>
 
 - **Phase 1 — Root and Intermediate CAs:** Issue new root certificates with PQC algorithms (ML-DSA-87 for roots needing CNSA 2.0, ML-DSA-65 for general purpose). Distribute these through trust store updates. This is the slowest step—root distribution takes years.
 
@@ -191,7 +191,7 @@ The practical migration sequence, informed by the NIST NCCoE’s guidance and th
 
 ### The PQC Root Key Ceremony
 
-Generating a new PQC root private key is not a routine task. Public and private CAs have operated under formal key ceremony practices for decades—tied to WebTrust for Certification Authorities audit requirements, CA/Browser Forum Baseline Requirements, and NIST SP 800-57 Part 2 key management guidance—to ensure that the act of creating the root key pair is witnessed, scripted, and auditable. PQC migration does not change this discipline; it extends it. The same ceremonial controls apply, with a few PQC-specific additions around algorithm selection, HSM firmware verification, and—for stateful hash-based signatures—state management.19
+Generating a new PQC root private key is not a routine task. Public and private CAs have operated under formal key ceremony practices for decades—tied to WebTrust for Certification Authorities audit requirements, CA/Browser Forum Baseline Requirements, and NIST SP 800-57 Part 2 key management guidance—to ensure that the act of creating the root key pair is witnessed, scripted, and auditable. PQC migration does not change this discipline; it extends it. The same ceremonial controls apply, with a few PQC-specific additions around algorithm selection, HSM firmware verification, and—for stateful hash-based signatures—state management.<sup>19</sup>
 
 The section that follows describes the ceremony controls that organizations issuing PQC root or intermediate CA keys should plan for. It is not a replacement for your CA’s Certificate Policy (CP) and Certification Practice Statement (CPS); those documents describe what your specific organization commits to. The following checklist is the common baseline shared across public CAs, government PKIs, and large private CAs.
 
@@ -283,13 +283,13 @@ PQC ceremonies differ in detail from classical ceremonies—larger keys, differe
 
 ### The mTLS Amplification Effect
 
-Most TLS performance studies focus on server authentication—the server sends its certificate chain to the client. In mTLS environments (common in Zero Trust, service mesh, and API gateway architectures), the client also sends a certificate chain. With PQC, the handshake is doubly impacted: a server chain of ~17 KB plus a client chain of ~17 KB means the handshake could exceed 34 KB of authentication data—well beyond IW20.20
+Most TLS performance studies focus on server authentication—the server sends its certificate chain to the client. In mTLS environments (common in Zero Trust, service mesh, and API gateway architectures), the client also sends a certificate chain. With PQC, the handshake is doubly impacted: a server chain of ~17 KB plus a client chain of ~17 KB means the handshake could exceed 34 KB of authentication data—well beyond IW20.<sup>20</sup>
 
 For organizations running mTLS at scale (every microservice authenticating to every other microservice), this is a critical capacity planning consideration that most PQC migration guides overlook.
 
 ### Shorter Certificate Lifetimes Compound the Problem
 
-The CA/Browser Forum’s Ballot SC-081v3 sets a schedule that shrinks publicly trusted TLS certificate validity: 200 days starting March 2026, 100 days by March 2027, and 47 days by March 2029.21 Shorter lifetimes mean more frequent issuance, which means paying the PQC overhead tax more often. The combination of larger certificates and higher issuance velocity is what makes a simple drop-in replacement unsustainable at internet scale—and why architectural solutions like MTCs are necessary.
+The CA/Browser Forum’s Ballot SC-081v3 sets a schedule that shrinks publicly trusted TLS certificate validity: 200 days starting March 2026, 100 days by March 2027, and 47 days by March 2029.<sup>21</sup> Shorter lifetimes mean more frequent issuance, which means paying the PQC overhead tax more often. The combination of larger certificates and higher issuance velocity is what makes a simple drop-in replacement unsustainable at internet scale—and why architectural solutions like MTCs are necessary.
 
 > **F5 PERSPECTIVE**
 > **BIG-IP Capacity Planning for PQC Certificates**
@@ -301,7 +301,7 @@ The CA/Browser Forum’s Ballot SC-081v3 sets a schedule that shrinks publicly t
 
 ## Zero Trust and IAM in a Post-Quantum World
 
-Zero Trust Architecture is predicated on a simple premise: verify every request, and let no network location confer implicit trust. NIST SP 800-207 codifies this premise through seven tenets, chief among them that all communication is secured regardless of network location, and that resource authentication and authorization are dynamic and strictly enforced. CISA’s Zero Trust Maturity Model v2.0 and OMB M-22-09 have since made Zero Trust the expected operating model for federal agencies. The premise is sound. The challenge for a PQC migration is that every Zero Trust control depends on cryptographic identity—certificates, signatures, tokens, attestations—and every one of those controls inherits the quantum-vulnerability of its underlying algorithms.22
+Zero Trust Architecture is predicated on a simple premise: verify every request, and let no network location confer implicit trust. NIST SP 800-207 codifies this premise through seven tenets, chief among them that all communication is secured regardless of network location, and that resource authentication and authorization are dynamic and strictly enforced. CISA’s Zero Trust Maturity Model v2.0 and OMB M-22-09 have since made Zero Trust the expected operating model for federal agencies. The premise is sound. The challenge for a PQC migration is that every Zero Trust control depends on cryptographic identity—certificates, signatures, tokens, attestations—and every one of those controls inherits the quantum-vulnerability of its underlying algorithms.<sup>22</sup>
 
 Zero Trust does not introduce new cryptographic problems. It amplifies the ones already described in this chapter. Where a perimeter model authenticates at the edge and trusts the interior, Zero Trust authenticates at every hop. Every service-to-service call is mTLS. Every API request is signed. Every device presents a certificate. Every user session is re-evaluated. The cryptographic surface area is larger by one or two orders of magnitude, which means the PQC migration cost is larger by the same factor.
 
