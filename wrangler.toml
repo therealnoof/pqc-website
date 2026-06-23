@@ -1,7 +1,7 @@
 # Cloudflare Workers — static assets deployment.
 # Deploy with:  npx wrangler deploy   (after `npm run build`)
 # or simply:    npm run deploy
-name = "pqc-field-guide"
+name = "pqc-website"
 compatibility_date = "2025-06-01"
 
 # Serve the built Astro site as static assets from the edge. No server-side
