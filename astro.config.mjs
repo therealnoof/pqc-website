@@ -6,7 +6,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 // Update `site` to your final Cloudflare URL (workers.dev subdomain or custom
 // domain). Used for canonical URLs and the sitemap.
-const SITE = process.env.SITE_URL || "https://pqc-field-guide.pages.dev";
+const SITE = process.env.SITE_URL || "https://pqcfieldguide.com";
 
 // https://astro.build
 export default defineConfig({
