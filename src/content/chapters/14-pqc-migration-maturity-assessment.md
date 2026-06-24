@@ -15,7 +15,7 @@ For each dimension, identify the stage (1–5) that best describes your organiza
 
 ### How to Use This Scorecard
 
-- **Assess each dimension independently.** Your organization may be at Stage 4 in Awareness but Stage 1 in PQC Availability—that’s normal.
+- **Assess each dimension independently.** Your organization may be at Stage 4 in Awareness but Stage 1 in PQC Availability, and that’s normal.
 
 - **Focus on the lowest-scoring dimensions first.** These are your bottlenecks. Improvements in one area often unblock progress in others.
 
@@ -78,6 +78,6 @@ Sum your scores across all 8 dimensions (max 40). This gives an overall maturity
 Track scores over time. The goal is steady progress across all dimensions, not perfection in any single one. A balanced approach reduces the risk of being caught with a critical gap when a quantum milestone arrives.
 
 > **PLAIN-LANGUAGE SIDEBAR**
-> This scorecard is a conversation starter, not a compliance checklist. Print it, bring it to your next security review, and have each stakeholder independently score the eight dimensions. Where scores differ by 2 or more stages, you’ve found a gap in shared understanding—and that’s the most valuable outcome of the exercise.
+> This scorecard is a conversation starter, not a compliance checklist. Print it, bring it to your next security review, and have each stakeholder independently score the eight dimensions. Where scores differ by 2 or more stages, you’ve found a gap in shared understanding, and that’s the most valuable outcome of the exercise.
 
 ### Appendix A

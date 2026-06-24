@@ -6,16 +6,16 @@ chapter: 9
 order: 12
 words: 3045
 readingMinutes: 14
-excerpt: "Deploying post-quantum cryptography is a milestone, not a finish line. Once PQC is live in your environment—hybrid TLS on the edge, updated SSH key exchanges, new certificate chains in the pipeline—a new set of operation"
+excerpt: "Deploying post-quantum cryptography is a milestone, not a finish line. Once PQC is live in your environment (hybrid TLS on the edge, updated SSH key exchanges, new certificate chains in the pipeline), a new set of operation"
 ---
 
-Deploying post-quantum cryptography is a milestone, not a finish line. Once PQC is live in your environment—hybrid TLS on the edge, updated SSH key exchanges, new certificate chains in the pipeline—a new set of operational challenges begins. This chapter covers what happens after the migration: how you monitor PQC in production, manage certificates that are 10× larger, protect long-lived signed artifacts, keep your vendor ecosystem aligned, and build the institutional knowledge to sustain the program.
+Deploying post-quantum cryptography is a milestone, not a finish line. Once PQC is live in your environment (hybrid TLS on the edge, updated SSH key exchanges, new certificate chains in the pipeline), a new set of operational challenges begins. This chapter covers what happens after the migration: how you monitor PQC in production, manage certificates that are 10× larger, protect long-lived signed artifacts, keep your vendor ecosystem aligned, and build the institutional knowledge to sustain the program.
 
 ## Protecting Long-Lived Signed Artifacts
 
-Most of the PQC migration discussion focuses on data in transit—TLS sessions, VPN tunnels, SSH connections. But some of the most consequential cryptographic artifacts in your environment aren’t protecting live traffic. They’re protecting evidence: signed firmware images, software bills of materials (SBOMs), audit logs, legal contracts, code signing certificates, and regulatory filings that must remain verifiable for years or decades.
+Most of the PQC migration discussion focuses on data in transit: TLS sessions, VPN tunnels, SSH connections. But some of the most consequential cryptographic artifacts in your environment aren’t protecting live traffic. They’re protecting evidence: signed firmware images, software bills of materials (SBOMs), audit logs, legal contracts, code signing certificates, and regulatory filings that must remain verifiable for years or decades.
 
-These artifacts face a threat that live TLS connections do not: **harvest-now, forge-later**. An adversary who captures a classically signed firmware image today could, with a future quantum computer, forge an altered version with a valid signature—retroactively compromising the trust chain. This isn’t theoretical; it’s the signature-side analog of the HNDL attack we described in Chapter 1.<sup>1</sup>
+These artifacts face a threat that live TLS connections do not: **harvest-now, forge-later**. An adversary who captures a classically signed firmware image today could, with a future quantum computer, forge an altered version with a valid signature, retroactively compromising the trust chain. This isn’t theoretical; it’s the signature-side analog of the HNDL attack we described in Chapter 1.<sup>1</sup>
 
 ### What Needs Protection
 
@@ -36,14 +36,14 @@ Researchers have formalized three practical patterns for protecting existing sig
 
 **Pattern 2: Re-signing legacy artifacts.** For existing signed artifacts that must remain verifiable beyond Q-Day, re-sign them with a PQC key inside a trusted environment (HSM or TEE). This retroactively extends the evidentiary lifetime of legacy records. The trust assumption: the original artifacts were unmodified at the time of re-signing.
 
-**Pattern 3: Merkle root anchoring.** For large batches of legacy records, compute a Merkle tree over the batch and sign only the root with a PQC signature. Individual records are verified via compact inclusion proofs against the signed root. This amortizes the cost of PQC signatures across thousands of records—a practical approach for audit log archives.
+**Pattern 3: Merkle root anchoring.** For large batches of legacy records, compute a Merkle tree over the batch and sign only the root with a PQC signature. Individual records are verified via compact inclusion proofs against the signed root. This amortizes the cost of PQC signatures across thousands of records: a practical approach for audit log archives.
 
 > **PLAIN-LANGUAGE SIDEBAR**
-> Think of re-signing legacy artifacts like a notary re-stamping old documents with a new, tamper-proof seal. The original signatures are still there—they prove the document was authentic when it was first signed. The new PQC seal proves it hasn’t been altered since, even if someone eventually finds a way to forge the original stamp.
+> Think of re-signing legacy artifacts like a notary re-stamping old documents with a new, tamper-proof seal. The original signatures are still there. They prove the document was authentic when it was first signed. The new PQC seal proves it hasn’t been altered since, even if someone eventually finds a way to forge the original stamp.
 
 ## Certificate Lifecycle Management at Scale
 
-PQC certificates are larger, expire more frequently (per the CA/Browser Forum’s tightening validity schedule), and involve new algorithms that your existing tooling may not fully support. The certificate lifecycle—issuance, distribution, installation, monitoring, renewal, and revocation—becomes more demanding across every step.
+PQC certificates are larger, expire more frequently (per the CA/Browser Forum’s tightening validity schedule), and involve new algorithms that your existing tooling may not fully support. The certificate lifecycle (issuance, distribution, installation, monitoring, renewal, and revocation) becomes more demanding across every step.
 
 ### Key Operational Changes
 
@@ -57,11 +57,11 @@ PQC certificates are larger, expire more frequently (per the CA/Browser Forum’
 
 > **MANDATE ALERT**
 > Microsoft announced general availability of PQC APIs (ML-KEM and ML-DSA) in Windows Server 2025 and Windows 11 (24H2/25H2) via CNG, with Active Directory Certificate Services (ADCS) PQC support targeted for early 2026. If you run a Microsoft PKI, this is your on-ramp for issuing PQC certificates from your enterprise CA.
-> AWS KMS and Google Cloud KMS both support ML-DSA for digital signatures. These services can sign firmware, SBOMs, and other artifacts with PQC today—no HSM upgrade required.
+> AWS KMS and Google Cloud KMS both support ML-DSA for digital signatures. These services can sign firmware, SBOMs, and other artifacts with PQC today, no HSM upgrade required.
 
 ## Performance Monitoring and Regression Detection
 
-PQC introduces measurable performance changes. In most cases, they’re small enough to be invisible to end users (1–2 ms on a TLS handshake). But in edge cases—high-latency networks, mobile connections, mTLS-heavy service meshes, or misconfigured initial congestion windows—the impact can compound.
+PQC introduces measurable performance changes. In most cases, they’re small enough to be invisible to end users (1–2 ms on a TLS handshake). But in edge cases (high-latency networks, mobile connections, mTLS-heavy service meshes, or misconfigured initial congestion windows), the impact can compound.
 
 ### What to Monitor
 
@@ -94,7 +94,7 @@ For each critical vendor and supplier, your procurement and security teams shoul
 
 - **CBOM disclosure:** Can you provide a Cryptographic Bill of Materials documenting which algorithms, key sizes, and protocols your product uses?
 
-The USDA has already embedded explicit PQC procurement language in its acquisition regulations—requiring that products in CISA-listed categories support PQC.<sup>9</sup> Other federal agencies will follow. For vendors selling to the public sector, PQC readiness is quickly becoming a contract requirement, not a differentiator.
+The USDA has already embedded explicit PQC procurement language in its acquisition regulations, requiring that products in CISA-listed categories support PQC.<sup>9</sup> Other federal agencies will follow. For vendors selling to the public sector, PQC readiness is quickly becoming a contract requirement, not a differentiator.
 
 ## Building Institutional Knowledge
 
@@ -110,7 +110,7 @@ PQC is not a one-time project that can be handed to a contractor and forgotten. 
 | **Application developers** | Library updates (OpenSSL 3.5+, BoringSSL, Windows CNG), API changes for PQC key generation, and testing strategies | Integration and testing |
 | **Leadership / CISO** | Risk posture, compliance timeline, budget implications, vendor readiness assessment | Strategic awareness and decision authority |
 
-The CCOE (Cryptographic Center of Excellence) model from Chapter 6 provides the organizational structure; training fills it with capability. Consider tabletop exercises that simulate a PQC deployment failure—a certificate chain that breaks a critical application, a middlebox that drops hybrid handshakes, or an HSM that doesn’t support ML-DSA yet. These exercises build muscle memory before the pressure of production.
+The CCOE (Cryptographic Center of Excellence) model from Chapter 6 provides the organizational structure; training fills it with capability. Consider tabletop exercises that simulate a PQC deployment failure: a certificate chain that breaks a critical application, a middlebox that drops hybrid handshakes, or an HSM that doesn’t support ML-DSA yet. These exercises build muscle memory before the pressure of production.
 
 ## The Crypto-Agility Feedback Loop
 
@@ -126,7 +126,7 @@ The loop has four steps:
 
 **2. Evaluate.** Watch for NIST advisories, IETF draft updates, and cryptanalytic research. If a new attack weakens ML-KEM or ML-DSA, your team needs to assess the impact within days, not months. Subscribe to the NIST PQC mailing list, IETF TLS working group updates, and your vendors’ security advisories.
 
-**3. Adapt.** When a change is needed—a new algorithm, a deprecated parameter, a configuration update—your crypto-agile architecture should allow it through policy and configuration changes rather than full application redeployments. This is the payoff for the modular design principles established in Chapter 6.
+**3. Adapt.** When a change is needed (a new algorithm, a deprecated parameter, a configuration update), your crypto-agile architecture should allow it through policy and configuration changes rather than full application redeployments. This is the payoff for the modular design principles established in Chapter 6.
 
 **4. Verify.** After any change, validate that the new configuration is operating correctly: handshakes complete, performance is within bounds, interoperability is maintained. Then update your CBOM and close the loop.
 
@@ -135,7 +135,7 @@ The loop has four steps:
 > **F5 PERSPECTIVE**
 > **Day-2 PQC Operations with BIG-IP**
 > BIG-IP’s role in Day-2 PQC operations extends naturally from its position as the TLS termination and visibility point:
-> **Observability:** BIG-IP telemetry (via Application Study Tool, F5 Insight, or iRules logging) can surface per-VIP cipher suite negotiation, handshake latency distributions, and certificate chain sizes. This data feeds directly into the monitoring table above—your PQC performance baseline lives on BIG-IP.
+> **Observability:** BIG-IP telemetry (via Application Study Tool, F5 Insight, or iRules logging) can surface per-VIP cipher suite negotiation, handshake latency distributions, and certificate chain sizes. This data feeds directly into the monitoring table above. Your PQC performance baseline lives on BIG-IP.
 > **Algorithm policy enforcement:** SSL/TLS profiles on BIG-IP control which cipher suites and key exchange groups are offered to clients. Updating the allowed set to include (or require) X25519MLKEM768 is a profile change, not a code deployment. When the time comes to drop classical-only key exchange, it’s the same profile change in reverse.
 > **Certificate rotation:** As PQC certificates enter production, BIG-IP’s certificate management capabilities handle the larger chain sizes. For automated rotation today, F5 publishes Kojot ACME, an open-source ACMEv2 client utility that runs on BIG-IP and supports HTTP-01 and DNS-01 validation, wildcard certificates, HSM/FIPS key preservation, HA deployments, and OCSP monitoring. On the NGINX side of F5’s portfolio, the ngx_http_acme_module ships natively in NGINX Open Source and NGINX Plus, enabling certificate issuance and renewal directly through NGINX configuration directives without external clients. Readers should expect F5’s native ACME footprint across the platform to continue expanding as 47-day certificate validity approaches.
 > **Crypto-agility at the edge:** BIG-IP is the crypto-agility enforcement point for your internet edge. When NIST publishes an advisory, when a new IETF draft changes a code point, or when your CCOE decides to adjust PQC policy, the change is implemented on a handful of BIG-IP profiles rather than hundreds of application servers.
@@ -144,7 +144,7 @@ The loop has four steps:
 
 This book has followed a deliberate arc: why the quantum threat demands action (Chapters 1–2), what replaces the vulnerable algorithms (Chapters 3–4), and how to discover, plan, deploy, and operate the migration (Chapters 5–9). Along the way, we’ve been honest about what’s solved (hybrid key exchange), what’s in progress (certificate authentication), and what’s genuinely hard (DNSSEC, long-lived evidence, and the sheer organizational challenge of touching every cryptographic system in an enterprise).
 
-The PQC migration is the most significant cryptographic transition since the move from DES to AES—and arguably larger, because it touches public-key infrastructure in ways the symmetric transition never did. But it’s also a transition with clear standards, strong community momentum, and years of preparation time for organizations that start now.
+The PQC migration is the most significant cryptographic transition since the move from DES to AES, and arguably larger, because it touches public-key infrastructure in ways the symmetric transition never did. But it’s also a transition with clear standards, strong community momentum, and years of preparation time for organizations that start now.
 
 The Appendices that follow provide quick-reference tools for your team: a glossary, an algorithm cheat sheet, a compliance checklist, and a vendor PQC readiness assessment template. Keep this book within arm’s reach. The migration is a multi-year journey, and the operational practices in this chapter will be your daily companion long after the deployment celebrations are over.
 

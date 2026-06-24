@@ -22,7 +22,7 @@ We designed this guide so you don’t have to read it cover to cover. Different 
 > **Start with:** Ch 3 (New Algorithms) → Ch 5 (Crypto Discovery) → Ch 6 (Migration Roadmap) → Ch 7 (Hybrid Mode) → Ch 8 (Protocol Deep Dives)
 
 > ■  **THE NETWORK / SECURITY ENGINEER**
-> “I need to know what changes in TLS, IPsec, SSH, and PKI—and what breaks.”
+> “I need to know what changes in TLS, IPsec, SSH, and PKI, and what breaks.”
 > **Start with:** Ch 3 (New Algorithms) → Ch 7 (Hybrid Mode) → Ch 8 (Protocol Deep Dives) → Ch 9 (Day-2 Operations)
 
 > ■  **THE FEDERAL / DoD PROGRAM MANAGER**
@@ -55,4 +55,4 @@ Throughout this book, you’ll see a few recurring elements designed to help you
 > When we need to explain a complex technical concept, these sidebars give you the “tell it to me like I’m briefing the general” version alongside the technical detail.
 
 > **F5 PERSPECTIVE**
-> Clearly marked sections where we show how F5 capabilities map to a specific migration challenge. Vendor-neutral guidance always comes first. Skip these if your stack doesn’t include F5—you won’t miss any core content.
+> Clearly marked sections where we show how F5 capabilities map to a specific migration challenge. Vendor-neutral guidance always comes first. Skip these if your stack doesn’t include F5. You won’t miss any core content.

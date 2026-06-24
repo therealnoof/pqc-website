@@ -4,14 +4,14 @@ displayTitle: "Chapter 4: The Regulatory Landscape"
 section: "Chapters"
 chapter: 4
 order: 7
-words: 4052
-readingMinutes: 18
+words: 5264
+readingMinutes: 23
 excerpt: "If the first three chapters answered “why should we care?” and “what’s at risk?”, this chapter answers the question that gets CISOs and program managers out of their chairs: “Who says we have to do this, and by when?”"
 ---
 
 If the first three chapters answered “why should we care?” and “what’s at risk?”, this chapter answers the question that gets CISOs and program managers out of their chairs: “Who says we have to do this, and by when?”
 
-The PQC regulatory landscape is complex and actively evolving. It spans federal law, executive policy, agency-specific mandates, standards body timelines, and international frameworks—each with different enforcement mechanisms and deadlines. This chapter organizes all of it so you can determine exactly which requirements apply to your organization.
+The PQC regulatory landscape is complex and actively evolving. It spans federal law, executive policy, agency-specific mandates, standards body timelines, and international frameworks, each with different enforcement mechanisms and deadlines. This chapter organizes all of it so you can determine exactly which requirements apply to your organization.
 
 ## First Principles: Law vs. Policy vs. Guidance
 
@@ -21,21 +21,21 @@ Before we map the specific mandates, we need to establish a critical distinction
 | --- | --- | --- | --- |
 | **Federal Law** | Passed by Congress, signed by the President. Requires an act of Congress to repeal. | **No. Survives any administration change.** | Quantum Computing Cybersecurity Preparedness Act |
 | **National Security Memorandum** | Presidential directive on national security policy. Binding on federal agencies. | Yes, by the sitting President. But rarely done. | NSM-10 (not rescinded by Trump admin) |
-| **Executive Order** | Presidential directive on federal operations. Binding on executive branch agencies. | Yes. Commonly modified or rescinded by subsequent presidents. | EO 14306 (Trump, June 2025) |
+| **Executive Order** | Presidential directive on federal operations. Binding on executive branch agencies. | Yes. Commonly modified or rescinded by subsequent presidents. | EO 14306 (Trump, June 2025); EO 14409 (Trump, June 2026) |
 | **OMB Memo** | Implementation guidance from the Office of Management and Budget. Binding on federal agencies. | Yes, by OMB. But typically remains until replaced. | M-23-02 (crypto inventories) |
 | **Agency Guidance / Standard** | Recommendations and standards from NIST, NSA, CISA. Compliance often required by federal procurement or accreditation frameworks. | Standards can be revised but rarely fully withdrawn. | NIST IR 8547, CNSA 2.0, CISA PQC product list |
 
-This hierarchy matters enormously. The Quantum Computing Cybersecurity Preparedness Act is **federal law**—no executive order can override it. NSM-10 has not been rescinded. NIST standards are embedded in federal procurement requirements across the entire government. Understanding which mandates are durable versus which are politically contingent is essential for building a migration plan that survives the next election cycle.<sup>1</sup>
+This hierarchy matters enormously. The Quantum Computing Cybersecurity Preparedness Act is **federal law**. No executive order can override it. NSM-10 has not been rescinded. NIST standards are embedded in federal procurement requirements across the entire government. Understanding which mandates are durable versus which are politically contingent is essential for building a migration plan that survives the next election cycle.<sup>1</sup>
 
 ## United States: The Federal PQC Framework
 
 ### The Quantum Computing Cybersecurity Preparedness Act (Federal Law)
 
-Signed into law on December 21, 2022, this is the **bedrock of US PQC policy**—the one mandate that cannot be rescinded by any president.<sup>2</sup>
+Signed into law on December 21, 2022, this is the **bedrock of US PQC policy**: the one mandate that cannot be rescinded by any president.<sup>2</sup>
 
 The Act requires:
 
-- OMB to issue guidance on migrating federal IT systems to PQC (due within one year of NIST standards publication—approximately August 2025)
+- OMB to issue guidance on migrating federal IT systems to PQC (due within one year of NIST standards publication, approximately August 2025)
 
 - Federal agencies to maintain cryptographic inventories of systems vulnerable to quantum attack
 
@@ -72,7 +72,7 @@ President Trump’s EO 14306, “Sustaining Select Efforts to Strengthen the Nat
 
 - NSA and OMB must issue requirements for TLS 1.3 or successor support by January 2, 2030
 
-- The quantum threat language—including identification of China as the most active cyber threat—was retained verbatim
+- The quantum threat language, including identification of China as the most active cyber threat, was retained verbatim
 
 **What was removed:**
 
@@ -84,9 +84,34 @@ President Trump’s EO 14306, “Sustaining Select Efforts to Strengthen the Nat
 
 The practical effect: EO 14306 loosened the federal urgency of PQC adoption while preserving the direction. Agencies retain latitude on implementation pace, but the destination (quantum-resistant cryptography by 2035) remains unchanged.
 
+### Executive Order 14409 (June 2026): Hard Deadlines Return
+
+If EO 14306 loosened the federal urgency around PQC, the executive order signed June 22, 2026 (“Securing the Nation Against Advanced Cryptographic Attacks,” EO 14409) put it back. EO 14306 had removed the “as soon as practicable” pressure and let agencies set their own pace. The June 2026 order gives them deadlines instead. It does not rescind or amend EO 14306; it adds a harder, date-driven layer on top of it.<sup>16</sup>
+
+The order sets two binding deadlines for federal civilian high-value assets (HVAs) and high-impact systems:
+
+- **PQC for key establishment by December 31, 2030.**
+
+- **PQC for digital signatures by December 31, 2031.**
+
+It also drives a near-term action cadence measured from the signing date:
+
+- **30 days:** agency heads identify a PQC migration lead and report it to the OMB Director and the National Cyber Director.
+
+- **90 days:** OMB issues guidance directing agencies to review HVA and high-impact system inventories, submit migration plans, and align to the 2030/2031 deadlines.
+
+- **180 days:** NIST begins a PQC migration pilot (to complete by December 31, 2027); CISA releases cryptographic bill-of-materials (CBOM) guidance; NIST revises the Cryptographic Module Validation Program (CMVP); and the FAR Council publishes a proposed rule requiring **covered contractors to comply with NIST FIPS (including the PQC standards) by December 31, 2030.**
+
+- **270 days:** CISA and NIST release vulnerability-disclosure program guidance, and NSA reports on National Security System PQC migration status (annually thereafter).
+
+The practical effect is a re-tightening of the federal schedule. The 2035 NSM-10 end-state still stands as the outer bound, but for HVAs and high-impact systems the operative dates are now **2030 and 2031**, and the FAR rule moves PQC from “procurement pressure” to a contractual requirement for federal suppliers. National Security Systems are largely carved out of this order; they remain governed by CNSA 2.0 and the Department of War’s PQC program (discussed below).
+
+> **⚠  MANDATE ALERT**
+> EO 14409 does not replace EO 14306, NSM-10, or the Preparedness Act. It stacks on them. For a federal civilian agency, the binding question is no longer “by 2035” but “are our high-value assets on PQC key establishment by the end of 2030 and PQC signatures by the end of 2031?” The contractor FIPS/PQC deadline (December 31, 2030) extends that same pressure to the entire federal supply chain.
+
 ## CNSA 2.0: The NSA’s Timeline for National Security Systems
 
-For organizations operating in or selling to National Security Systems (NSS) environments—DoD, intelligence community, classified networks—the NSA’s Commercial National Security Algorithm Suite 2.0 is the binding standard.<sup>6</sup> CNSA 2.0 is more aggressive than the general federal timeline:
+For organizations operating in or selling to National Security Systems (NSS) environments (DoD, intelligence community, classified networks), the NSA’s Commercial National Security Algorithm Suite 2.0 is the binding standard.<sup>6</sup> CNSA 2.0 is more aggressive than the general federal timeline:
 
 | **System Category** | **Support & Prefer CNSA 2.0 By** | **Exclusively Use CNSA 2.0 By** | **Notes** |
 | --- | --- | --- | --- |
@@ -104,32 +129,62 @@ CNSA 2.0 specifies exact algorithms: **ML-KEM-1024** for key establishment and *
 
 CNSA 2.0 specifies the algorithms. NSM-10 sets the destination. But for organizations that operate or deliver into Department of War networks, a third document now sits on top of both: the DoW CIO memorandum *Preparing for Migration to Post Quantum Cryptography*, issued November 18, 2025 by Katherine Arrington (Performing the Duties of the CIO).<sup>13</sup>
 
-The memo creates a new, DoW-specific approval gate. Every DoW Component—Services, Combatant Commands, Defense Agencies, and Field Activities—must now coordinate cryptographic migration through a centralized **DoW CIO PQC Directorate**, led by Dr. Britta Hale. Any “engagement” with PQC technology—defined broadly as testing, evaluating, piloting, researching, investing in, prototyping, demonstrating, implementing, integrating, or any planned or actual acquisition—requires two new authorizations issued by the Directorate:
+The memo creates a new, DoW-specific approval gate. Every DoW Component (Services, Combatant Commands, Defense Agencies, and Field Activities) must now coordinate cryptographic migration through a centralized **DoW CIO PQC Directorate**, led by Dr. Britta Hale. Any “engagement” with PQC technology (defined broadly as testing, evaluating, piloting, researching, investing in, prototyping, demonstrating, implementing, integrating, or any planned or actual acquisition) requires two new authorizations issued by the Directorate:
 
 - **Cryptographic intake approval,** before any test, evaluation, pilot, investment, or acquisition begins.
 
-- **Cryptographic deployment approval,** before any PQC-enabling or PQC-related technology is deployed. Deployment approval is informed by Intelligence Community, NIST, and NSA certification outcomes—meaning FIPS 140-3, NIAP Common Criteria, and NSA CSfC validation are inputs to the decision, not substitutes for it.
+- **Cryptographic deployment approval,** before any PQC-enabling or PQC-related technology is deployed. Deployment approval is informed by Intelligence Community, NIST, and NSA certification outcomes, meaning FIPS 140-3, NIAP Common Criteria, and NSA CSfC validation are inputs to the decision, not substitutes for it.
 
 If the Directorate identifies issues that cannot be mitigated, the technology is removed from engagement and use immediately. This is a real cessation authority, not a comment-and-recommend role.
 
 The memo also issues three immediate prohibitions and two phase-out deadlines that affect every DoW Component’s procurement pipeline today:
 
-- **Quantum confidentiality and keying technologies are out, effective immediately.** No testing, piloting, use, or procurement of QKD; QKD combined with other cryptographic key establishment; quantum communications or networking; non-local quantum randomness generation; or non-FIPS random number generation for confidentiality, authenticity, integrity, key distribution, or randomness generation—absent specific Directorate exception. Chapter 7 explains why this technical position is not new; the November 2025 memo makes it binding for DoW.
+- **Quantum confidentiality and keying technologies are out, effective immediately.** No testing, piloting, use, or procurement of QKD; QKD combined with other cryptographic key establishment; quantum communications or networking; non-local quantum randomness generation; or non-FIPS random number generation for confidentiality, authenticity, integrity, key distribution, or randomness generation, absent specific Directorate exception. Chapter 7 explains why this technical position is not new; the November 2025 memo makes it binding for DoW.
 
 - **Commercial PSK-based “quantum resistance” solutions are out, effective immediately.** Pre-shared keys provisioned through NSA KMI for Type 1 devices remain permitted. All other commercial PSK-based quantum-resistance approaches are prohibited from new test, pilot, use, or procurement actions.
 
-- **Commercial symmetric key establishment, key agreement, and key distribution protocols for quantum resistance are out, effective immediately—**same prohibition scope as PSKs.
+- **Commercial symmetric key establishment, key agreement, and key distribution protocols for quantum resistance are out, effective immediately:** same prohibition scope as PSKs.
 
 - **By December 31, 2030,** non-KMI PSK solutions and symmetric key establishment/agreement/distribution protocols must be phased out and replaced with NIST-approved (CNSA 2.0–listed for NSS) asymmetric PQC key establishment.
 
 - **By December 31, 2031,** the same phase-out applies to solutions currently registered with NSA CSfC. Pre-2010 symmetric key distribution use cases are explicitly grandfathered as legacy.
 
-A DoW PQC Strategy is referenced repeatedly throughout the memo and is in preparation. It will be the master execution document. As of this writing, it has not been published; new requirements, approval processes, and updates are being maintained centrally at https://cybersecurityks.osd.mil/DoDcs/pqc. Component-level PQC migration leads were due to the Directorate within twenty days of the memo’s issuance, with annual updates each September 30.<sup>14</sup>
+A DoW PQC Strategy is referenced repeatedly throughout the memo as the master execution document that would follow. It has since been published, signed April 1, 2026 (see the next section). New requirements, approval processes, and updates are maintained centrally at https://cybersecurityks.osd.mil/DoDcs/pqc. Component-level PQC migration leads were due to the Directorate within twenty days of the memo’s issuance, with annual updates each September 30.<sup>14</sup>
 
 > **⚠  MANDATE ALERT**
-> The DoW CIO PQC Directorate’s intake and deployment approvals are an **additional** gate on top of FIPS 140-3, NIAP Common Criteria, and NSA CSfC—not a replacement. A DoW Component cannot lawfully acquire, pilot, deploy, or use any PQC-enabling or PQC-related technology without explicit Directorate approval, even when the underlying product holds every existing federal certification. As of this writing, the operational machinery for this approval (forms, criteria, SLAs, vendor-facing process documentation) is still being stood up; expect this to evolve as the DoW PQC Strategy is published and the Directorate matures.
+> The DoW CIO PQC Directorate’s intake and deployment approvals are an **additional** gate on top of FIPS 140-3, NIAP Common Criteria, and NSA CSfC, not a replacement. A DoW Component cannot lawfully acquire, pilot, deploy, or use any PQC-enabling or PQC-related technology without explicit Directorate approval, even when the underlying product holds every existing federal certification. As of this writing, the operational machinery for this approval (forms, criteria, SLAs, vendor-facing process documentation) is still being stood up; expect this to evolve as the DoW PQC Strategy is published and the Directorate matures.
 
-The practical implication for vendors and integrators: a product that has cleared FIPS 140-3, NIAP CC, and CSfC is no longer sufficient on its own to be acquired or deployed by a DoW Component for PQC purposes. The Directorate’s intake and deployment approvals are now decision points in the procurement path, and the artifacts the Directorate will demand—test plans, test results, acquisition artifacts, risk mitigations—should be assembled in parallel with traditional certification work, not after.<sup>15</sup>
+The practical implication for vendors and integrators: a product that has cleared FIPS 140-3, NIAP CC, and CSfC is no longer sufficient on its own to be acquired or deployed by a DoW Component for PQC purposes. The Directorate’s intake and deployment approvals are now decision points in the procurement path, and the artifacts the Directorate will demand (test plans, test results, acquisition artifacts, risk mitigations) should be assembled in parallel with traditional certification work, not after.<sup>15</sup>
+
+### The DoW PQC Strategy (April 2026): The Master Execution Document
+
+The execution document the November 2025 memo kept pointing to is now public. Signed April 1, 2026 by DoW CIO Kirsten A. Davies and cleared for open publication, the **Department of War Post Quantum Cryptography Strategy** is the master plan the Directorate’s intake and deployment gates were built to serve.<sup>17</sup>
+
+Its headline mandate mirrors the new federal civilian deadlines but applies them department-wide: **no later than December 31, 2030, all DoW systems must support PQC or be phased out; no later than December 31, 2031, all DoW systems must use PQC,** unless otherwise noted. For National Security Systems, the binding algorithm suite remains **CNSA 2.0**.
+
+The strategy organizes the work into **five Lines of Effort (LOEs):**
+
+1. **Optimize DoW Governance:** a centralized oversight body (the Directorate above), streamlined NSA certification and reciprocity, updated policies and acquisition authorities, and workforce preparation.
+
+2. **Baseline Inventory and Plan:** identify all NSS and non-NSS cryptography (including in the Defense Industrial Base), conduct quantum-threat impact assessments, and build component-level migration roadmaps and response plans.
+
+3. **Develop and Analyze:** mature PQC algorithms and protocols with NIST/NSA and international standards bodies (NATO, IETF), promote cryptographic agility, and vet commercial solutions early.
+
+4. **Integrate Commercial Solutions:** drive PQC into commodity IT through CSfC and NIAP, modernize the DoW PKI, adopt PQC software/firmware signing, and extend CMMC to require PQC across the DIB.
+
+5. **Deploy Quantum Resistant Devices:** modernize the NSA Key Management Infrastructure (KMI) and field PQC across data links, transport, space systems, telephony, tactical radios, and edge devices.
+
+Execution runs along **two acquisition tracks:** a **High Assurance ECU track** (NSA-certified End Cryptographic Units dependent on the NSA KMI) and a **Commercial Solutions track** (NIST PQC algorithms in commodity IT, including the CSfC program for classified use).
+
+The strategy also draws several hard technical lines that a compliant solution cannot cross:
+
+- **Confidentiality-only migration is not considered PQC.** A solution that adds PQC key establishment but leaves authentication classical is not compliant; PQC authentication is required too.
+
+- **A mission thread is only “quantum resistant” when vulnerable algorithms are deprecated** end to end across the data lifecycle (supply chain, at-rest, and in-transit), not merely when PQC is switched on alongside them.
+
+- **QKD, quantum networking, non-local quantum randomness, and (outside NSA KMI) symmetric and PSK-based key establishment are excluded** as quantum-resistance solutions: the same prohibitions the November 2025 memo had already made binding for DoW.<sup>17</sup>
+
+For DoD/DoW readers, Appendix G maps the book’s five-phase migration model against these five LOEs alongside the RMF and acquisition frameworks.
 
 ## NIST IR 8547: The Deprecation Timeline
 
@@ -139,15 +194,15 @@ Published in November 2024 as an initial public draft, NIST IR 8547 (“Transiti
 
 - **Disallowed after 2035:** All quantum-vulnerable public-key algorithms at any security strength. “Disallowed” means NIST-compliant systems cannot use the algorithm at all. Period.
 
-NIST IR 8547 also supports hybrid cryptographic solutions during the transition—combining classical and PQC algorithms so that the system remains secure as long as at least one algorithm holds. This is particularly relevant for organizations that want to begin migration now without waiting for full PQC ecosystem maturity.
+NIST IR 8547 also supports hybrid cryptographic solutions during the transition, combining classical and PQC algorithms so that the system remains secure as long as at least one algorithm holds. This is particularly relevant for organizations that want to begin migration now without waiting for full PQC ecosystem maturity.
 
 ## International: The Global Picture
 
-### United Kingdom — NCSC Three-Phase Roadmap
+### United Kingdom: NCSC Three-Phase Roadmap
 
-The UK’s National Cyber Security Centre (part of GCHQ) published its PQC migration timeline in March 2025—the first major regulatory jurisdiction to endorse NIST’s standardized algorithms and set concrete deadlines.<sup>9</sup>
+The UK’s National Cyber Security Centre (part of GCHQ) published its PQC migration timeline in March 2025. It was the first major regulatory jurisdiction to endorse NIST’s standardized algorithms and set concrete deadlines.<sup>9</sup>
 
-- **By 2028:** Complete discovery—identify all cryptographic services needing upgrades, build a migration plan, create a cryptographic inventory.
+- **By 2028:** Complete discovery: identify all cryptographic services needing upgrades, build a migration plan, create a cryptographic inventory.
 
 - **By 2031:** Execute high-priority upgrades for critical systems and refine migration plans as PQC standards mature.
 
@@ -155,7 +210,7 @@ The UK’s National Cyber Security Centre (part of GCHQ) published its PQC migra
 
 The NCSC prioritizes critical national infrastructure: NHS healthcare systems, City of London financial services, defense, and government. For most SMEs, the transition will happen through routine vendor updates. Larger organizations must take active ownership.
 
-### European Union — NIS2 PQC Roadmap
+### European Union: NIS2 PQC Roadmap
 
 The EU’s approach is structured through the NIS Cooperation Group’s coordinated implementation roadmap, published in early 2025.<sup>10</sup>
 
@@ -167,7 +222,7 @@ The EU’s approach is structured through the NIS Cooperation Group’s coordina
 
 In January 2026, the European Commission published a proposed directive amending NIS2 to include **explicit post-quantum cryptography requirements** written directly into the directive text for the first time. ENISA has published guidance recommending hybrid PQ/T schemes (combining classical algorithms with PQC) to smooth interoperability during transition.
 
-### Financial Sector — G7 Roadmap
+### Financial Sector: G7 Roadmap
 
 The G7 Cyber Expert Group released a financial sector PQC roadmap on January 13, 2026, co-chaired by the US Treasury and Bank of England.<sup>11</sup> It targets critical financial systems for migration by 2030–2032 and full transition by 2035. FINRA, FS-ISAC, and national financial regulators are expected to align sector-specific guidance with this framework.
 
@@ -177,9 +232,9 @@ The PQC mandates don’t apply uniformly. Your migration urgency depends on your
 
 | **Sector** | **Primary PQC Drivers** | **Key Dates** |
 | --- | --- | --- |
-| **DoD / Intelligence** | CNSA 2.0, NSM-10, CNSSP 15, DoW CIO PQC Memo (Nov 2025). Mandatory. DoW Components must obtain intake and deployment approval from the DoW CIO PQC Directorate. No waivers without explicit Directorate or NSA approval. | New acquisitions: Jan 2027. Networking: 2030. Full: 2033–2035. |
-| **Federal Civilian (FCEB)** | Preparedness Act, NSM-10, M-23-02, EO 14306, NIST IR 8547. Compliance tracked via FISMA. | Transition plans: Apr 2026. Deprecated: 2030. Disallowed: 2035. |
-| **Federal Contractors** | CISA PQC product list, DFARS/CMMC for DoD suppliers, agency-specific acquisition rules (e.g., USDA AGAR). | PQC readiness expected: Jan 2027. Procurement pressure accelerating. |
+| **DoD / Intelligence (DoW)** | CNSA 2.0, NSM-10, CNSSP 15, DoW CIO PQC Memo (Nov 2025), DoW PQC Strategy (Apr 2026). Mandatory. DoW Components must obtain intake and deployment approval from the DoW CIO PQC Directorate. No waivers without explicit Directorate or NSA approval. | New acquisitions: Jan 2027. Support PQC: 2030. Use PQC: 2031. CNSA 2.0 category deadlines run to 2033 where noted. |
+| **Federal Civilian (FCEB)** | Preparedness Act, NSM-10, M-23-02, EO 14306, EO 14409, NIST IR 8547. Compliance tracked via FISMA. | Transition plans: Apr 2026. HVAs (key establishment): 2030, signatures: 2031. Deprecated: 2030. Disallowed: 2035. |
+| **Federal Contractors** | CISA PQC product list, DFARS/CMMC for DoD suppliers, EO 14409 FAR rule, agency-specific acquisition rules (e.g., USDA AGAR). | PQC readiness expected: Jan 2027. FAR FIPS/PQC compliance: Dec 31, 2030. |
 | **Financial Services** | G7 roadmap, FINRA guidance, FS-ISAC publications. HNDL risk acute for transaction data. | G7 targets critical systems: 2030–2032. Full: 2035. |
 | **Healthcare** | HIPAA “reasonable safeguards” (evolves with technology). Long data lifetimes (medical records are permanent). | No explicit PQC mandate yet. HNDL risk is extreme due to data lifetime. |
 | **Critical Infrastructure** | CISA PQC Initiative, EU NIS2. OT/ICS environments have unique migration challenges. | EU: critical infrastructure by 2030. US: varies by sector. |
@@ -193,9 +248,9 @@ The mandates described above ride on top of existing acquisition frameworks. Und
 
 **DoDI 5000.02 Adaptive Acquisition Framework (AAF).** Reissued January 23, 2020 with Change 1 (June 8, 2022), DoDI 5000.02 replaced the traditional one-size-fits-all model with six tailorable pathways: Urgent Capability Acquisition, Middle Tier of Acquisition (rapid prototyping and rapid fielding), Major Capability Acquisition, Software Acquisition, Defense Business Systems, and Acquisition of Services. PQC entry points vary by pathway. Major Capability Acquisition has the most structured milestone gates (Milestone A/B/C) at which PQC requirements can be specified; Software Acquisition moves fastest through iterative deliveries; Middle Tier rapid fielding programs must complete within five years of program start and typically inherit PQC requirements from the parent system.
 
-**NASA NPR 7120.5F (Space Flight Program and Project Management).** NASA space flight programs follow a two-phase structure—Formulation and Implementation—subdivided into Phase A through Phase F with Key Decision Points (KDPs) as approval gates. PQC requirements for NASA systems enter primarily at Phase A (Concept & Technology Development) for new missions; for existing missions in Phase E (Operations & Sustainment), PQC arrives through capability upgrades or technology refresh cycles. Ground systems supporting space flight operations are explicitly within NPR 7120.5F scope.
+**NASA NPR 7120.5F (Space Flight Program and Project Management).** NASA space flight programs follow a two-phase structure (Formulation and Implementation) subdivided into Phase A through Phase F with Key Decision Points (KDPs) as approval gates. PQC requirements for NASA systems enter primarily at Phase A (Concept & Technology Development) for new missions; for existing missions in Phase E (Operations & Sustainment), PQC arrives through capability upgrades or technology refresh cycles. Ground systems supporting space flight operations are explicitly within NPR 7120.5F scope.
 
-The practical implication: a regulatory date is a constraint on when PQC capability must be present in a deployed system, not a directive for how a program acquires it. A DoD Major Capability Acquisition program starting in 2026 may not field initial operational capability until 2030–2033—so PQC must be in the requirements baseline at program start to meet CNSA 2.0’s Jan 2027 “new acquisitions” gate, even though the deployed system won’t exist until years later. Appendix G provides a detailed crosswalk mapping the book’s five-phase PQC migration model against each of these frameworks.
+The practical implication: a regulatory date is a constraint on when PQC capability must be present in a deployed system, not a directive for how a program acquires it. A DoD Major Capability Acquisition program starting in 2026 may not field initial operational capability until 2030–2033, so PQC must be in the requirements baseline at program start to meet CNSA 2.0’s Jan 2027 “new acquisitions” gate, even though the deployed system won’t exist until years later. Appendix G provides a detailed crosswalk mapping the book’s five-phase PQC migration model against each of these frameworks.
 
 ## The Master Timeline: Everything in One View
 
@@ -203,39 +258,41 @@ This is the single consolidated reference. We’ve mapped every major PQC milest
 
 | **Date** | **Milestone** | **Source** |
 | --- | --- | --- |
-| **Aug 2024** | NIST publishes FIPS 203/204/205—first finalized PQC standards | NIST |
-| **Nov 2024** | NIST IR 8547 published—formal deprecation timeline announced | NIST |
+| **Aug 2024** | NIST publishes FIPS 203/204/205: first finalized PQC standards | NIST |
+| **Nov 2024** | NIST IR 8547 published: formal deprecation timeline announced | NIST |
 | **Mar 2025** | NIST selects HQC as fifth PQC algorithm; UK NCSC publishes 3-phase roadmap | NIST, NCSC |
 | **Jun 2025** | EO 14306 modifies federal PQC posture (preserves direction, loosens urgency) | White House |
 | **Nov 2025** | **DoW CIO PQC Memo: new intake/deployment approval gate; QKD and commercial PSK/symmetric KE prohibited immediately** | DoW CIO |
 | **Jan 2026** | CISA publishes PQC product categories list for federal procurement | CISA / EO 14306 |
-| **Apr 2026** | **FCEB agencies submit PQC transition plans (crypto inventory + roadmap)** | NSM-10 / M-23-02 |
+| **Apr 2026** | **FCEB agencies submit PQC transition plans (crypto inventory + roadmap). DoW PQC Strategy signed (support PQC 2030, use PQC 2031).** | NSM-10 / M-23-02, DoW |
+| **Jun 2026** | **EO 14409 sets hard civilian deadlines: HVA key establishment 2030, signatures 2031; contractor FIPS/PQC 2030. DoW PQC Strategy published.** | White House, DoW |
 | **2026–2027** | CNSA 2.0: Networking equipment must support PQC. FN-DSA and HQC standards expected. | NSA, NIST |
 | **Jan 2027** | **All new NSS acquisitions must be CNSA 2.0 compliant. Federal contractors demonstrate PQC readiness.** | CNSA 2.0 / EO 14306 |
 | **2028** | UK NCSC Phase 1 complete: all orgs have crypto inventory and migration plan | UK NCSC |
-| **Jan 2030** | **All federal systems support TLS 1.3+. CNSA 2.0 exclusive for VPNs/routers and software signing. NIST deprecates 112-bit public-key algorithms. DoW phase-out of non-KMI PSK and symmetric KE protocols complete (CSfC-registered: Dec 2031).** | EO 14306, CNSA 2.0, NIST |
+| **2030** | **EO 14409: federal HVAs use PQC for key establishment; covered contractors meet NIST FIPS/PQC (Dec 31). All federal systems support TLS 1.3+. CNSA 2.0 exclusive for VPNs/routers and software signing. NIST deprecates 112-bit public-key algorithms. DoW systems support PQC; non-KMI PSK and symmetric KE phase-out complete.** | EO 14409, EO 14306, CNSA 2.0, NIST, DoW |
+| **2031** | **EO 14409: federal HVAs use PQC for digital signatures. DoW systems use PQC; CSfC-registered phase-out complete.** | EO 14409, DoW |
 | **2030–2032** | EU: critical infrastructure to PQC. G7: critical financial systems migrated. UK Phase 2 complete. | EU NIS2, G7, NCSC |
 | **2033** | CNSA 2.0 exclusive for web/cloud, operating systems, niche devices, legacy replacement | NSA CNSA 2.0 |
 | **2035** | **NIST disallows all quantum-vulnerable public-key algorithms. NSM-10 full migration target. EU/UK complete.** | NIST, NSM-10, EU, UK |
 
 ## What This Means for You
 
-**If you operate NSS or sell to DoD:** CNSA 2.0 is your binding standard. New acquisitions must be compliant by January 2027. You are already behind on software signing.
+**If you operate NSS or sell to DoD:** CNSA 2.0 is your binding standard. New acquisitions must be compliant by January 2027. You are already behind on software signing. The April 2026 DoW PQC Strategy adds a department-wide bar (systems must support PQC by the end of 2030 and use it by the end of 2031), and every DoW Component must clear the DoW CIO PQC Directorate’s intake and deployment gates before piloting, buying, or fielding anything.
 
-**If you’re a federal civilian agency:** Your crypto inventory and transition plan should be in progress or submitted. 2030 deprecation means no new systems with RSA/ECC after that date.
+**If you’re a federal civilian agency:** Your crypto inventory and transition plan should be in progress or submitted. EO 14409 now puts dates on the work: high-value assets need PQC for key establishment by the end of 2030 and for digital signatures by the end of 2031. Name your migration lead and align the plan to those deadlines. 2030 deprecation also means no new systems with RSA/ECC after that date.
 
-**If you’re a federal contractor:** PQC readiness is becoming a procurement requirement. The CISA product categories list is already shaping buying decisions. If your products don’t support PQC, you risk being excluded from future contracts.
+**If you’re a federal contractor:** PQC readiness is becoming a procurement requirement. The CISA product categories list is already shaping buying decisions, and EO 14409 directs a FAR rule requiring covered contractors to meet NIST FIPS (including the PQC standards) by December 31, 2030. If your products don’t support PQC, you risk being excluded from future contracts.
 
-**If you’re in the private sector:** No direct federal mandate (unless you’re a contractor), but the NIST deprecation timeline will cascade through every compliance framework that references NIST standards—which is nearly all of them. If your customers are in regulated industries, they will require PQC from their vendors.
+**If you’re in the private sector:** No direct federal mandate (unless you’re a contractor), but the NIST deprecation timeline will cascade through every compliance framework that references NIST standards, which is nearly all of them. If your customers are in regulated industries, they will require PQC from their vendors.
 
 **If you operate internationally:** The UK, EU, and G7 timelines are converging on 2035 with intermediate milestones. Multinational organizations must track requirements across multiple jurisdictions.
 
 > **PLAIN-LANGUAGE SIDEBAR**
-> The bottom line: regardless of your sector, 2035 is the hard stop. But the real operational deadlines are earlier—January 2027 for DoD, 2028 for UK discovery, 2030 for NIST deprecation and CNSA 2.0 networking. The organizations that start now will migrate calmly. The ones that wait until 2030 will discover what panic looks like at enterprise scale.
+> The bottom line: regardless of your sector, 2035 is the outer bound, but the real operational deadlines land much earlier. January 2027 for DoD new acquisitions, 2028 for UK discovery, 2030 for NIST deprecation, CNSA 2.0 networking, EO 14409 key establishment, and the contractor FIPS/PQC rule, then 2031 for EO 14409 signatures and full DoW PQC use. The organizations that start now will migrate calmly. The ones that wait until 2030 will discover what panic looks like at enterprise scale.
 
 ## What’s Next
 
-You now know why you need to migrate, what is broken, what replaces it, and who says you have to. The next question is intensely practical: how do you find all the cryptography in your environment? Chapter 5 walks through the cryptographic discovery process—building the inventory that every migration plan depends on.
+You now know why you need to migrate, what is broken, what replaces it, and who says you have to. The next question is intensely practical: how do you find all the cryptography in your environment? Chapter 5 walks through the cryptographic discovery process: building the inventory that every migration plan depends on.
 
 ## Notes
 
@@ -269,6 +326,10 @@ The following sources support specific claims made in Chapter 4. Full bibliograp
 
 **14.**  Per the November 18, 2025 memo, Component PQC migration leads must be reported to the Directorate within twenty days of the memo’s issuance and updated annually by September 30. Centralized requirements and approval-process documentation are maintained at https://cybersecurityks.osd.mil/DoDcs/pqc. Point of contact: osd.pentagon.dodcio.mesg.dcio-cs-pqc@mail.mil.
 
-**15.**  The DoW CIO memo’s authorization regime is “in addition to”—not a substitute for—Committee on National Security Systems Policy 15, “Use of Public Standards for Secure Information Sharing,” December 2024, and Chairman of the Joint Chiefs of Staff Instruction 6510.02, “Cryptographic Modernization Planning,” August 16, 2022.
+**15.**  The DoW CIO memo’s authorization regime is “in addition to,” not a substitute for, Committee on National Security Systems Policy 15, “Use of Public Standards for Secure Information Sharing,” December 2024, and Chairman of the Joint Chiefs of Staff Instruction 6510.02, “Cryptographic Modernization Planning,” August 16, 2022.
+
+**16.**  Executive Order, “Securing the Nation Against Advanced Cryptographic Attacks,” signed June 22, 2026. The White House presidential-actions text does not print an Executive Order number; “EO 14409” follows the designation used in the Department of War’s June 2026 public announcement. The order sets December 31, 2030 (key establishment) and December 31, 2031 (digital signatures) deadlines for federal civilian high-value assets and high-impact systems, with a FAR Council rule requiring covered-contractor FIPS/PQC compliance by December 31, 2030. It does not rescind or amend EO 14306.
+
+**17.**  Department of War. *Post Quantum Cryptography Strategy.* Signed April 1, 2026 by Kirsten A. Davies, Department of War Chief Information Officer; cleared for open publication April 16, 2026. Establishes five Lines of Effort, two acquisition tracks (High Assurance ECU and Commercial Solutions), and department-wide deadlines: support PQC by December 31, 2030; use PQC by December 31, 2031; NSS must support CNSA 2.0. https://dowcio.war.gov/Portals/0/Documents/Library/DoW-PQC-Strategy.pdf
 
 Next: Chapter 5 — Know What You Have: Cryptographic Discovery

@@ -6,18 +6,18 @@ chapter: 3
 order: 6
 words: 2835
 readingMinutes: 13
-excerpt: "In Chapter 1, we learned that quantum computing breaks the math behind today’s encryption—not the concept of encryption itself. In Chapter 2, we mapped exactly which algorithms and protocols are vulnerable. Now we answer"
+excerpt: "In Chapter 1, we learned that quantum computing breaks the math behind today’s encryption, not the concept of encryption itself. In Chapter 2, we mapped exactly which algorithms and protocols are vulnerable. Now we answer"
 ---
 
-In Chapter 1, we learned that quantum computing breaks the math behind today’s encryption—not the concept of encryption itself. In Chapter 2, we mapped exactly which algorithms and protocols are vulnerable. Now we answer the next question: what are we replacing them with?
+In Chapter 1, we learned that quantum computing breaks the math behind today’s encryption, not the concept of encryption itself. In Chapter 2, we mapped exactly which algorithms and protocols are vulnerable. Now we answer the next question: what are we replacing them with?
 
-The good news is that the replacements are already here. NIST finalized the first three post-quantum standards in August 2024 and selected a fourth in March 2025, with a fifth in draft. These aren’t experimental—they’re the result of an eight-year international competition involving 82 submissions from 25 countries, whittled down through multiple rounds of analysis, attack, and optimization.<sup>1</sup>
+The good news is that the replacements are already here. NIST finalized the first three post-quantum standards in August 2024 and selected a fourth in March 2025, with a fifth in draft. These aren’t experimental. They’re the result of an eight-year international competition involving 82 submissions from 25 countries, whittled down through multiple rounds of analysis, attack, and optimization.<sup>1</sup>
 
-This chapter introduces each algorithm in plain language: what mathematical problem it’s built on, what it does, how big its keys and signatures are, and when to use it. We’re not going to teach you the math—we’re going to give you the intuition you need to make architecture and procurement decisions.
+This chapter introduces each algorithm in plain language: what mathematical problem it’s built on, what it does, how big its keys and signatures are, and when to use it. We’re not going to teach you the math; we’re going to give you the intuition you need to make architecture and procurement decisions.
 
 ## New Math, Same Mission
 
-As we discussed in Chapter 1, today’s public-key cryptography relies on trapdoor functions built from two mathematical problems: **integer factorization** (RSA) and **discrete logarithms** (DH, ECC). Shor’s algorithm cracks both. The solution is to build trapdoor functions from different mathematical problems—problems that resist both classical and quantum attack.
+As we discussed in Chapter 1, today’s public-key cryptography relies on trapdoor functions built from two mathematical problems: **integer factorization** (RSA) and **discrete logarithms** (DH, ECC). Shor’s algorithm cracks both. The solution is to build trapdoor functions from different mathematical problems: problems that resist both classical and quantum attack.
 
 NIST’s post-quantum standards draw from three distinct mathematical families, each offering a different set of tradeoffs:
 
@@ -34,22 +34,22 @@ NIST’s post-quantum standards draw from three distinct mathematical families, 
 NIST deliberately chose algorithms from multiple mathematical families. If a future breakthrough cracks lattice problems, the hash-based and code-based backups still stand. This **algorithmic diversity** is a core design principle of the post-quantum landscape.<sup>2</sup>
 
 > **PLAIN-LANGUAGE SIDEBAR**
-> Think of it like building three separate bridges across a canyon, each using different engineering principles—one suspension, one arch, one cantilever. If an earthquake reveals a flaw in suspension bridge design, the arch and cantilever bridges still hold. NIST built multiple mathematical bridges for the same reason.
+> Think of it like building three separate bridges across a canyon, each using different engineering principles: one suspension, one arch, one cantilever. If an earthquake reveals a flaw in suspension bridge design, the arch and cantilever bridges still hold. NIST built multiple mathematical bridges for the same reason.
 
 ## ML-KEM: The New Key Exchange (FIPS 203)
 
-**What it replaces:** RSA key exchange, ECDH, X25519, Diffie-Hellman—any algorithm used to establish a shared secret between two parties.
+**What it replaces:** RSA key exchange, ECDH, X25519, Diffie-Hellman: any algorithm used to establish a shared secret between two parties.
 
 **What it is:** ML-KEM stands for Module-Lattice-Based Key-Encapsulation Mechanism. It’s based on the CRYSTALS-Kyber algorithm, which won NIST’s competition and was renamed for standardization.<sup>3</sup>
 
 ### How It Works (The Intuition)
 
-ML-KEM’s security is based on the **Module Learning With Errors (MLWE)** problem. Here’s the intuition: imagine a system of equations where the answers are slightly wrong—each one has a small random error added to it. Given the noisy answers, recovering the original secret is computationally infeasible, even for a quantum computer.
+ML-KEM’s security is based on the **Module Learning With Errors (MLWE)** problem. Here’s the intuition: imagine a system of equations where the answers are slightly wrong: each one has a small random error added to it. Given the noisy answers, recovering the original secret is computationally infeasible, even for a quantum computer.
 
 > **PLAIN-LANGUAGE SIDEBAR**
 > Think of it this way: someone gives you the results of 1,000 math equations, but each answer is slightly off by a random amount. Could you figure out the original variables? For low-dimensional problems, maybe. But in the high-dimensional spaces ML-KEM operates in (hundreds of dimensions), the noise makes the problem impossibly hard. That hardness is the trapdoor.
 
-Technically, ML-KEM is a **Key Encapsulation Mechanism (KEM)**, not a traditional key exchange. The distinction matters: in a KEM, one party generates a shared secret and “encapsulates” it using the other party’s public key. The recipient “decapsulates” it with their private key. The result is the same—a shared secret both parties can use for symmetric encryption—but the mechanics are slightly different from Diffie-Hellman’s interactive exchange.<sup>4</sup>
+Technically, ML-KEM is a **Key Encapsulation Mechanism (KEM)**, not a traditional key exchange. The distinction matters: in a KEM, one party generates a shared secret and “encapsulates” it using the other party’s public key. The recipient “decapsulates” it with their private key. The result is the same (a shared secret both parties can use for symmetric encryption), but the mechanics are slightly different from Diffie-Hellman’s interactive exchange.<sup>4</sup>
 
 ### The Numbers
 
@@ -67,9 +67,9 @@ The size increase is real but manageable. ML-KEM-768 (the recommended default fo
 
 ## ML-DSA: The New Digital Signature (FIPS 204)
 
-**What it replaces:** RSA signatures, ECDSA, EdDSA—any algorithm used to prove identity and verify data integrity in certificates, code signing, and authentication.
+**What it replaces:** RSA signatures, ECDSA, EdDSA: any algorithm used to prove identity and verify data integrity in certificates, code signing, and authentication.
 
-**What it is:** ML-DSA stands for Module-Lattice-Based Digital Signature Algorithm, based on CRYSTALS-Dilithium. It’s NIST’s primary recommended signature scheme—the general-purpose workhorse.<sup>6</sup>
+**What it is:** ML-DSA stands for Module-Lattice-Based Digital Signature Algorithm, based on CRYSTALS-Dilithium. It’s NIST’s primary recommended signature scheme: the general-purpose workhorse.<sup>6</sup>
 
 ### How It Works (The Intuition)
 
@@ -84,15 +84,15 @@ ML-DSA uses a technique called **Fiat-Shamir with Aborts.** The signer creates a
 | **ML-DSA-87** | 2,592 bytes | 4,627 bytes | 4,896 bytes | Level 5 (AES-256) |
 | **ECDSA P-256 (classical)** | 64 bytes | 64 bytes | 32 bytes | — (broken) |
 
-This is where the sticker shock hits. An ML-DSA-65 signature is **3,309 bytes versus 64 bytes for ECDSA P-256**—a 50x increase. Public keys grow from 64 bytes to nearly 2 KB. For a TLS certificate chain with three certificates, the total signature and key payload could exceed 15–20 KB. We’ll dig into the protocol-level implications of this in Chapter 8.
+This is where the sticker shock hits. An ML-DSA-65 signature is **3,309 bytes versus 64 bytes for ECDSA P-256**: a 50x increase. Public keys grow from 64 bytes to nearly 2 KB. For a TLS certificate chain with three certificates, the total signature and key payload could exceed 15–20 KB. We’ll dig into the protocol-level implications of this in Chapter 8.
 
-The silver lining: **ML-DSA is actually faster than RSA-2048 for both signing and verification**—roughly 10x faster for signing operations.<sup>8</sup> The performance penalty compared to ECDSA exists but is modest on modern hardware. The real challenge isn’t CPU time—it’s bandwidth and packet size.
+The silver lining: **ML-DSA is actually faster than RSA-2048 for both signing and verification**—roughly 10x faster for signing operations.<sup>8</sup> The performance penalty compared to ECDSA exists but is modest on modern hardware. The real challenge isn’t CPU time. It’s bandwidth and packet size.
 
 ## SLH-DSA: The Conservative Backup (FIPS 205)
 
 **What it replaces:** Same use cases as ML-DSA (digital signatures), but intended as a backup with a different security foundation.
 
-**What it is:** SLH-DSA stands for Stateless Hash-Based Digital Signature Algorithm, based on SPHINCS+. Its security rests entirely on the strength of hash functions (SHA-2 or SHAKE)—mathematical objects that have been studied intensively for decades and are extremely well understood.<sup>9</sup>
+**What it is:** SLH-DSA stands for Stateless Hash-Based Digital Signature Algorithm, based on SPHINCS+. Its security rests entirely on the strength of hash functions (SHA-2 or SHAKE), mathematical objects that have been studied intensively for decades and are extremely well understood.<sup>9</sup>
 
 ### Why It Matters
 
@@ -106,7 +106,7 @@ SLH-DSA comes in two flavors for each security level: **"f" (fast)** optimizes f
 
 ## FN-DSA: Compact Signatures (FIPS 206 — Draft)
 
-**What it is:** FN-DSA stands for FFT over NTRU-Lattice-Based Digital Signature Algorithm, based on the FALCON submission. It offers the smallest signatures of any PQC signature scheme—roughly 666 bytes at Level 1 and 1,280 bytes at Level 5—making it attractive for bandwidth-constrained environments.<sup>11</sup>
+**What it is:** FN-DSA stands for FFT over NTRU-Lattice-Based Digital Signature Algorithm, based on the FALCON submission. It offers the smallest signatures of any PQC signature scheme (roughly 666 bytes at Level 1 and 1,280 bytes at Level 5), making it attractive for bandwidth-constrained environments.<sup>11</sup>
 
 **Why it isn’t the primary standard:** FN-DSA’s implementation requires Gaussian sampling using floating-point arithmetic, which is notoriously difficult to implement correctly and prone to side-channel attacks. NIST selected ML-DSA as the primary standard specifically because it is easier to implement securely. FN-DSA is the specialist tool, not the default.<sup>12</sup>
 
@@ -121,7 +121,7 @@ HQC serves the same purpose as ML-KEM (establishing shared secrets for symmetric
 The tradeoff: HQC’s keys and ciphertexts are 3–4x larger than ML-KEM at equivalent security levels (roughly 4,500 bytes for a public key at Level 3, compared to 1,184 bytes for ML-KEM-768).<sup>14</sup> It also requires more computation. For now, ML-KEM remains the clear default for production deployments, with HQC as the strategic fallback.
 
 > **PLAIN-LANGUAGE SIDEBAR**
-> You don’t need to deploy HQC today. Think of it as the spare tire in your trunk—you hope you never need it, but you’re glad it’s there. Organizations designing for crypto-agility (covered in Chapter 6) should ensure their architectures can accommodate HQC if ML-KEM ever needs to be swapped out.
+> You don’t need to deploy HQC today. Think of it as the spare tire in your trunk: you hope you never need it, but you’re glad it’s there. Organizations designing for crypto-agility (covered in Chapter 6) should ensure their architectures can accommodate HQC if ML-KEM ever needs to be swapped out.
 
 ## Which Algorithm, When: The Practitioner’s Decision Guide
 
@@ -136,7 +136,7 @@ With five algorithms across three mathematical families, choosing the right one 
 | **SSH key exchange** | ML-KEM-768 (hybrid with X25519) | — (OpenSSH 10.0 default) | Already deployed in latest OpenSSH |
 | **Email encryption (S/MIME)** | ML-KEM-768 | HQC (future) | Awaiting S/MIME protocol updates |
 | **IoT / embedded devices** | FN-DSA (when finalized) or ML-DSA-44 | SLH-DSA-128s (if signature frequency low) | Evaluate FN-DSA for size-constrained use cases |
-| **Long-term archival signatures** | SLH-DSA | — (most conservative choice) | Hash-based security — highest long-term confidence |
+| **Long-term archival signatures** | SLH-DSA | — (most conservative choice) | Hash-based security, highest long-term confidence |
 
 ### The 80/20 Rule
 
@@ -150,14 +150,14 @@ If you’re in a CNSA 2.0 environment, bump both to Level 5 (ML-KEM-1024 and ML-
 
 > **MANDATE ALERT**
 > **A Note on Implementation Security: Side-Channel Attacks**
-> Even a theoretically secure algorithm can be broken by a careless implementation. PQC algorithms are susceptible to **side-channel attacks**—techniques that extract secret key material by observing execution time, power consumption, or electromagnetic emissions rather than attacking the math directly. Researchers have demonstrated side-channel key recovery against ML-KEM implementations, and Falcon’s (FN-DSA) floating-point arithmetic makes constant-time implementation especially difficult.
+> Even a theoretically secure algorithm can be broken by a careless implementation. PQC algorithms are susceptible to **side-channel attacks:** techniques that extract secret key material by observing execution time, power consumption, or electromagnetic emissions rather than attacking the math directly. Researchers have demonstrated side-channel key recovery against ML-KEM implementations, and Falcon’s (FN-DSA) floating-point arithmetic makes constant-time implementation especially difficult.
 > The practical takeaway: always use vetted, validated implementations from established cryptographic libraries (OpenSSL, BoringSSL, liboqs, Windows CNG). Never roll your own PQC. Ensure your vendors’ implementations are tested against side-channel attacks, especially if you’re deploying on hardware where physical access is possible (IoT, OT, embedded systems). The AIVD/TNO PQC Migration Handbook specifically flags this as a risk that organizations frequently underestimate.
 
 ## What’s Next
 
 You now understand what broke (Chapter 2), what replaces it (this chapter), and why these specific algorithms were chosen. But algorithms don’t deploy themselves. The next question is: who says you have to do this, and by when?
 
-Chapter 4 maps the full regulatory landscape—NSM-10, CNSA 2.0, the Quantum Computing Cybersecurity Preparedness Act, NIST IR 8547, and the EU and UK timelines—so you know exactly which mandates apply to your organization and when the deadlines hit.
+Chapter 4 maps the full regulatory landscape (NSM-10, CNSA 2.0, the Quantum Computing Cybersecurity Preparedness Act, NIST IR 8547, and the EU and UK timelines) so you know exactly which mandates apply to your organization and when the deadlines hit.
 
 ## Notes
 
