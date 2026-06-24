@@ -41,6 +41,7 @@ const buildDate = "2026";
       <p class="cover-sub">{meta.subtitle}</p>
       <p class="cover-author">{meta.authors.join(", ")}</p>
       <p class="cover-meta">{meta.chapterCount} chapters · {meta.pageCount} sections · ~{meta.readingMinutes} min</p>
+      {meta.version && <p class="cover-meta">Version {meta.version} · Updated {meta.updated}</p>}
     </section>
 
     <!-- CONTENTS -->

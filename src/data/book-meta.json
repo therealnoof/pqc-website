@@ -1,6 +1,9 @@
 {
   "title": "The Post-Quantum Cryptography Field Guide",
   "subtitle": "A Practitioner's Handbook",
+  "version": "1.1",
+  "updated": "June 2026",
+  "updateNote": "Now covers Executive Order 14409 and the Department of War Post-Quantum Cryptography Strategy.",
   "authors": [
     "Arnulfo “Noof” Hernandez"
   ],
