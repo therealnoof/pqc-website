@@ -99,7 +99,17 @@ const highlights = [
           The Post-Quantum<br />Cryptography <span class="grad">Field Guide</span>
         </h1>
         <p class="hero-sub">{meta.subtitle}</p>
+        {meta.version && (
+          <p class="hero-version">Version {meta.version} · Updated {meta.updated}</p>
+        )}
         <p class="hero-intro">{intro}</p>
+
+        {meta.updateNote && (
+          <p class="hero-update">
+            <span class="hero-update-tag">What's new</span>
+            {meta.updateNote}
+          </p>
+        )}
 
         <div class="hero-cta">
           <a class="btn btn-primary" href={`/read/${firstChapter.slug}/`}>
@@ -279,7 +289,20 @@ const highlights = [
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
   .hero-sub { font-size: clamp(1.05rem, 2.5vw, 1.3rem); color: var(--text-strong); font-weight: 600; margin: 1rem 0 0; }
+  .hero-version { font-family: var(--font-mono); font-size: 0.8rem; color: var(--faint); margin: 0.6rem 0 0; letter-spacing: 0.02em; }
   .hero-intro { font-size: 1.08rem; color: var(--muted); max-width: 40rem; margin: 0.9rem 0 0; }
+  .hero-update {
+    display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap;
+    max-width: 40rem; margin: 1.1rem 0 0; padding: 0.7rem 0.95rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+    border-left: 3px solid var(--accent); border-radius: var(--radius);
+    background: color-mix(in srgb, var(--accent-2) 8%, var(--surface));
+    color: var(--text); font-size: 0.92rem; line-height: 1.5;
+  }
+  .hero-update-tag {
+    font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--accent); flex: none;
+  }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.8rem; }
   .stats { display: flex; flex-wrap: wrap; gap: 2.2rem; list-style: none; padding: 0; margin: 2.6rem 0 0; }
   .stats li { display: flex; flex-direction: column; }
