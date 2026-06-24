@@ -4,8 +4,8 @@ displayTitle: "PQC Compliance Checklist"
 section: "Appendices & Reference"
 chapter: null
 order: 17
-words: 621
-readingMinutes: 3
+words: 835
+readingMinutes: 4
 excerpt: "A consolidated timeline and action checklist for PQC-related mandates. Check off items as your organization completes them."
 ---
 
@@ -22,6 +22,7 @@ A consolidated timeline and action checklist for PQC-related mandates. Check off
 | **☐** | **Enable hybrid TLS key exchange** | X25519MLKEM768 on internet-facing load balancers/CDN. (Ch7 bridge architecture) |
 | **☐** | **Verify SSH key exchange** | Confirm OpenSSH 10.0+ default (mlkem768x25519). Update if needed. |
 | **☐** | **Begin dual-signing firmware** | Sign new firmware/SBOMs with both classical + ML-DSA. (CNSA 2.0 “prefer by 2025”) |
+| **☐** | **Name a PQC migration lead** | Federal civilian agencies: report a lead to the OMB Director and National Cyber Director within 30 days of EO 14409. Align the migration plan to its 2030/2031 deadlines. |
 
 ## 2026–2027 Actions
 
@@ -51,6 +52,11 @@ A consolidated timeline and action checklist for PQC-related mandates. Check off
 | --- | --- | --- |
 | **☐** | **NIST deprecation deadline (2030)** | All 112-bit classical algorithms deprecated. No new deployments. (NIST IR 8547) |
 | **☐** | **CNSA 2.0 full compliance (2030)** | NSS: exclusive use of ML-KEM-1024 / ML-DSA-87 for networking. |
+| **☐** | **EO 14409 HVA key establishment (2030)** | Federal civilian high-value assets and high-impact systems use PQC for key establishment by Dec 31, 2030. |
+| **☐** | **Contractor FIPS/PQC compliance (2030)** | Covered federal contractors meet NIST FIPS, including the PQC standards, by Dec 31, 2030 (EO 14409 FAR rule). |
+| **☐** | **DoW support-PQC deadline (2030)** | DoW systems support PQC or are phased out by Dec 31, 2030. (DoW PQC Strategy) |
+| **☐** | **EO 14409 HVA digital signatures (2031)** | Federal civilian high-value assets and high-impact systems use PQC for digital signatures by Dec 31, 2031. |
+| **☐** | **DoW use-PQC deadline (2031)** | DoW systems use PQC by Dec 31, 2031; CSfC-registered phase-out complete. (DoW PQC Strategy) |
 | **☐** | **Complete hybrid → pure PQC transition** | Remove classical component from hybrid deployments where no longer needed. |
 | **☐** | **NIST disallow deadline (2035)** | All quantum-vulnerable public-key algorithms disallowed. NSM-10 full compliance. |
 | **☐** | **Validate crypto-agility** | Confirm ability to swap algorithms within 30 days across the environment. (Appendix E Dim 7) |
@@ -67,6 +73,7 @@ Federal agencies and federal service integrators should apply the following item
 | **☐** | **M-23-02 cryptographic inventory reporting** | FCEB agencies submit annual cryptographic inventory to CISA per OMB Memorandum M-23-02. (Ch 5 Note 1) |
 | **☐** | **FedRAMP continuous monitoring for cloud offerings** | Include PQC posture and migration progress in FedRAMP ConMon deliverables. |
 | **☐** | **Reauthorize systems after PQC migration** | Treat hybrid/PQC deployment as a significant change triggering ATO reauthorization per NIST SP 800-37 Rev 2 Monitor step. |
-| **☐** | **Embed PQC in procurement language** | Apply PQC readiness requirements to acquisition clauses. USDA/AGAR provides a model. (Ch 9 Note 9) |
+| **☐** | **Embed PQC in procurement language** | Apply PQC readiness requirements to acquisition clauses. USDA/AGAR provides a model; the EO 14409 FAR rule will make FIPS/PQC compliance contractual by 2030. (Ch 9 Note 9) |
+| **☐** | **Clear DoW CIO PQC Directorate gates** | DoW Components: obtain cryptographic intake and deployment approval before piloting, buying, or fielding PQC technology. (DoW CIO memo, Nov 2025; DoW PQC Strategy, Apr 2026) |
 
 ### Appendix F

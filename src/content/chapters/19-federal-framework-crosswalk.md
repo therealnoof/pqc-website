@@ -4,18 +4,18 @@ displayTitle: "Federal Framework Crosswalk"
 section: "Appendices & Reference"
 chapter: null
 order: 19
-words: 1336
-readingMinutes: 6
+words: 1724
+readingMinutes: 8
 excerpt: "Federal agencies operate under multiple overlapping cybersecurity and acquisition frameworks. This appendix maps the book’s five-phase PQC migration model (Chapter 6) against the four frameworks most commonly encountered"
 ---
 
-Federal agencies operate under multiple overlapping cybersecurity and acquisition frameworks. This appendix maps the book’s five-phase PQC migration model (Chapter 6) against the four frameworks most commonly encountered by federal and DoD readers: the NIST Risk Management Framework, the FAA Acquisition Management System, FedRAMP, and the DoD Risk Management Framework. The intent is not to replace these frameworks’ own guidance but to show PQC program managers where their migration work maps onto existing compliance artifacts—SSPs, POA&Ms, ConMon submissions, Investment Analysis reports, and ATO packages.
+Federal agencies operate under multiple overlapping cybersecurity and acquisition frameworks. This appendix maps the book’s five-phase PQC migration model (Chapter 6) against the four frameworks most commonly encountered by federal and DoD readers: the NIST Risk Management Framework, the FAA Acquisition Management System, FedRAMP, and the DoD Risk Management Framework. A fifth crosswalk maps the model onto the Department of War PQC Strategy’s five Lines of Effort. The intent is not to replace these frameworks’ own guidance but to show PQC program managers where their migration work maps onto existing compliance artifacts: SSPs, POA&Ms, ConMon submissions, Investment Analysis reports, and ATO packages.
 
 Use this crosswalk when building a PQC program charter, responding to RFIs or audit inquiries, or aligning budget requests with existing framework deliverables. Every row points to work your organization likely already performs; what changes is the cryptographic content of that work.
 
 ## NIST Risk Management Framework (SP 800-37 Rev 2)
 
-The NIST RMF is a seven-step process—Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor—applied at organizational, mission/business, and system tiers. The framework is mandatory for federal civilian agencies under FISMA and is adopted by reference in DoD and Intelligence Community RMF implementations. PQC migration maps directly onto existing RMF artifacts without introducing a parallel compliance track.
+The NIST RMF is a seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) applied at organizational, mission/business, and system tiers. The framework is mandatory for federal civilian agencies under FISMA and is adopted by reference in DoD and Intelligence Community RMF implementations. PQC migration maps directly onto existing RMF artifacts without introducing a parallel compliance track.
 
 | **Book Phase** | **Framework Activity** | **PQC Migration Activity** |
 | --- | --- | --- |
@@ -54,7 +54,7 @@ FedRAMP provides government-wide security assessment and authorization for cloud
 
 ## DoD Risk Management Framework (DoDI 8510.01)
 
-DoDI 8510.01, reissued July 19, 2022 as “Risk Management Framework for DoD Systems,” adopts the NIST SP 800-37 Rev 2 RMF process while layering DoD-specific governance. Categorization uses CNSSI 1253 rather than FIPS 199 for National Security Systems. The framework emphasizes cybersecurity reciprocity—the reuse of authorization evidence across Components to reduce redundant testing. PQC migration for DoD Components aligns with the CNSA 2.0 timeline (exclusive PQC use for NSS by 2030–2035).
+DoDI 8510.01, reissued July 19, 2022 as “Risk Management Framework for DoD Systems,” adopts the NIST SP 800-37 Rev 2 RMF process while layering DoD-specific governance. Categorization uses CNSSI 1253 rather than FIPS 199 for National Security Systems. The framework emphasizes cybersecurity reciprocity: the reuse of authorization evidence across Components to reduce redundant testing. PQC migration for DoD/DoW Components aligns with CNSA 2.0 and the DoW PQC Strategy: systems support PQC by 2030 and use PQC by 2031, with CNSA 2.0 category deadlines running to 2033 where noted.
 
 | **Book Phase** | **Framework Activity** | **PQC Migration Activity** |
 | --- | --- | --- |
@@ -65,8 +65,21 @@ DoDI 8510.01, reissued July 19, 2022 as “Risk Management Framework for DoD Sys
 | **Phase 3: Broaden** | **Authorize** | AO makes risk-based authorization decision for PQC-enabled system. Reciprocity framework enables cross-Component reuse of PQC authorization evidence. |
 | **Phase 4: Complete and Sustain** | **Monitor** | Continuous monitoring per DoDI 8530.01. Track CNSA 2.0 milestones (NSS exclusive PQC use by 2030–2035). Update ISRMC (DoD Risk Executive Function) on enterprise PQC posture. |
 
+## Department of War PQC Strategy (DoDI/LOE Structure)
+
+The DoW PQC Strategy is not a Risk Management Framework, but it carries its own structure of five Lines of Effort (LOEs) against which DoW program managers report progress. Unlike the RMF’s sequential steps, the strategy is explicit that the LOEs run concurrently; their order does not imply sequence. The crosswalk below maps the book’s five-phase model onto the LOEs so a DoW Component can show how its migration work satisfies the strategy. Two acquisition tracks (High Assurance ECU, which is NSA-certified and KMI-dependent, and Commercial Solutions, which uses NIST algorithms via CSfC and commodity IT) cut across all five LOEs.
+
+| **Book Phase** | **DoW Line of Effort** | **PQC Migration Activity** |
+| --- | --- | --- |
+| **Phase 0: Organize** | **LOE 1: Optimize Governance** | Stand up the CCOE and align it to the DoW CIO PQC Directorate’s intake and deployment gates. Update acquisition authorities and prepare the workforce. |
+| **Phase 0: Organize** | **LOE 2: Baseline Inventory and Plan** | Identify all NSS and non-NSS cryptography (including DIB systems that hold DoW data), conduct quantum-threat impact assessments, and build component-level migration roadmaps and response plans. |
+| **Phase 1: Edge First** | **LOE 3: Develop and Analyze** | Vet commercial and DoW-developed PQC solutions against warfighting use cases (latency, jamming resilience, key-compromise resilience) and promote cryptographic agility. Engage NIST, NSA, NATO, and IETF on protocols. |
+| **Phase 1: Edge First / Phase 2** | **LOE 4: Integrate Commercial Solutions** | Field PQC commodity IT through CSfC and NIAP profiles. Modernize the DoW PKI, adopt PQC software and firmware signing, and upgrade operating systems, browsers, and networking equipment. |
+| **Phase 2: Trust Infrastructure / Phase 3** | **LOE 5: Deploy Quantum Resistant Devices** | Modernize the NSA KMI and field High Assurance ECUs across data links, transport, space systems, telephony, tactical radios, and edge devices. |
+| **Phase 4: Complete and Sustain** | **LOE 5 + LOE 1** | Deprecate and remove legacy devices that cannot support PQC. Sustain governance, track LOE progress against the 2030 support and 2031 use deadlines, and maintain cryptographic agility for the next transition. |
+
 ## Cross-Framework Observations
 
-Three patterns recur across all four frameworks. First, the SSP (or its framework equivalent) is always the anchor document—PQC controls must be documented there regardless of which framework governs the system. Second, the POA&M is always the tracking mechanism for incomplete PQC migration; remaining quantum-vulnerable systems should be recorded there with target remediation milestones. Third, authorization decisions (ATO, In-Service Decision, FedRAMP Authorization) are significant-change events when PQC deployment substantially alters the system’s cryptographic posture. Program managers should plan for these decision gates in the timeline.
+Three patterns recur across all four frameworks. First, the SSP (or its framework equivalent) is always the anchor document: PQC controls must be documented there regardless of which framework governs the system. Second, the POA&M is always the tracking mechanism for incomplete PQC migration; remaining quantum-vulnerable systems should be recorded there with target remediation milestones. Third, authorization decisions (ATO, In-Service Decision, FedRAMP Authorization) are significant-change events when PQC deployment substantially alters the system’s cryptographic posture. Program managers should plan for these decision gates in the timeline.
 
 The book’s five-phase migration model (Chapter 6) deliberately does not mirror any one framework’s step structure. This separation is intentional: PQC migration spans multiple systems, each of which may be at a different point in its own RMF/AMS/FedRAMP/DoD RMF cycle. The book’s phases describe the cryptographic work; the framework steps describe how that work is authorized and sustained within federal compliance structures. Use both views together.

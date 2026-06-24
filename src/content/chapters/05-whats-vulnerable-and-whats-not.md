@@ -11,7 +11,7 @@ excerpt: "Chapter 1 explained why quantum computing threatens our cryptographic 
 
 Chapter 1 explained why quantum computing threatens our cryptographic infrastructure. This chapter answers the next logical question: what, specifically, is at risk?
 
-Not everything breaks. That’s important to understand upfront. Quantum computing breaks certain categories of cryptographic algorithms while leaving others largely intact. Knowing which is which—and understanding how they’re layered inside the protocols you actually run—is the foundation of every migration decision you’ll make.
+Not everything breaks. That’s important to understand upfront. Quantum computing breaks certain categories of cryptographic algorithms while leaving others largely intact. Knowing which is which (and understanding how they’re layered inside the protocols you actually run) is the foundation of every migration decision you’ll make.
 
 ![figure](/book-media/img-04.png)
 
@@ -21,38 +21,38 @@ Not everything breaks. That’s important to understand upfront. Quantum computi
 
 We can classify every cryptographic algorithm currently in widespread use into one of three categories based on its vulnerability to quantum attack:
 
-> **❌  BROKEN — Destroyed by Shor’s Algorithm**
-> All public-key algorithms based on integer factorization, discrete logarithms, or elliptic curve discrete logarithms. A cryptographically relevant quantum computer (CRQC) renders these completely insecure—no reasonable increase in key size can help.
+> **❌  BROKEN: Destroyed by Shor’s Algorithm**
+> All public-key algorithms based on integer factorization, discrete logarithms, or elliptic curve discrete logarithms. A cryptographically relevant quantum computer (CRQC) renders these completely insecure: no reasonable increase in key size can help.
 
-> **⚠  WEAKENED — Reduced by Grover’s Algorithm**
+> **⚠  WEAKENED: Reduced by Grover’s Algorithm**
 > All symmetric encryption and hash functions. Grover’s algorithm halves their effective security strength. The fix is straightforward: double the key size. AES-256 remains safe; AES-128 needs upgrading.
 
-> **✅  SAFE — No Known Quantum Advantage**
+> **✅  SAFE: No Known Quantum Advantage**
 > Post-quantum algorithms (ML-KEM, ML-DSA, SLH-DSA) and sufficiently strong symmetric algorithms (AES-256, SHA-384/512). These are built on mathematical problems for which no efficient quantum algorithm is known.
 
 ## Algorithm-by-Algorithm: The Vulnerability Map
 
-The following table is your reference sheet. Tear this page out and tape it to your monitor if you have to—this is the single most important classification in the book.
+The following table is your reference sheet. Tear this page out and tape it to your monitor if you have to. This is the single most important classification in the book.
 
 | **Algorithm** | **Type** | **Quantum Threat** | **Status** | **Action Required** |
 | --- | --- | --- | --- | --- |
-| **RSA (all key sizes)** | Key exchange, digital signatures | **Shor’s — Broken** | Deprecated 2030, disallowed 2035 | Replace with ML-KEM (key exchange) or ML-DSA (signatures) |
-| **ECDSA / EdDSA** | Digital signatures | **Shor’s — Broken** | Deprecated 2030, disallowed 2035 | Replace with ML-DSA or SLH-DSA |
-| **ECDH / X25519 / X448** | Key agreement | **Shor’s — Broken** | Deprecated 2030, disallowed 2035 | Replace with ML-KEM |
-| **DH / DHE** | Key exchange | **Shor’s — Broken** | Deprecated 2030, disallowed 2035 | Replace with ML-KEM |
-| **DSA** | Digital signatures | **Shor’s — Broken** | Already deprecated by NIST | Replace with ML-DSA |
-| **AES-128** | Symmetric encryption | **Grover’s — Weakened** | Upgrade recommended | Upgrade to AES-256 |
+| **RSA (all key sizes)** | Key exchange, digital signatures | **Shor’s: Broken** | Deprecated 2030, disallowed 2035 | Replace with ML-KEM (key exchange) or ML-DSA (signatures) |
+| **ECDSA / EdDSA** | Digital signatures | **Shor’s: Broken** | Deprecated 2030, disallowed 2035 | Replace with ML-DSA or SLH-DSA |
+| **ECDH / X25519 / X448** | Key agreement | **Shor’s: Broken** | Deprecated 2030, disallowed 2035 | Replace with ML-KEM |
+| **DH / DHE** | Key exchange | **Shor’s: Broken** | Deprecated 2030, disallowed 2035 | Replace with ML-KEM |
+| **DSA** | Digital signatures | **Shor’s: Broken** | Already deprecated by NIST | Replace with ML-DSA |
+| **AES-128** | Symmetric encryption | **Grover’s: Weakened** | Upgrade recommended | Upgrade to AES-256 |
 | **SHA-1** | Hash function | **Grover’s + classical weaknesses** | Already broken classically | Replace immediately (SHA-256 minimum) |
-| **3DES / Blowfish** | Symmetric encryption | **Grover’s — Unacceptable** | Already deprecated | Replace immediately (AES-256) |
-| **AES-256** | Symmetric encryption | **Grover’s — Adequate** | 128-bit effective — safe | No change needed |
-| **SHA-256 / SHA-384 / SHA-512** | Hash functions | **Grover’s — Adequate** | 128-bit+ effective — safe | No change needed (avoid SHA-1) |
+| **3DES / Blowfish** | Symmetric encryption | **Grover’s: Unacceptable** | Already deprecated | Replace immediately (AES-256) |
+| **AES-256** | Symmetric encryption | **Grover’s: Adequate** | 128-bit effective, safe | No change needed |
+| **SHA-256 / SHA-384 / SHA-512** | Hash functions | **Grover’s: Adequate** | 128-bit+ effective, safe | No change needed (avoid SHA-1) |
 | **HMAC-SHA-256+** | Message authentication | **No known quantum advantage** | Safe | No change needed |
 
 Source: Classification based on NIST IR 8547 (Transition to Post-Quantum Cryptography) and NIST SP 800-131A Rev. 3.<sup>1</sup>
 
 ## Protocol by Protocol: Where Quantum Hits Your Network
 
-Algorithms don’t exist in isolation—they’re embedded inside protocols. The same RSA key might appear in a TLS certificate, an IPsec IKE negotiation, and an SSH login. Understanding which protocols are affected, and where inside each protocol the vulnerable algorithms sit, is essential for planning your migration.
+Algorithms don’t exist in isolation. They’re embedded inside protocols. The same RSA key might appear in a TLS certificate, an IPsec IKE negotiation, and an SSH login. Understanding which protocols are affected, and where inside each protocol the vulnerable algorithms sit, is essential for planning your migration.
 
 ### TLS (Transport Layer Security)
 
@@ -67,7 +67,7 @@ TLS is the most widely deployed security protocol on the planet. It protects web
 **Record integrity:** HMAC or AEAD (built into GCM). **Safe.** No change needed.
 
 > **PLAIN-LANGUAGE SIDEBAR**
-> In a TLS session, the handshake is the vulnerable part. Once the handshake completes and symmetric keys are established, the bulk data transfer is quantum-safe (assuming AES-256). This is why the PQC migration for TLS focuses almost entirely on the handshake—replacing ECDHE with ML-KEM and replacing ECDSA/RSA certificate signatures with ML-DSA.
+> In a TLS session, the handshake is the vulnerable part. Once the handshake completes and symmetric keys are established, the bulk data transfer is quantum-safe (assuming AES-256). This is why the PQC migration for TLS focuses almost entirely on the handshake: replacing ECDHE with ML-KEM and replacing ECDSA/RSA certificate signatures with ML-DSA.
 
 ### IPsec / IKEv2
 
@@ -93,20 +93,20 @@ SSH is the primary remote administration protocol for Linux/Unix systems, networ
 
 Public Key Infrastructure is the trust fabric of the internet. Every TLS certificate, code signing certificate, email certificate, and device identity certificate relies on public-key cryptography for its digital signature.
 
-This is arguably the most complex PQC migration challenge. Certificates are everywhere—embedded in web servers, load balancers, API gateways, IoT devices, mobile apps, firmware, smart cards, and hardware security modules (HSMs). They’re issued by Certificate Authorities (CAs) in hierarchical trust chains, and changing the signature algorithm means updating every link in that chain.<sup>7</sup>
+This is arguably the most complex PQC migration challenge. Certificates are everywhere: embedded in web servers, load balancers, API gateways, IoT devices, mobile apps, firmware, smart cards, and hardware security modules (HSMs). They’re issued by Certificate Authorities (CAs) in hierarchical trust chains, and changing the signature algorithm means updating every link in that chain.<sup>7</sup>
 
 **Root and intermediate CA signatures:** RSA or ECDSA. **Broken by Shor’s.** Every certificate in the chain must eventually use PQC signatures.
 
-**End-entity certificates:** RSA or ECDSA public keys and signatures. **Broken by Shor’s.** Certificate sizes will increase significantly—ML-DSA-87 signatures are 4,627 bytes vs. 64 bytes for ECDSA P-256.<sup>8</sup>
+**End-entity certificates:** RSA or ECDSA public keys and signatures. **Broken by Shor’s.** Certificate sizes will increase significantly: ML-DSA-87 signatures are 4,627 bytes vs. 64 bytes for ECDSA P-256.<sup>8</sup>
 
 > **⚠  MANDATE ALERT**
-> Certificate size explosion is a real operational concern. An ML-DSA-87 public key is 2,592 bytes; an ML-DSA-87 signature is 4,627 bytes. Compare that to ECDSA P-256: 64-byte public key, 64-byte signature. A TLS certificate chain with three PQC certificates could exceed 20 KB—potentially fragmenting the TLS handshake across multiple TCP packets and causing performance issues on constrained networks. Chapter 8 covers this in detail.
+> Certificate size explosion is a real operational concern. An ML-DSA-87 public key is 2,592 bytes; an ML-DSA-87 signature is 4,627 bytes. Compare that to ECDSA P-256: 64-byte public key, 64-byte signature. A TLS certificate chain with three PQC certificates could exceed 20 KB, potentially fragmenting the TLS handshake across multiple TCP packets and causing performance issues on constrained networks. Chapter 8 covers this in detail.
 
 ### Code Signing and Software Supply Chain
 
 Every signed software package, firmware update, OS patch, and container image relies on digital signatures to prove authenticity and integrity. These signatures almost universally use RSA or ECDSA.
 
-**Code signing signatures:** RSA or ECDSA. **Broken by Shor’s.** An attacker with a CRQC could forge signatures on malicious software, making it appear to come from a trusted vendor. This is why the NSA’s CNSA 2.0 timeline prioritizes software and firmware signing first—with exclusive use of PQC signatures required by 2030.<sup>9</sup>
+**Code signing signatures:** RSA or ECDSA. **Broken by Shor’s.** An attacker with a CRQC could forge signatures on malicious software, making it appear to come from a trusted vendor. This is why the NSA’s CNSA 2.0 timeline prioritizes software and firmware signing first, with exclusive use of PQC signatures required by 2030.<sup>9</sup>
 
 This has particular implications for long-lived systems: embedded devices, SCADA controllers, medical equipment, and military platforms that may run the same firmware for a decade or more. A signature that was secure when applied in 2024 may be forgeable by 2035. The integrity of every software update these systems have ever received becomes retroactively questionable.
 
@@ -129,7 +129,7 @@ We can use these two dimensions to classify your organization’s data into quan
 | **MODERATE** | 3–10 years | Business strategy, competitive analysis, customer databases, internal comms | Plan migration within NIST timeline. Prioritize based on exposure. |
 | **LOW** | < 3 years | Session tokens, ephemeral API keys, transient web traffic, public marketing content | Migrate per normal upgrade cycles. Low HNDL exposure. |
 
-The critical insight: **your migration priority should be driven by data sensitivity lifetime, not by when you think Q-Day will arrive.** If your organization handles data in the CRITICAL or HIGH tiers and that data crosses a network—even an encrypted one—the HNDL clock is already running.
+The critical insight: **your migration priority should be driven by data sensitivity lifetime, not by when you think Q-Day will arrive.** If your organization handles data in the CRITICAL or HIGH tiers and that data crosses a network (even an encrypted one), the HNDL clock is already running.
 
 ## The Official Clock: NIST’s Deprecation Timeline
 
@@ -137,12 +137,12 @@ In late 2024, NIST published IR 8547, “Transition to Post-Quantum Cryptography
 
 - **By 2030:** RSA, ECDSA, EdDSA, DH, and ECDH will be **deprecated** at the 112-bit security level. Organizations should have migration plans in place and active.
 
-- **By 2035:** All quantum-vulnerable public-key algorithms will be **disallowed**—completely removed from NIST standards. No exceptions.<sup>10</sup>
+- **By 2035:** All quantum-vulnerable public-key algorithms will be **disallowed**: completely removed from NIST standards. No exceptions.<sup>10</sup>
 
-For context, “deprecated” means the algorithm is still technically permitted but actively discouraged—new systems should not use it. “Disallowed” means NIST-compliant systems cannot use it at all. If your organization’s compliance framework references NIST standards (and nearly all federal and most private-sector frameworks do), 2035 is the hard stop.
+For context, “deprecated” means the algorithm is still technically permitted but actively discouraged: new systems should not use it. “Disallowed” means NIST-compliant systems cannot use it at all. If your organization’s compliance framework references NIST standards (and nearly all federal and most private-sector frameworks do), 2035 is the hard stop.
 
 > **⚠  MANDATE ALERT**
-> Don’t let the 2035 date create a false sense of comfort. The SHA-1 to SHA-2 migration—a far simpler cryptographic transition than PQC—took the industry over 12 years. The PQC transition involves replacing algorithms across every protocol layer, re-issuing every certificate, updating every HSM, and testing interoperability across every vendor in your stack. If you start in 2030, you are almost certainly too late for the 2035 deadline.
+> Don’t let the 2035 date create a false sense of comfort. The SHA-1 to SHA-2 migration (a far simpler cryptographic transition than PQC) took the industry over 12 years. The PQC transition involves replacing algorithms across every protocol layer, re-issuing every certificate, updating every HSM, and testing interoperability across every vendor in your stack. If you start in 2030, you are almost certainly too late for the 2035 deadline.
 
 ## What’s Not Vulnerable: A Reassuring List
 
@@ -154,7 +154,7 @@ It’s easy to read the preceding sections and feel like everything is on fire (
 
 - **HMAC constructions are safe.** Message authentication codes built on SHA-256+ are not meaningfully threatened.
 
-- **Symmetric key derivation functions (HKDF, PBKDF2) are safe.** These are symmetric operations and inherit the Grover’s-halving property—but with 256-bit inputs, the remaining 128-bit security is more than sufficient.
+- **Symmetric key derivation functions (HKDF, PBKDF2) are safe.** These are symmetric operations and inherit the Grover’s-halving property, but with 256-bit inputs, the remaining 128-bit security is more than sufficient.
 
 - **Random number generation is safe.** CSPRNGs (cryptographically secure pseudorandom number generators) are not affected by known quantum algorithms. The randomness foundation of your cryptographic stack remains solid.
 
@@ -162,7 +162,7 @@ The quantum threat is real but targeted. It’s an asymmetric crypto problem fir
 
 ## What’s Next
 
-Now that we know what is broken and what is safe, the next question is: what are we replacing the broken algorithms with? Chapter 3 takes you inside the new NIST post-quantum standards—ML-KEM, ML-DSA, SLH-DSA, and the upcoming FN-DSA and HQC—and explains how they work, what their tradeoffs are, and why NIST chose the mathematical foundations it did.
+Now that we know what is broken and what is safe, the next question is: what are we replacing the broken algorithms with? Chapter 3 takes you inside the new NIST post-quantum standards (ML-KEM, ML-DSA, SLH-DSA, and the upcoming FN-DSA and HQC) and explains how they work, what their tradeoffs are, and why NIST chose the mathematical foundations it did.
 
 ## Notes
 
@@ -176,7 +176,7 @@ The following sources support specific claims made in Chapter 2. Full bibliograp
 
 **4.**  NSA CNSA 2.0 specifies ML-KEM-1024 for key establishment in IPsec (National Security Systems). See: draft-guthrie-cnsa2-ipsec-profile for the CNSA 2.0 IPsec integration profile. Traditional networking equipment must support CNSA 2.0 by 2026 and use it exclusively by 2030.
 
-**5.**  Post-Quantum Pre-Shared Keys (PPKs) for IKEv2 are specified in RFC 8784. This allows organizations to add a quantum-resistant layer to existing IPsec tunnels without waiting for full PQC algorithm integration—effectively a stopgap measure.
+**5.**  Post-Quantum Pre-Shared Keys (PPKs) for IKEv2 are specified in RFC 8784. This allows organizations to add a quantum-resistant layer to existing IPsec tunnels without waiting for full PQC algorithm integration: effectively a stopgap measure.
 
 **6.**  OpenSSH 9.0 (April 2022) introduced sntrup761x25519-sha512 hybrid key exchange by default. OpenSSH 10.0 (April 2025) switched the default to mlkem768x25519-sha256, aligning with NIST’s ML-KEM standard. See IETF draft-ietf-sshm-mlkem-hybrid-kex.
 

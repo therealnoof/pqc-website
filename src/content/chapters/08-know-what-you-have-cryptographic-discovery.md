@@ -11,7 +11,7 @@ excerpt: "Every PQC migration plan begins with the same question: “Where is cr
 
 Every PQC migration plan begins with the same question: “Where is cryptography in my environment?” The answer, invariably, is “more places than you think.”
 
-Cryptography is embedded in every layer of modern IT infrastructure—TLS certificates on web servers and load balancers, SSH keys on Linux hosts, IPsec tunnels between sites, code signing certificates in CI/CD pipelines, S/MIME certificates in email clients, API tokens, database encryption, disk encryption, HSMs, smart cards, and dozens of applications that implement their own cryptographic functions. Most organizations have no comprehensive inventory of these assets. That’s the problem this chapter solves.
+Cryptography is embedded in every layer of modern IT infrastructure: TLS certificates on web servers and load balancers, SSH keys on Linux hosts, IPsec tunnels between sites, code signing certificates in CI/CD pipelines, S/MIME certificates in email clients, API tokens, database encryption, disk encryption, HSMs, smart cards, and dozens of applications that implement their own cryptographic functions. Most organizations have no comprehensive inventory of these assets. That’s the problem this chapter solves.
 
 Without a cryptographic inventory, you’re migrating blind. You can’t prioritize what you can’t see, you can’t track progress against what you haven’t catalogued, and you can’t prove compliance with mandates that require you to “submit cryptographic inventories.”<sup>1</sup>
 
@@ -21,7 +21,7 @@ If you’ve ever tried to audit certificates across an enterprise network, you k
 
 - **Volume:** A typical enterprise has thousands to tens of thousands of certificates and keys across its environment. Federal agencies may have hundreds of thousands.
 
-- **Diversity:** Cryptography exists in certificates, connection configurations, application code, hardware modules, firmware, IoT devices, and third-party SaaS services—each requiring different discovery techniques.
+- **Diversity:** Cryptography exists in certificates, connection configurations, application code, hardware modules, firmware, IoT devices, and third-party SaaS services, each requiring different discovery techniques.
 
 - **Opacity:** Many systems use cryptography without exposing it to administrators. An application may negotiate TLS internally without any external indication of which cipher suite or key exchange algorithm it’s using.
 
@@ -30,7 +30,7 @@ If you’ve ever tried to audit certificates across an enterprise network, you k
 - **Fragmentation:** No single team owns cryptography. Network engineers own TLS termination. Security teams own certificates. Developers own code signing. IAM teams own authentication. PKI teams own the CA hierarchy. Each has partial visibility; none has the full picture.
 
 > **PLAIN-LANGUAGE SIDEBAR**
-> Think of cryptographic discovery like a building inspection for electrical wiring. You know there’s wiring in every wall—but you don’t know exactly where every wire runs, what gauge it is, or whether it meets current code. The only way to find out is to look—and to look systematically, because missing one segment could mean a fire.
+> Think of cryptographic discovery like a building inspection for electrical wiring. You know there’s wiring in every wall, but you don’t know exactly where every wire runs, what gauge it is, or whether it meets current code. The only way to find out is to look, and to look systematically, because missing one segment could mean a fire.
 
 ## Three Approaches to Cryptographic Discovery
 
@@ -46,7 +46,7 @@ The key insight from NIST’s work: **most of the data items required for PQC co
 
 ## What to Catalog: The Cryptographic Bill of Materials
 
-Your cryptographic inventory—sometimes called a **Cryptographic Bill of Materials (CBOM)**—should capture the following for each asset:
+Your cryptographic inventory (sometimes called a **Cryptographic Bill of Materials (CBOM)**) should capture the following for each asset:
 
 - **Algorithm:** Which cryptographic algorithm is in use (RSA-2048, ECDHE-P256, AES-128-GCM, SHA-1, etc.)
 
@@ -95,7 +95,7 @@ Transition from project-based discovery to **continuous inventory management.** 
 
 ## Inventory at Source: The Long-Term Strategy
 
-Discovery tools are essential for the initial inventory, but they’re not a sustainable long-term strategy on their own. The more mature approach is to **address inventory at source**—ensuring that new cryptographic assets are added to the inventory the moment they’re implemented, rather than waiting for a periodic scan to find them.<sup>4</sup>
+Discovery tools are essential for the initial inventory, but they’re not a sustainable long-term strategy on their own. The more mature approach is to **address inventory at source**: ensuring that new cryptographic assets are added to the inventory the moment they’re implemented, rather than waiting for a periodic scan to find them.<sup>4</sup>
 
 Practical ways to implement inventory at source:
 
@@ -113,7 +113,7 @@ The goal is to shift discovery from being the primary method of inventory popula
 
 Here’s the silver lining in the PQC discovery process: **it forces you to confront cryptographic debt you’ve been carrying for years.**
 
-When you start scanning your environment, you will find things that shouldn’t be there—and they won’t all be quantum-related. You’ll find:
+When you start scanning your environment, you will find things that shouldn’t be there, and they won’t all be quantum-related. You’ll find:
 
 - Expired certificates nobody renewed (or knew about)
 
@@ -129,13 +129,13 @@ When you start scanning your environment, you will find things that shouldn’t 
 
 - SSH keys that have never been rotated and are shared across teams
 
-The PQC migration is an opportunity to clean house. Frame it that way for your leadership: “We’re not just preparing for quantum—we’re fixing the cryptographic hygiene issues we’ve been deferring for a decade.” That framing turns a compliance exercise into a genuine security improvement, which is a much easier budget conversation.
+The PQC migration is an opportunity to clean house. Frame it that way for your leadership: “We’re not just preparing for quantum; we’re fixing the cryptographic hygiene issues we’ve been deferring for a decade.” That framing turns a compliance exercise into a genuine security improvement, which is a much easier budget conversation.
 
 > **F5 PERSPECTIVE**
 > **Strategic Points of Control: How F5 Enables Cryptographic Discovery**
-> The following section describes how F5 capabilities can support the cryptographic discovery process. This is vendor-specific guidance—the methodology described above applies regardless of your infrastructure stack.
-> F5 devices—BIG-IP, SSL Orchestrator, NGINX—sit at strategic control points in the network where application traffic converges: between users and applications, between applications and APIs, between sites, and between cloud environments. This positioning provides a unique vantage point for cryptographic visibility that most organizations already have deployed but aren’t fully leveraging for PQC readiness.
-> **BIG-IP SSL Orchestrator (SSLO)** decrypts and re-encrypts TLS traffic at line speed using F5’s full-proxy architecture. For every connection that passes through SSLO, the system sees the complete cryptographic handshake: the cipher suite negotiated, the key exchange algorithm used, the certificate presented, the TLS version, and the certificate chain. This means SSLO already possesses the raw data needed for network-level cryptographic inventory—the question is how to extract, catalog, and act on it.
+> The following section describes how F5 capabilities can support the cryptographic discovery process. This is vendor-specific guidance. The methodology described above applies regardless of your infrastructure stack.
+> F5 devices (BIG-IP, SSL Orchestrator, NGINX) sit at strategic control points in the network where application traffic converges: between users and applications, between applications and APIs, between sites, and between cloud environments. This positioning provides a unique vantage point for cryptographic visibility that most organizations already have deployed but aren’t fully leveraging for PQC readiness.
+> **BIG-IP SSL Orchestrator (SSLO)** decrypts and re-encrypts TLS traffic at line speed using F5’s full-proxy architecture. For every connection that passes through SSLO, the system sees the complete cryptographic handshake: the cipher suite negotiated, the key exchange algorithm used, the certificate presented, the TLS version, and the certificate chain. This means SSLO already possesses the raw data needed for network-level cryptographic inventory. The question is how to extract, catalog, and act on it.
 > In a PQC discovery context, SSLO can identify:
 > •  Which connections still negotiate RSA, ECDHE, or DH key exchange (Shor’s-vulnerable)
 > •  Which server certificates use RSA or ECDSA signatures (Shor’s-vulnerable)
@@ -143,8 +143,8 @@ The PQC migration is an opportunity to clean house. Frame it that way for your l
 > •  Which connections still use TLS 1.0/1.1 or weak cipher suites (cryptographic debt)
 > •  The volume and frequency of connections by cryptographic profile (prioritization data)
 > **F5 Application Study Tool (AST) and F5 Insight** extend this visibility into operational dashboards. AST is an open-source tool built on OpenTelemetry, Prometheus, and Grafana that collects telemetry data from BIG-IP devices across your fleet. F5 Insight (announced March 2026 as part of the F5 ADSP platform) builds on AST’s foundation to provide end-to-end observability with AI-assisted analysis.
-> For PQC compliance, the combination of SSLO + AST/Insight enables a network-centric view of your cryptographic posture: which algorithms are in active use, at what volume, protecting what traffic categories, and—critically—which connections are still using quantum-vulnerable configurations. This data feeds directly into the CBOM and supports the risk-based prioritization framework described earlier in this chapter.
-> **BIG-IP v21.1** (announced March 2026) adds NIST-compliant PQC cipher support with hybrid TLS cipher groups, allowing organizations to enable PQC protection while maintaining backward compatibility with classical configurations. BIG-IP Zero Trust Access (formerly APM) adds quantum-resistant TLS and SSL VPN tunneling. This means F5 isn’t just helping you discover your quantum exposure—it’s also providing the upgrade path for the infrastructure you’re likely using to terminate and inspect that traffic.
+> For PQC compliance, the combination of SSLO + AST/Insight enables a network-centric view of your cryptographic posture: which algorithms are in active use, at what volume, protecting what traffic categories, and, critically, which connections are still using quantum-vulnerable configurations. This data feeds directly into the CBOM and supports the risk-based prioritization framework described earlier in this chapter.
+> **BIG-IP v21.1** (announced March 2026) adds NIST-compliant PQC cipher support with hybrid TLS cipher groups, allowing organizations to enable PQC protection while maintaining backward compatibility with classical configurations. BIG-IP Zero Trust Access (formerly APM) adds quantum-resistant TLS and SSL VPN tunneling. This means F5 isn’t just helping you discover your quantum exposure. It’s also providing the upgrade path for the infrastructure you’re likely using to terminate and inspect that traffic.
 
 ## Running a Discovery Pilot: Proof of Value
 
@@ -158,21 +158,21 @@ Before committing to a full enterprise discovery program, run a well-scoped pilo
 
 - **Allocate 4–6 weeks for the pilot,** including analysis and report generation
 
-- **Document everything you find** that wasn’t expected—this is your “cryptographic debt” evidence, and it’s your most compelling argument for broader investment
+- **Document everything you find** that wasn’t expected. This is your “cryptographic debt” evidence, and it’s your most compelling argument for broader investment
 
 - **Expect surprises.** NIST’s NCCoE work found that automated discovery tools routinely reveal hundreds or thousands of cryptographic assets that organizations didn’t know existed<sup>6</sup>
 
-The pilot report becomes your proof of value—evidence that the quantum-vulnerable surface area is real, quantifiable, and larger than leadership assumed. That report is how you get the resources for Phases 1–4.
+The pilot report becomes your proof of value: evidence that the quantum-vulnerable surface area is real, quantifiable, and larger than leadership assumed. That report is how you get the resources for Phases 1–4.
 
 > **PLAIN-LANGUAGE SIDEBAR**
 > In highly-regulated environments, pilot work needs vocabulary that auditors and mission owners recognize. Two patterns are worth naming before you start.
-> **Concurrent shadow operation means** running the new PQC-capable path alongside the classical path in production, with the classical path as the safety net. Hybrid TLS 1.3 (X25519MLKEM768) is the canonical example: the handshake negotiates both a classical and a post-quantum shared secret, and the session key is derived from both. The PQC contribution “shadows” the classical exchange—if ML-KEM fails for any reason (library bug, implementation defect, side-channel discovery), the classical portion alone is sufficient to keep connections working. You gain production evidence about PQC behavior without gambling operational stability on it.
-> **Regional rollout means** enabling PQC in one region, availability zone, or mission enclave first, instrumenting it thoroughly, then expanding outward. The pattern is feature-flag management applied to cryptography—what’s new is the measurement burden: handshake latency distribution (p50/p95/p99), client failure rates, certificate-size fragmentation impact (Chapter 8), and HSM throughput under PQC load (Chapter 9). For federal and DoD environments, “region” often maps to a mission-specific enclave or security domain rather than geography.
+> **Concurrent shadow operation means** running the new PQC-capable path alongside the classical path in production, with the classical path as the safety net. Hybrid TLS 1.3 (X25519MLKEM768) is the canonical example: the handshake negotiates both a classical and a post-quantum shared secret, and the session key is derived from both. The PQC contribution “shadows” the classical exchange, and if ML-KEM fails for any reason (library bug, implementation defect, side-channel discovery), the classical portion alone is sufficient to keep connections working. You gain production evidence about PQC behavior without gambling operational stability on it.
+> **Regional rollout means** enabling PQC in one region, availability zone, or mission enclave first, instrumenting it thoroughly, then expanding outward. The pattern is feature-flag management applied to cryptography; what’s new is the measurement burden: handshake latency distribution (p50/p95/p99), client failure rates, certificate-size fragmentation impact (Chapter 8), and HSM throughput under PQC load (Chapter 9). For federal and DoD environments, “region” often maps to a mission-specific enclave or security domain rather than geography.
 > Both patterns carry forward into Phase 1 of the migration roadmap (Chapter 6) and are the operational foundation for the hybrid TLS work in Chapter 7.
 
 ## What’s Next
 
-With your cryptographic inventory in hand, you now have the data needed to build a prioritized migration plan. Chapter 6 takes the discovery output and transforms it into a phased migration roadmap—complete with a recommended organizational structure (the Cryptographic Center of Excellence), risk-based prioritization, and the crypto-agility principles that ensure you’re never locked into a single algorithm again.
+With your cryptographic inventory in hand, you now have the data needed to build a prioritized migration plan. Chapter 6 takes the discovery output and transforms it into a phased migration roadmap, complete with a recommended organizational structure (the Cryptographic Center of Excellence), risk-based prioritization, and the crypto-agility principles that ensure you’re never locked into a single algorithm again.
 
 ## Notes
 

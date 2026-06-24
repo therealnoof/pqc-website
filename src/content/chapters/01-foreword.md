@@ -23,19 +23,19 @@ If you are curious about Quantum and need to know how to prepare for Q-day then 
 
 ## The Clock We Can’t See
 
-Somewhere in the world, there’s an adversary capturing your organization’s encrypted traffic right now. This information can’t be read today—that’s not currently possible. But they’re relying on the idea that within the next decade or so, a sufficiently powerful quantum computer will let them decrypt everything they’ve been patiently collecting. The security community calls this **Harvest Now, Decrypt Later (HNDL)**,<sup>2</sup> and it means the quantum threat isn’t a future problem. It’s a here today data exfiltration campaign with a delayed payoff.
+Somewhere in the world, there’s an adversary capturing your organization’s encrypted traffic right now. This information can’t be read today. That’s not currently possible. But they’re relying on the idea that within the next decade or so, a sufficiently powerful quantum computer will let them decrypt everything they’ve been patiently collecting. The security community calls this **Harvest Now, Decrypt Later (HNDL)**,<sup>2</sup> and it means the quantum threat isn’t a future problem. It’s a here today data exfiltration campaign with a delayed payoff.
 
-The day a cryptographically relevant quantum computer (CRQC) becomes operational—also known as **“Q-Day”**—isn’t something we’ll see coming with a press release. It may happen in a university lab or maybe in a classified nation state bunker. It may be announced months or years after it becomes operational. The point is: we won’t know the day it happens. All we can do now is prepare our networks for a future with Quantum.
+The day a cryptographically relevant quantum computer (CRQC) becomes operational (also known as **“Q-Day”**) isn’t something we’ll see coming with a press release. It may happen in a university lab or maybe in a classified nation state bunker. It may be announced months or years after it becomes operational. The point is: we won’t know the day it happens. All we can do now is prepare our networks for a future with Quantum.
 
 ## The Mandates Are Already Here
 
-If the HNDL argument feels too abstract, here’s the concrete version: the compliance clock is already ticking. NIST published the first three finalized post-quantum cryptography (PQC) standards in August 2024.<sup>3</sup> The NSA’s CNSA 2.0 requires all new National Security Systems acquisitions to support quantum-resistant algorithms by January 2027.<sup>4</sup> Federal agencies must submit PQC transition plans by April 2026.<sup>5</sup> The Quantum Computing Cybersecurity Preparedness Act—that’s federal law, not an executive order that can be rescinded—mandates ongoing cryptographic inventories and migration planning.<sup>6</sup>
+If the HNDL argument feels too abstract, here’s the concrete version: the compliance clock is already ticking. NIST published the first three finalized post-quantum cryptography (PQC) standards in August 2024.<sup>3</sup> The NSA’s CNSA 2.0 requires all new National Security Systems acquisitions to support quantum-resistant algorithms by January 2027.<sup>4</sup> Federal agencies must submit PQC transition plans by April 2026.<sup>5</sup> The Quantum Computing Cybersecurity Preparedness Act (that’s federal law, not an executive order that can be rescinded) mandates ongoing cryptographic inventories and migration planning.<sup>6</sup>
 
-This isn’t a “maybe someday” situation. If you sell to, partner with, or operate within the federal ecosystem, post-quantum cryptography is now a procurement, compliance, and architectural requirement. And the private sector won’t be far behind—the EU has already published its own PQC migration roadmap targeting critical infrastructure by 2030.<sup>7</sup>
+This isn’t a “maybe someday” situation. If you sell to, partner with, or operate within the federal ecosystem, post-quantum cryptography is now a procurement, compliance, and architectural requirement. And the private sector won’t be far behind. The EU has already published its own PQC migration roadmap targeting critical infrastructure by 2030.<sup>7</sup>
 
 ## Why We Wrote This
 
-We’ve spent years working with public sector customers—DoD, federal civilian, intelligence community, and state and local agencies—helping them architect, deploy, and secure some of the most complex network environments in the world. What we’ve learned is that the hardest part of any major technology transition isn’t the technology itself. It’s the gap between knowing something and then knowing how to act on it.
+We’ve spent years working with public sector customers (DoD, federal civilian, intelligence community, and state and local agencies) helping them architect, deploy, and secure some of the most complex network environments in the world. What we’ve learned is that the hardest part of any major technology transition isn’t the technology itself. It’s the gap between knowing something and then knowing how to act on it.
 
 That gap is enormous in post-quantum cryptography right now. There’s no shortage of whitepapers explaining Shor’s algorithm or listing NIST’s new standards. What’s missing is a practical, pragmatic guide that answers the questions we hear in every customer conversation:
 
@@ -52,19 +52,19 @@ That gap is enormous in post-quantum cryptography right now. There’s no shorta
 This field guide is our attempt to close that gap. We’ve pulled together the regulatory mandates, the technical details, the migration frameworks, and the operational reality into something you can hold in one hand and actually use.
 
 > **A QUICK DISCLAIMER**
-> Let’s address the elephant in the room. The primary author’s of this guide work for F5, Inc. F5 makes products that live in the middle of network traffic—load balancers, SSL/TLS terminators, application delivery controllers, API gateways—and some of those products are directly relevant to a PQC migration.
-> We’re not going to pretend otherwise. But we made a deliberate choice when writing this book: **every chapter presents vendor-neutral guidance first.** Where F5 capabilities are relevant to a specific migration challenge, we’ll call them out—clearly labeled, never disguised as generic advice. If you work with a different vendor stack, this book should still be one of the most useful things on your desk. If you happen to use F5, you’ll get some bonus context on where those tools fit.
+> Let’s address the elephant in the room. The primary author’s of this guide work for F5, Inc. F5 makes products that live in the middle of network traffic (load balancers, SSL/TLS terminators, application delivery controllers, API gateways), and some of those products are directly relevant to a PQC migration.
+> We’re not going to pretend otherwise. But we made a deliberate choice when writing this book: **every chapter presents vendor-neutral guidance first.** Where F5 capabilities are relevant to a specific migration challenge, we’ll call them out: clearly labeled, never disguised as generic advice. If you work with a different vendor stack, this book should still be one of the most useful things on your desk. If you happen to use F5, you’ll get some bonus context on where those tools fit.
 > Our credibility depends on your trust, and we’d rather you find this guide genuinely useful than feel like you got handed a sales pitch.
 
 ## What This Book Is (and Isn’t)
 
-**This is** a practitioner’s field guide—concise, opinionated, and focused on getting you from “aware” to “acting.” It’s designed to be carried to meetings, marked up with sticky notes, and dog-eared at the chapters that matter to your role.
+**This is** a practitioner’s field guide: concise, opinionated, and focused on getting you from “aware” to “acting.” It’s designed to be carried to meetings, marked up with sticky notes, and dog-eared at the chapters that matter to your role.
 
 **This is not** a cryptography textbook. We’ll explain the algorithms and the math when it’s necessary to understand why something matters, but we won’t bury you in lattice theory. If you want a deep academic treatment, we’ll point you to excellent resources. Our job is to help you build a plan, make decisions, and start moving.
 
 **This is not** an academic course on Quantum Mechanics. However, we will cover the basics because a firm understanding of why we are here is critical. We will cover core topics like Superposition and Entanglement. These topics will give you a firm understanding of what makes quantum so powerful and how it applies to cryptography.
 
-Everything in this guide is grounded in primary sources: NIST standards, NSA guidance, CISA publications, IETF RFCs, and executive-level mandates. Every factual claim is cited. Where the landscape is uncertain or actively changing—and there’s a lot of that right now—we’ll tell you so.
+Everything in this guide is grounded in primary sources: NIST standards, NSA guidance, CISA publications, IETF RFCs, and executive-level mandates. Every factual claim is cited. Where the landscape is uncertain or actively changing (and there’s a lot of that right now), we’ll tell you so.
 
 ## Notes
 

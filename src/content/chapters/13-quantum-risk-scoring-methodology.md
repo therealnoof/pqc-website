@@ -19,8 +19,8 @@ The quantum risk score combines three factors: **algorithm weakness** (how vulne
 | --- | --- | --- |
 | **0** | Quantum-safe. No migration needed. | AES-256, SHA-384, SHA-512, ML-KEM, ML-DSA, SLH-DSA |
 | **1** | Theoretically weakened by quantum, but not practically broken. Future attention needed. | AES-128 (Grover’s halves effective strength), SHA-256 (collision resistance reduced but still adequate), 3DES |
-| **2** | Broken by quantum computer running Shor’s algorithm. Migration required within NIST timeline. | RSA-2048+, ECDSA P-256/P-384, ECDH, DH, DSA — all quantum-vulnerable asymmetric algorithms |
-| **3** | Broken by quantum AND already weakened classically. Immediate migration regardless of quantum timeline. | RSA-1024, SHA-1 signatures, DES, RC4, MD5 — deprecated algorithms still found in legacy systems |
+| **2** | Broken by quantum computer running Shor’s algorithm. Migration required within NIST timeline. | RSA-2048+, ECDSA P-256/P-384, ECDH, DH, DSA: all quantum-vulnerable asymmetric algorithms |
+| **3** | Broken by quantum AND already weakened classically. Immediate migration regardless of quantum timeline. | RSA-1024, SHA-1 signatures, DES, RC4, MD5: deprecated algorithms still found in legacy systems |
 
 ## Factor 2: Impact Severity Score (0–4)
 
@@ -48,7 +48,7 @@ Estimate the time, effort, and complexity required to migrate this system to PQC
 
 ## Computing the Overall Quantum Risk Score (0–4)
 
-The overall quantum risk score is derived by combining the three factors. This is not a simple average—algorithm weakness gates the assessment, while impact and difficulty determine urgency:
+The overall quantum risk score is derived by combining the three factors. This is not a simple average: algorithm weakness gates the assessment, while impact and difficulty determine urgency:
 
 **Step 1:** If Algorithm Weakness = 0, the system is quantum-safe. Overall Risk = 0 regardless of other factors. No further assessment needed.
 

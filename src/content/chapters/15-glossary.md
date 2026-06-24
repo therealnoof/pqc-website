@@ -4,8 +4,8 @@ displayTitle: "Glossary"
 section: "Appendices & Reference"
 chapter: null
 order: 15
-words: 1273
-readingMinutes: 6
+words: 1542
+readingMinutes: 7
 excerpt: "Quick-reference definitions for terms used throughout this book. Terms are listed alphabetically."
 ---
 
@@ -33,13 +33,21 @@ Quick-reference definitions for terms used throughout this book. Terms are liste
 
 **CRQC (Cryptographically Relevant Quantum Computer)**  A quantum computer powerful enough to run Shor’s algorithm against deployed cryptographic key sizes. Does not yet exist; timeline estimates range from 10–20+ years.
 
+**CSfC (Commercial Solutions for Classified)**  NSA program that lets layered, properly configured commercial products protect classified data, as an alternative to NSA-developed Type 1 equipment. In the DoW PQC Strategy, CSfC is a primary path for fielding PQC commodity IT.
+
 **Crypto-Agility**  The architectural capability to swap, update, or replace cryptographic algorithms without redesigning applications or protocols. A core design principle for PQC migration.
 
-**Cryptographic Proxy Layer**  Structural term for the Bridge Architecture (Chapter 7)—a dedicated enforcement point (TLS terminator, ADC, reverse proxy) that performs cryptographic upgrade on behalf of downstream systems that are not yet PQC-capable. Commonly used in federal and enterprise architecture documentation as a synonym for “bridge architecture.”
+**Cryptographic Proxy Layer**  Structural term for the Bridge Architecture (Chapter 7): a dedicated enforcement point (TLS terminator, ADC, reverse proxy) that performs cryptographic upgrade on behalf of downstream systems that are not yet PQC-capable. Commonly used in federal and enterprise architecture documentation as a synonym for “bridge architecture.”
 
 **DoW CIO PQC Directorate**  Department of War organization established by the November 18, 2025 DoW CIO memorandum *Preparing for Migration to Post Quantum Cryptography*. Issues two new authorizations every DoW Component must obtain before any PQC engagement: **cryptographic intake approval** (before testing, evaluating, piloting, investing in, or acquiring any PQC-enabling or PQC-related technology) and **cryptographic deployment approval** (before deployment, informed by NIST, NSA, and IC certification outcomes). These approvals layer on top of, not replace, FIPS 140-3, NIAP Common Criteria, and NSA CSfC. Led by Dr. Britta Hale. Chapter 4.
 
-**EO 14144 / EO 14306**  U.S. Executive Orders directing federal agencies to inventory quantum-vulnerable systems and begin PQC migration. EO 14306 rescinded several prior orders but preserved PQC mandates.
+**DoW PQC Strategy**  Department of War *Post Quantum Cryptography Strategy*, signed April 1, 2026. Master execution document for the DoW transition. Sets five Lines of Effort and two acquisition tracks (High Assurance ECU and Commercial Solutions), and the department-wide deadlines: support PQC by December 31, 2030; use PQC by December 31, 2031; NSS support CNSA 2.0. Chapter 4.
+
+**DoWIN (Department of War Information Network)**  The DoW’s enterprise network of IT systems, infrastructure, and services. Formerly the DoDIN. PQC migration of the DoWIN spans commodity IT, weapon systems, and edge devices.
+
+**ECU (End Cryptographic Unit) / HA-ECU**  A device that performs the actual encryption or decryption at the end of a secure communications path. High Assurance ECUs (HA-ECUs) are NSA-certified and depend on the NSA Key Management Infrastructure (KMI); they form one of the two acquisition tracks in the DoW PQC Strategy.
+
+**EO 14144 / EO 14306 / EO 14409**  U.S. Executive Orders shaping federal PQC policy. EO 14144 (Jan 2025) and EO 14306 (June 2025) direct agencies to inventory quantum-vulnerable systems and migrate; EO 14306 rescinded several prior orders but preserved PQC mandates. EO 14409 (June 2026, “Securing the Nation Against Advanced Cryptographic Attacks”) re-imposes hard deadlines: high-value assets use PQC for key establishment by 2030 and digital signatures by 2031, with a FAR rule requiring contractor FIPS/PQC compliance by 2030.
 
 **FIPS 203 (ML-KEM)**  NIST standard for Module-Lattice-Based Key Encapsulation Mechanism. Replaces ECDH/DH for key exchange. Three parameter sets: ML-KEM-512/768/1024.
 
@@ -63,6 +71,8 @@ Quick-reference definitions for terms used throughout this book. Terms are liste
 
 **IW10 / IW20**  TCP initial congestion window set to 10 or 20 segments. IW10 (≈14.6 KB) is the default; IW20 (≈29 KB) accommodates most PQC certificate chains in a single flight.
 
+**KMI (Key Management Infrastructure)**  NSA system for generating, distributing, and managing keying material for High Assurance devices. The DoW PQC Strategy tasks NSA with adapting the KMI for PQC algorithms while scaling key production to Component needs.
+
 **Merkle Tree Certificates (MTCs)**  Google/Cloudflare initiative replacing per-certificate PQC signatures with compact Merkle inclusion proofs. Reduces TLS authentication data from ~15 KB to ~736 bytes.
 
 **ML-DSA (Module-Lattice Digital Signature Algorithm)**  See FIPS 204. The primary PQC signature algorithm. ML-DSA-65 is the general-purpose recommendation.
@@ -79,11 +89,11 @@ Quick-reference definitions for terms used throughout this book. Terms are liste
 
 **PPK (Post-Quantum Pre-Shared Key)**  RFC 8784 mechanism for layering a quantum-resistant symmetric secret onto IKEv2 IPsec key derivation as an interim PQC measure.
 
-**Q-Day**  The hypothetical date when a CRQC first breaks deployed public-key cryptography. Not a single event—different algorithms may fall at different times.
+**Q-Day**  The hypothetical date when a CRQC first breaks deployed public-key cryptography. Not a single event. Different algorithms may fall at different times.
 
 **QKD (Quantum Key Distribution)**  Hardware-based key distribution using quantum physics. NSA, NCSC, ANSSI, and BSI recommend PQC over QKD for most use cases due to cost, range, and scalability limitations.
 
-**RMF (Risk Management Framework)**  NIST SP 800-37 Rev 2 seven-step process—Prepare, Categorize, Select, Implement, Assess, Authorize, and Monitor—for managing security and privacy risk across federal information systems.
+**RMF (Risk Management Framework)**  NIST SP 800-37 Rev 2 seven-step process (Prepare, Categorize, Select, Implement, Assess, Authorize, and Monitor) for managing security and privacy risk across federal information systems.
 
 **SCRM (Supply Chain Risk Management)**  Discipline for identifying and mitigating risks introduced by suppliers, subcontractors, and third-party components (NIST SP 800-161 Rev 1). Extended in Chapter 9 to address PQC vendor readiness.
 

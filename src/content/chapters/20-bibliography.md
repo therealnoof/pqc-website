@@ -4,12 +4,12 @@ displayTitle: "Bibliography"
 section: "Appendices & Reference"
 chapter: null
 order: 20
-words: 2163
+words: 2269
 readingMinutes: 10
-excerpt: "Master reference list for all sources cited in chapter endnotes. Organized by category. ~95 entries covering all 128 endnotes across Chapters 1–9."
+excerpt: "Master reference list for all sources cited in chapter endnotes. Organized by category. ~98 entries covering all 130 endnotes across Chapters 1–9."
 ---
 
-Master reference list for all sources cited in chapter endnotes. Organized by category. ~95 entries covering all 128 endnotes across Chapters 1–9.
+Master reference list for all sources cited in chapter endnotes. Organized by category. ~98 entries covering all 130 endnotes across Chapters 1–9.
 
 ## Foundational Physics and Quantum Mechanics
 
@@ -144,6 +144,12 @@ White House. National Security Memorandum 10 (NSM-10). May 4, 2022.
 White House. Executive Order 14144: Strengthening Cybersecurity. January 2025.
 
 White House. Executive Order 14306: Amending EO 14028 and EO 14144. June 2025.
+
+White House. Executive Order “Securing the Nation Against Advanced Cryptographic Attacks” (EO 14409). June 22, 2026. Sets PQC deadlines for federal civilian high-value assets: key establishment by 2030, digital signatures by 2031; FAR rule for contractor FIPS/PQC compliance by 2030. https://www.whitehouse.gov/presidential-actions/2026/06/securing-the-nation-against-advanced-cryptographic-attacks/
+
+Department of War. Post Quantum Cryptography Strategy. Signed April 1, 2026 (Kirsten A. Davies, DoW CIO); cleared for open publication April 16, 2026. Five Lines of Effort; support PQC by 2030, use PQC by 2031; NSS support CNSA 2.0. https://dowcio.war.gov/Portals/0/Documents/Library/DoW-PQC-Strategy.pdf
+
+U.S. Department of War. “Securing Global Dominance: DoW Unleashes Quantum Defense Strategy to Harden Networks and Empower the Joint Force.” News release, June 2026. https://www.war.gov/News/Releases/Release/Article/4524599/
 
 Quantum Computing Cybersecurity Preparedness Act. Pub. L. No. 117-349. December 21, 2022.
 
